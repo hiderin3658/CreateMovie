@@ -1,0 +1,65 @@
+{
+  "character_id": "char_001",
+  "name": "Character Name",
+  "role": "protagonist",
+  "visual_description": {
+    "age": "teenage / adult / elderly",
+    "gender": "male / female / non-binary",
+    "height": "short / average / tall",
+    "build": "slim / athletic / stocky",
+    "hair": {
+      "color": "black / brown / blonde / red / etc.",
+      "style": "short / long / curly / straight",
+      "length": "shoulder-length / waist-length / cropped"
+    },
+    "eyes": {
+      "color": "brown / blue / green / hazel",
+      "shape": "round / almond / narrow"
+    },
+    "skin_tone": "light / medium / dark / olive",
+    "distinctive_features": [
+      "glasses",
+      "scar on left cheek",
+      "freckles",
+      "dimples"
+    ]
+  },
+  "clothing": {
+    "default_outfit": {
+      "top": "school uniform blazer / casual shirt / etc.",
+      "bottom": "pants / skirt / etc.",
+      "footwear": "sneakers / boots / etc.",
+      "accessories": ["backpack", "watch", "etc."]
+    },
+    "color_scheme": ["#2C3E50", "#FFFFFF", "#E74C3C"],
+    "style": "casual / formal / sporty / vintage"
+  },
+  "personality_traits": [
+    "optimistic",
+    "determined",
+    "kind",
+    "curious"
+  ],
+  "typical_poses": [
+    "hands in pockets, relaxed stance",
+    "arms crossed, confident",
+    "leaning forward, engaged"
+  ],
+  "typical_expressions": [
+    "warm smile",
+    "focused concentration",
+    "surprised eyes wide"
+  ],
+  "prompt_template": "{{age}} {{gender}}, {{hair.color}} {{hair.style}} hair, {{clothing.default_outfit.top}}, {{distinctive_features}}, {{personality_trait}} expression, {{art_style}}",
+  "example_prompts": {
+    "full_body": "teenage girl, long black hair, school uniform with blue blazer, warm smile, standing with confident posture, anime style",
+    "portrait": "teenage girl, long black hair, close-up face, warm smile, bright eyes, school uniform visible, anime style, soft lighting",
+    "action": "teenage girl, long black hair in motion, school uniform, running forward, determined expression, anime style, dynamic pose"
+  },
+  "consistency_notes": [
+    "Always include 'long black hair' in every prompt",
+    "School uniform blazer is signature element",
+    "Warm, approachable expression is default",
+    "Maintain anime art style across all cuts"
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "title": "Water Cycle Educational Video",
+  "duration": 60,
+  "num_cuts": 8,
+  "style_guide": {
+    "visual_style": "educational illustration",
+    "color_palette": ["#4A90E2", "#7ED321", "#F5A623"],
+    "mood": "clear and informative",
+    "lighting": "bright even lighting",
+    "texture": "clean vector style"
+  },
+  "cuts": [
+    {
+      "cut_number": 1,
+      "duration": 8,
+      "scene_description": "Ocean with sun above",
+      "action": "Introduction to water cycle starting point",
+      "composition": "rule_of_thirds",
+      "camera_angle": "ELS",
+      "camera_movement": "slow_zoom_in",
+      "lighting": "bright daylight",
+      "mood": "clear",
+      "image_prompt": "extreme wide shot, ocean surface with bright sun above, clear blue sky, educational illustration style, simple clean design, bright colors, 16:9",
+      "video_prompt": "slow zoom in on ocean surface, gentle water movement, 8 seconds, educational introduction, maintain clean composition"
+    },
+    {
+      "cut_number": 2,
+      "duration": 7,
+      "scene_description": "Water evaporating from ocean",
+      "action": "Evaporation process visualization",
+      "composition": "centered",
+      "camera_angle": "MS",
+      "camera_movement": "static",
+      "lighting": "bright sunlight",
+      "mood": "educational",
+      "image_prompt": "medium shot, water vapor rising from ocean surface, heat waves visible, arrows showing upward movement, educational diagram style, clear visual, 16:9",
+      "video_prompt": "static camera, vapor gently rising animation, 7 seconds, demonstrating evaporation, maintain clarity"
+    },
+    {
+      "cut_number": 3,
+      "duration": 8,
+      "scene_description": "Water vapor forming clouds",
+      "action": "Condensation in sky",
+      "composition": "centered",
+      "camera_angle": "MS",
+      "camera_movement": "slow_zoom_in",
+      "lighting": "sky lighting",
+      "mood": "clear",
+      "image_prompt": "medium shot, water vapor particles gathering into clouds, sky background, educational visualization, simple cloud formation, bright colors, 16:9",
+      "video_prompt": "slow zoom in, cloud forming gradually, 8 seconds, showing condensation process, maintain educational clarity"
+    },
+    {
+      "cut_number": 4,
+      "duration": 7,
+      "scene_description": "Heavy rain clouds",
+      "action": "Cloud accumulation before rain",
+      "composition": "centered",
+      "camera_angle": "LS",
+      "camera_movement": "static",
+      "lighting": "overcast",
+      "mood": "educational",
+      "image_prompt": "wide shot, dark rain clouds filled with water, sky view, educational style, clear visualization of water accumulation, 16:9",
+      "video_prompt": "static camera, clouds darkening, 7 seconds, showing water accumulation, maintain composition"
+    },
+    {
+      "cut_number": 5,
+      "duration": 8,
+      "scene_description": "Rain falling to earth",
+      "action": "Precipitation process",
+      "composition": "centered",
+      "camera_angle": "LS",
+      "camera_movement": "tilt_down",
+      "lighting": "soft overcast",
+      "mood": "clear",
+      "image_prompt": "wide shot, rain drops falling from clouds to ground, clear precipitation visualization, educational diagram, arrows showing downward movement, 16:9",
+      "video_prompt": "tilt down following rain, water falling, 8 seconds, demonstrating precipitation, clear visual flow"
+    },
+    {
+      "cut_number": 6,
+      "duration": 7,
+      "scene_description": "Water flowing into rivers",
+      "action": "Water collection and flow",
+      "composition": "diagonal",
+      "camera_angle": "MS",
+      "camera_movement": "pan",
+      "lighting": "bright daylight",
+      "mood": "educational",
+      "image_prompt": "medium shot, water flowing down slopes into river, clear water flow visualization, educational style, arrows showing direction, bright colors, 16:9",
+      "video_prompt": "pan following water flow, rivers forming, 7 seconds, showing collection process, maintain clarity"
+    },
+    {
+      "cut_number": 7,
+      "duration": 8,
+      "scene_description": "Rivers flowing to ocean",
+      "action": "Return to ocean completing cycle",
+      "composition": "rule_of_thirds",
+      "camera_angle": "LS",
+      "camera_movement": "tracking",
+      "lighting": "bright daylight",
+      "mood": "clear",
+      "image_prompt": "wide shot, river flowing into ocean, aerial view, educational style, clear water flow, bright blue colors, completing the cycle visual, 16:9",
+      "video_prompt": "tracking shot following river to ocean, water flowing, 8 seconds, showing cycle completion, maintain visual clarity"
+    },
+    {
+      "cut_number": 8,
+      "duration": 7,
+      "scene_description": "Complete water cycle diagram",
+      "action": "Full cycle overview with arrows",
+      "composition": "centered",
+      "camera_angle": "ELS",
+      "camera_movement": "slow_zoom_out",
+      "lighting": "bright even",
+      "mood": "comprehensive",
+      "image_prompt": "extreme wide shot, complete water cycle diagram showing all stages, ocean to sky to land and back, educational poster style, clear labels, bright colors, comprehensive view, 16:9",
+      "video_prompt": "slow zoom out revealing full cycle, all elements visible, 7 seconds, showing complete system, maintain educational clarity"
+    }
+  ],
+  "music_sections": [
+    {
+      "section_id": 1,
+      "cuts": "1-4",
+      "duration": "30s",
+      "mood": "curious",
+      "energy": 5,
+      "tempo": "100bpm",
+      "suno_prompt": "[Educational Background] 100bpm, moderate, curious, learning atmosphere, light piano, soft synth, gentle rhythm"
+    },
+    {
+      "section_id": 2,
+      "cuts": "5-8",
+      "duration": "30s",
+      "mood": "clear",
+      "energy": 6,
+      "tempo": "105bpm",
+      "suno_prompt": "[Educational Conclusion] 105bpm, energetic, clear understanding, achievement, piano, light percussion, uplifting melody"
+    }
+  ]
+}
