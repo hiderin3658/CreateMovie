@@ -1,0 +1,63 @@
+{
+  "video1": {
+    "title": "出会いの予感",
+    "categories": [
+      "beach"
+    ],
+    "materials": [
+      "白良浜2（全景）.JPG",
+      "白良浜4（南向き）.jpeg",
+      "白良浜1（海向き全景）.jpeg",
+      "白良浜3（北向き）.jpeg",
+      "白良浜6（ビーチカフェ）.JPG"
+    ]
+  },
+  "video2": {
+    "title": "自然の驚き",
+    "categories": [
+      "nature"
+    ],
+    "materials": [
+      "千畳敷2.jpeg",
+      "円月島夕日１.jpeg",
+      "三段壁.jpeg",
+      "番所山隧道.jpeg",
+      "円月島.jpeg",
+      "千畳敷1.jpg"
+    ]
+  },
+  "video3": {
+    "title": "体験の楽しみ",
+    "categories": [
+      "attractions",
+      "culture"
+    ],
+    "materials": [
+      "崎の湯 (3).jpeg",
+      "白良浜5（花火）.jpg",
+      "崎の湯2.jpg",
+      "崎の湯1.jpeg",
+      "世界遺産（熊野古道富田坂）.jpg"
+    ]
+  },
+  "video4": {
+    "title": "もう一度来たい",
+    "categories": [
+      "beach",
+      "nature"
+    ],
+    "materials": [
+      "白良浜2（全景）.JPG",
+      "白良浜4（南向き）.jpeg",
+      "白良浜1（海向き全景）.jpeg",
+      "白良浜3（北向き）.jpeg",
+      "白良浜6（ビーチカフェ）.JPG",
+      "千畳敷2.jpeg",
+      "円月島夕日１.jpeg",
+      "三段壁.jpeg",
+      "番所山隧道.jpeg",
+      "円月島.jpeg",
+      "千畳敷1.jpg"
+    ]
+  }
+}

@@ -1,0 +1,240 @@
+# 白浜観光AIアニメコンペ プロジェクト設定
+
+project:
+  id: "nanki-shirahama-2024"
+  name: "行ってみたい白浜 - 観光AIアニメコンペ"
+  type: "competition"
+  theme: "tourism"
+  created: "2024-11-08"
+  deadline: "2024-12-31"  # 仮の締切
+
+  description: |
+    和歌山・白浜の観光資源をAIアニメで表現する全国コンペ。
+    提供された写真16枚をアニメ化背景として使用し、
+    登場人物を追加して「行ってみたい」と思わせる30秒動画を制作。
+
+competition:
+  organizer: "白浜観光協会（仮）"
+  platform: "SNS (TikTok, Instagram Reels, YouTube Shorts)"
+  submission_format: "MP4 video"
+
+  constraints:
+    - "提供写真のモチーフ変更（改変）禁止"
+    - "写真をアニメ化して背景として使用"
+    - "登場人物の追加OK"
+    - "白浜の魅力を効果的に訴求"
+
+requirements:
+  total_duration: 30  # seconds
+  num_videos: 4
+  video_duration: 10  # seconds per video
+
+  aspect_ratios:
+    primary: "9:16"    # Vertical (SNS shorts)
+    secondary: "16:9"  # Horizontal (optional)
+
+  resolution:
+    width: 1080
+    height: 1920
+
+  frame_rate: 30  # fps
+
+  materials:
+    provided: true
+    total_count: 16
+    categories:
+      beach: 4-5
+      nature: 4-5
+      attractions: 4-5
+      culture: 2-3
+
+    usage_requirements:
+      minimum_usage_rate: 0.75  # 16枚中12枚以上使用
+      modification_allowed: false  # モチーフ改変禁止
+      style_transfer_allowed: true  # アニメ化OK
+
+story_structure:
+  narrative_arc: "travel_experience"
+
+  videos:
+    video1:
+      title: "出会いの予感"
+      theme: "arrival_and_first_impression"
+      duration: 10
+      mood: "hopeful, excited"
+      tempo: 120
+      materials_count: 3-4
+      categories: ["beach"]
+
+    video2:
+      title: "自然の驚き"
+      theme: "natural_wonders"
+      duration: 10
+      mood: "awe, wonder"
+      tempo: 110
+      materials_count: 3-4
+      categories: ["nature"]
+
+    video3:
+      title: "体験の楽しみ"
+      theme: "activities_and_local_experience"
+      duration: 10
+      mood: "joyful, satisfied"
+      tempo: 130
+      materials_count: 3-4
+      categories: ["attractions", "culture"]
+
+    video4:
+      title: "もう一度来たい"
+      theme: "farewell_and_longing"
+      duration: 10
+      mood: "nostalgic, hopeful"
+      tempo: 95
+      materials_count: 3-4
+      categories: ["beach", "nature"]  # 印象的シーン再登場
+
+character_design:
+  main_character:
+    name: "旅する少女"
+    age: 20
+    appearance:
+      hair: "long brown hair, ponytail"
+      clothing: "casual summer outfit (t-shirt, shorts)"
+      accessories: ["backpack", "camera", "smartphone"]
+
+    personality: "bright, curious, energetic"
+    role: "tourist experiencing Shirahama"
+
+    consistency:
+      method: "ControlNet reference"
+      reference_sheet: "generated/characters/tourist_character_sheet.png"
+      weight: 0.8
+
+visual_style:
+  background:
+    style: "anime"
+    technique: "img2img style transfer"
+    preservation: "high"  # 元の構図・モチーフを保持
+    denoising_strength: 0.3-0.5
+
+  character:
+    style: "anime illustration"
+    integration: "natural blending"
+    lighting_match: true
+
+  color_palette:
+    primary: ["#87CEEB", "#FFE4B5", "#FFFFFF"]  # 空、砂浜、白
+    accent: ["#FF69B4", "#FFD700"]  # 明るい、活気
+    mood: "bright, cheerful, inviting"
+
+technical_specs:
+  ai_tools:
+    background_stylization:
+      tool: "Stable Diffusion"
+      model: "SD 1.5 with anime LoRA"
+      method: "img2img"
+
+    character_generation:
+      tool: "Stable Diffusion XL / Midjourney"
+      controlnet: ["reference", "openpose"]
+
+    video_generation:
+      primary: "Runway Gen-3"
+      alternative: ["Pika Labs", "Stable Video Diffusion"]
+
+    music_generation:
+      tool: "Suno AI"
+      genre: "J-Pop, Cinematic"
+
+  workflow:
+    phase1_preparation:
+      - organize_materials
+      - analyze_materials
+      - create_character_sheet
+
+    phase2_background:
+      - anime_style_transfer
+      - quality_check
+      - categorize_by_video
+
+    phase3_storyboard:
+      - generate_storyboards
+      - map_materials_to_cuts
+      - review_and_adjust
+
+    phase4_generation:
+      - composite_characters
+      - generate_video_frames
+      - i2v_conversion
+
+    phase5_finalization:
+      - video_editing
+      - music_integration
+      - final_rendering
+
+output_structure:
+  submission:
+    videos:
+      - "video1_encounter.mp4"
+      - "video2_nature.mp4"
+      - "video3_experience.mp4"
+      - "video4_farewell.mp4"
+      - "shirahama_complete_30s.mp4"  # Combined
+
+    documents:
+      - "concept_document.pdf"
+      - "material_usage_report.pdf"
+      - "technical_spec.pdf"
+
+hooks:
+  pre_generation:
+    - validate_materials
+    - ensure_character_consistency
+
+  post_generation:
+    - verify_no_modification
+    - check_material_usage_rate
+    - generate_usage_report
+
+plugins:
+  - "material_analyzer"
+  - "anime_style_transfer"
+  - "character_consistency_checker"
+  - "tourism_narrative_builder"
+
+team:
+  owner: "AI Creator"
+  role: "solo"
+
+status:
+  current: "planning"
+  progress: 0
+  milestones:
+    - name: "Materials organized"
+      completed: false
+    - name: "Character design complete"
+      completed: false
+    - name: "Backgrounds stylized"
+      completed: false
+    - name: "Storyboards generated"
+      completed: false
+    - name: "Videos rendered"
+      completed: false
+    - name: "Submission ready"
+      completed: false
+
+budget:
+  estimated_cost: 5.00  # USD
+  breakdown:
+    runway_gen3: 2.00
+    api_credits: 1.00
+    buffer: 2.00
+
+  cost_tracking: true
+
+notes: |
+  - 写真16枚は source_materials/raw/ の各カテゴリフォルダに配置
+  - 各写真には metadata/photo_descriptions.yaml でメタデータを記録
+  - モチーフ改変禁止のため、denoising strengthは慎重に調整
+  - キャラクター一貫性のため、最初にリファレンスシートを生成
+  - 4本の動画は独立しているが、ストーリーアークで繋がっている

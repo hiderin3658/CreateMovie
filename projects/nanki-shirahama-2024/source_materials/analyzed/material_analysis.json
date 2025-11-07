@@ -1,0 +1,19 @@
+{
+  "total_materials": 16,
+  "by_category": {
+    "beach": 5,
+    "nature": 6,
+    "attractions": 4,
+    "culture": 1
+  },
+  "hd_quality": {
+    "count": 7,
+    "percentage": "43.8%"
+  },
+  "average_file_size_mb": "0.30",
+  "quality_assessment": "needs_improvement",
+  "recommendations": [
+    "nature: Excellent variety (6 photos)",
+    "Need more culture photos (current: 1, recommended: 3+)"
+  ]
+}
