@@ -464,7 +464,11 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
 
             if cut.generated_image_path:
                 rel_path = Path(cut.generated_image_path).name
-                report.append(f"![Cut {cut.cut_number}](frames/{rel_path})\n")
+                report.append(f"![Cut {cut.cut_number}](frames/{rel_path})\n\n")
+            else:
+                # Display placeholder when image is not generated
+                report.append(f"\n> 📸 **Image not generated** (API key not available)\n")
+                report.append(f"> Use the Image Prompt below to generate this frame with Imagen 3 or other image generation services.\n\n")
 
             report.append(f"**Scene**: {cut.scene_description}\n")
             report.append(f"**Action**: {cut.action}\n")
@@ -475,6 +479,16 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
             report.append(f"\n**Image Prompt**:\n```\n{cut.image_prompt}\n```\n")
             report.append(f"\n**Video Prompt**:\n```\n{cut.video_prompt}\n```\n")
 
+            # Add Veo3 and Sora2 prompts if available
+            if cut.veo3_prompt:
+                report.append(f"\n**Veo 3 Prompt**:\n```\n{cut.veo3_prompt}\n```\n")
+            if cut.sora2_prompt:
+                report.append(f"\n**Sora 2 Prompt**:\n```\n{cut.sora2_prompt}\n```\n")
+            if cut.recommended_model:
+                report.append(f"\n**Recommended Model**: {cut.recommended_model}\n")
+
+            report.append("\n---\n")
+
         if storyboard.music_sections:
             report.append("\n## 🎵 BGM Structure\n")
             for section in storyboard.music_sections:
@@ -482,7 +496,25 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
                 report.append(f"**Cuts**: {section['cuts']} | **Duration**: {section['duration']}\n")
                 report.append(f"**Mood**: {section['mood']} | **Energy**: {section['energy']}/10\n")
                 report.append(f"**Tempo**: {section['tempo']}\n")
+                if 'genre' in section:
+                    report.append(f"**Genre**: {section['genre']}\n")
                 report.append(f"\n```\n{section['suno_prompt']}\n```\n")
+
+        # Add style guide section
+        if storyboard.style_guide:
+            report.append("\n## 🎨 Style Guide\n\n")
+            sg = storyboard.style_guide
+            if 'visual_style' in sg:
+                report.append(f"- **Visual Style**: {sg['visual_style']}\n")
+            if 'color_palette' in sg:
+                colors = ', '.join(sg['color_palette']) if isinstance(sg['color_palette'], list) else sg['color_palette']
+                report.append(f"- **Color Palette**: {colors}\n")
+            if 'mood' in sg:
+                report.append(f"- **Mood**: {sg['mood']}\n")
+            if 'lighting' in sg:
+                report.append(f"- **Lighting**: {sg['lighting']}\n")
+            if 'texture' in sg:
+                report.append(f"- **Texture**: {sg['texture']}\n")
 
         report_path = output_dir / 'storyboard_report.md'
         with open(report_path, 'w', encoding='utf-8') as f:
