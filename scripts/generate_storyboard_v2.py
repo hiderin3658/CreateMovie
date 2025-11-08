@@ -3,7 +3,6 @@
 AI Video Storyboard Generator V2 - Modular Version
 Complete workflow using the new modular architecture
 """
-import os
 import sys
 import argparse
 from pathlib import Path
@@ -107,7 +106,7 @@ def main():
     print("\n" + "="*60)
     print("✅ Generation Complete!")
     print("="*60)
-    print(f"\nOutput files:")
+    print("\nOutput files:")
     print(f"  📄 {args.output}/storyboard.json")
     print(f"  📄 {args.output}/storyboard_report.md")
     if storyboard.music_sections:

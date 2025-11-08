@@ -4,9 +4,12 @@ Base Video Generator Class
 Provides the foundation for all video generation functionality
 """
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional, Any, Callable
+from typing import Dict, List, Optional, Any, Callable, TYPE_CHECKING
 from dataclasses import dataclass
 import json
+
+if TYPE_CHECKING:
+    from .plugin import BasePlugin
 
 
 @dataclass

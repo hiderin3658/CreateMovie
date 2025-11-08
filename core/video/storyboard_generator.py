@@ -3,7 +3,6 @@
 Core Storyboard Generator
 Modularized storyboard generation functionality
 """
-import os
 import json
 import re
 from pathlib import Path
@@ -123,7 +122,6 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
             Complete storyboard data
         """
         story_description = input_data.get('story_description', '')
-        key_visual_path = input_data.get('key_visual_path')
         visual_analysis = input_data.get('visual_analysis')
 
         # Trigger pre-generation hooks
@@ -467,8 +465,8 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
                 report.append(f"![Cut {cut.cut_number}](frames/{rel_path})\n\n")
             else:
                 # Display placeholder when image is not generated
-                report.append(f"\n> 📸 **Image not generated** (API key not available)\n")
-                report.append(f"> Use the Image Prompt below to generate this frame with Imagen 3 or other image generation services.\n\n")
+                report.append("\n> 📸 **Image not generated** (API key not available)\n")
+                report.append("> Use the Image Prompt below to generate this frame with Imagen 3 or other image generation services.\n\n")
 
             report.append(f"**Scene**: {cut.scene_description}\n")
             report.append(f"**Action**: {cut.action}\n")
