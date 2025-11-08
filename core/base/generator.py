@@ -4,9 +4,12 @@ Base Video Generator Class
 Provides the foundation for all video generation functionality
 """
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional, Any, Callable
+from typing import Dict, List, Optional, Any, Callable, TYPE_CHECKING
 from dataclasses import dataclass
 import json
+
+if TYPE_CHECKING:
+    from .plugin import BasePlugin
 
 
 @dataclass
@@ -19,6 +22,11 @@ class GeneratorConfig:
     generate_music: bool = True
     output_dir: str = "output"
     title: str = "AI Generated Storyboard"
+    auto_naming: bool = True
+    overwrite: bool = False
+    generate_narrations: bool = False
+    narration_style: str = "documentary"
+    narration_language: str = "ja"
 
     def to_dict(self) -> Dict:
         return {
@@ -28,7 +36,12 @@ class GeneratorConfig:
             'generate_images': self.generate_images,
             'generate_music': self.generate_music,
             'output_dir': self.output_dir,
-            'title': self.title
+            'title': self.title,
+            'auto_naming': self.auto_naming,
+            'overwrite': self.overwrite,
+            'generate_narrations': self.generate_narrations,
+            'narration_style': self.narration_style,
+            'narration_language': self.narration_language
         }
 
 

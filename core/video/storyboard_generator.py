@@ -3,8 +3,8 @@
 Core Storyboard Generator
 Modularized storyboard generation functionality
 """
-import os
 import json
+import re
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, asdict
@@ -31,6 +31,12 @@ class CutData:
     veo3_prompt: Optional[str] = None
     sora2_prompt: Optional[str] = None
     recommended_model: Optional[str] = None
+    # Narration fields
+    narration_text: Optional[str] = None
+    narration_needed: bool = False
+    narration_duration: Optional[float] = None
+    narration_timing: Optional[str] = None
+    narration_style: Optional[str] = None
 
     def to_dict(self) -> Dict:
         return asdict(self)
@@ -122,7 +128,6 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
             Complete storyboard data
         """
         story_description = input_data.get('story_description', '')
-        key_visual_path = input_data.get('key_visual_path')
         visual_analysis = input_data.get('visual_analysis')
 
         # Trigger pre-generation hooks
@@ -354,9 +359,85 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
                 'texture': 'medium detail'
             }
 
+    def _sanitize_title(self, title: str) -> str:
+        """
+        Sanitize title to create safe directory name (ASCII only)
+
+        Args:
+            title: Original title (may contain Japanese/special characters)
+
+        Returns:
+            Sanitized title with only alphanumeric and underscores
+        """
+        # Remove special characters, keep only alphanumeric
+        sanitized = re.sub(r'[^\w\s-]', '', title)
+        # Replace spaces with underscores
+        sanitized = re.sub(r'[\s-]+', '_', sanitized)
+        # Remove non-ASCII characters
+        sanitized = sanitized.encode('ascii', 'ignore').decode('ascii')
+        # Clean up multiple underscores
+        sanitized = re.sub(r'_+', '_', sanitized)
+        # Remove leading/trailing underscores
+        sanitized = sanitized.strip('_')
+
+        # If nothing left, use default
+        if not sanitized:
+            sanitized = 'storyboard'
+
+        return sanitized.lower()
+
+    def _generate_output_dir(self, title: str, base_dir: str) -> Path:
+        """
+        Generate timestamped output directory name
+
+        Args:
+            title: Storyboard title
+            base_dir: Base output directory
+
+        Returns:
+            Path object for output directory
+        """
+        sanitized_title = self._sanitize_title(title)
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        dir_name = f"{sanitized_title}_{timestamp}"
+
+        return Path(base_dir) / dir_name
+
+    def _resolve_output_path(self, storyboard: StoryboardData, requested_dir: str) -> Path:
+        """
+        Resolve final output path based on config settings
+
+        Args:
+            storyboard: Storyboard data
+            requested_dir: User-requested output directory
+
+        Returns:
+            Resolved output path
+        """
+        if not self.config.auto_naming:
+            # Manual mode: use requested directory as-is
+            output_path = Path(requested_dir)
+
+            # Check if directory exists and handle overwrite
+            if output_path.exists() and not self.config.overwrite:
+                # Find next available version number
+                version = 2
+                while True:
+                    versioned_path = Path(f"{requested_dir}_v{version}")
+                    if not versioned_path.exists():
+                        output_path = versioned_path
+                        print(f"⚠️  Directory exists. Using: {output_path}")
+                        break
+                    version += 1
+
+            return output_path
+        else:
+            # Auto-naming mode: generate timestamped directory
+            return self._generate_output_dir(storyboard.title, requested_dir)
+
     def save_storyboard(self, storyboard: StoryboardData, output_dir: str):
-        """Save storyboard to JSON"""
-        output_path = Path(output_dir)
+        """Save storyboard to JSON with automatic naming to prevent overwrites"""
+        output_path = self._resolve_output_path(storyboard, output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
 
         json_path = output_path / 'storyboard.json'
@@ -387,7 +468,11 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
 
             if cut.generated_image_path:
                 rel_path = Path(cut.generated_image_path).name
-                report.append(f"![Cut {cut.cut_number}](frames/{rel_path})\n")
+                report.append(f"![Cut {cut.cut_number}](frames/{rel_path})\n\n")
+            else:
+                # Display placeholder when image is not generated
+                report.append("\n> 📸 **Image not generated** (API key not available)\n")
+                report.append("> Use the Image Prompt below to generate this frame with Imagen 3 or other image generation services.\n\n")
 
             report.append(f"**Scene**: {cut.scene_description}\n")
             report.append(f"**Action**: {cut.action}\n")
@@ -395,8 +480,27 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
             report.append(f"**Movement**: {cut.camera_movement}\n")
             report.append(f"**Mood**: {cut.mood} | {cut.lighting}\n")
 
+            # Add narration if available
+            if cut.narration_text:
+                report.append(f"\n**Narration** ({cut.narration_timing or 'start'} - {cut.narration_duration or 0}s):\n")
+                report.append("```\n")
+                report.append(f"{cut.narration_text}\n")
+                report.append("```\n")
+                if cut.narration_style:
+                    report.append(f"> 💡 Style: {cut.narration_style} | Timing: {cut.narration_timing or 'start'} | Duration: ~{cut.narration_duration or 0}s\n")
+
             report.append(f"\n**Image Prompt**:\n```\n{cut.image_prompt}\n```\n")
             report.append(f"\n**Video Prompt**:\n```\n{cut.video_prompt}\n```\n")
+
+            # Add Veo3 and Sora2 prompts if available
+            if cut.veo3_prompt:
+                report.append(f"\n**Veo 3 Prompt**:\n```\n{cut.veo3_prompt}\n```\n")
+            if cut.sora2_prompt:
+                report.append(f"\n**Sora 2 Prompt**:\n```\n{cut.sora2_prompt}\n```\n")
+            if cut.recommended_model:
+                report.append(f"\n**Recommended Model**: {cut.recommended_model}\n")
+
+            report.append("\n---\n")
 
         if storyboard.music_sections:
             report.append("\n## 🎵 BGM Structure\n")
@@ -405,7 +509,25 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
                 report.append(f"**Cuts**: {section['cuts']} | **Duration**: {section['duration']}\n")
                 report.append(f"**Mood**: {section['mood']} | **Energy**: {section['energy']}/10\n")
                 report.append(f"**Tempo**: {section['tempo']}\n")
+                if 'genre' in section:
+                    report.append(f"**Genre**: {section['genre']}\n")
                 report.append(f"\n```\n{section['suno_prompt']}\n```\n")
+
+        # Add style guide section
+        if storyboard.style_guide:
+            report.append("\n## 🎨 Style Guide\n\n")
+            sg = storyboard.style_guide
+            if 'visual_style' in sg:
+                report.append(f"- **Visual Style**: {sg['visual_style']}\n")
+            if 'color_palette' in sg:
+                colors = ', '.join(sg['color_palette']) if isinstance(sg['color_palette'], list) else sg['color_palette']
+                report.append(f"- **Color Palette**: {colors}\n")
+            if 'mood' in sg:
+                report.append(f"- **Mood**: {sg['mood']}\n")
+            if 'lighting' in sg:
+                report.append(f"- **Lighting**: {sg['lighting']}\n")
+            if 'texture' in sg:
+                report.append(f"- **Texture**: {sg['texture']}\n")
 
         report_path = output_dir / 'storyboard_report.md'
         with open(report_path, 'w', encoding='utf-8') as f:
