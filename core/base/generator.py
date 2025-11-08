@@ -24,6 +24,9 @@ class GeneratorConfig:
     title: str = "AI Generated Storyboard"
     auto_naming: bool = True
     overwrite: bool = False
+    generate_narrations: bool = False
+    narration_style: str = "documentary"
+    narration_language: str = "ja"
 
     def to_dict(self) -> Dict:
         return {
@@ -35,7 +38,10 @@ class GeneratorConfig:
             'output_dir': self.output_dir,
             'title': self.title,
             'auto_naming': self.auto_naming,
-            'overwrite': self.overwrite
+            'overwrite': self.overwrite,
+            'generate_narrations': self.generate_narrations,
+            'narration_style': self.narration_style,
+            'narration_language': self.narration_language
         }
 
 

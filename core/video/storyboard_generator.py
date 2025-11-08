@@ -31,6 +31,12 @@ class CutData:
     veo3_prompt: Optional[str] = None
     sora2_prompt: Optional[str] = None
     recommended_model: Optional[str] = None
+    # Narration fields
+    narration_text: Optional[str] = None
+    narration_needed: bool = False
+    narration_duration: Optional[float] = None
+    narration_timing: Optional[str] = None
+    narration_style: Optional[str] = None
 
     def to_dict(self) -> Dict:
         return asdict(self)
@@ -473,6 +479,15 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
             report.append(f"**Camera**: {cut.camera_angle} | {cut.composition}\n")
             report.append(f"**Movement**: {cut.camera_movement}\n")
             report.append(f"**Mood**: {cut.mood} | {cut.lighting}\n")
+
+            # Add narration if available
+            if cut.narration_text:
+                report.append(f"\n**Narration** ({cut.narration_timing or 'start'} - {cut.narration_duration or 0}s):\n")
+                report.append("```\n")
+                report.append(f"{cut.narration_text}\n")
+                report.append("```\n")
+                if cut.narration_style:
+                    report.append(f"> 💡 Style: {cut.narration_style} | Timing: {cut.narration_timing or 'start'} | Duration: ~{cut.narration_duration or 0}s\n")
 
             report.append(f"\n**Image Prompt**:\n```\n{cut.image_prompt}\n```\n")
             report.append(f"\n**Video Prompt**:\n```\n{cut.video_prompt}\n```\n")
