@@ -32,11 +32,13 @@ def main():
     parser.add_argument('--key-visual', help='Key visual reference image path')
     parser.add_argument('--duration', type=int, default=60, help='Video duration in seconds')
     parser.add_argument('--cuts', type=int, help='Number of cuts (default: auto)')
-    parser.add_argument('--output', default='output', help='Output directory')
+    parser.add_argument('--output', default='outputs', help='Output base directory (default: outputs)')
     parser.add_argument('--title', help='Storyboard title')
     parser.add_argument('--style', help='Visual style (cinematic, anime, etc.)')
     parser.add_argument('--no-images', action='store_true', help='Skip image generation')
     parser.add_argument('--no-music', action='store_true', help='Skip music generation')
+    parser.add_argument('--no-auto-naming', action='store_true', help='Disable automatic timestamped naming')
+    parser.add_argument('--overwrite', action='store_true', help='Allow overwriting existing directory')
 
     args = parser.parse_args()
 
@@ -48,7 +50,9 @@ def main():
         generate_images=not args.no_images,
         generate_music=not args.no_music,
         output_dir=args.output,
-        title=args.title or 'AI Generated Storyboard'
+        title=args.title or 'AI Generated Storyboard',
+        auto_naming=not args.no_auto_naming,
+        overwrite=args.overwrite
     )
 
     print("="*60)

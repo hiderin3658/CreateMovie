@@ -5,6 +5,7 @@ Modularized storyboard generation functionality
 """
 import os
 import json
+import re
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, asdict
@@ -354,9 +355,85 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
                 'texture': 'medium detail'
             }
 
+    def _sanitize_title(self, title: str) -> str:
+        """
+        Sanitize title to create safe directory name (ASCII only)
+
+        Args:
+            title: Original title (may contain Japanese/special characters)
+
+        Returns:
+            Sanitized title with only alphanumeric and underscores
+        """
+        # Remove special characters, keep only alphanumeric
+        sanitized = re.sub(r'[^\w\s-]', '', title)
+        # Replace spaces with underscores
+        sanitized = re.sub(r'[\s-]+', '_', sanitized)
+        # Remove non-ASCII characters
+        sanitized = sanitized.encode('ascii', 'ignore').decode('ascii')
+        # Clean up multiple underscores
+        sanitized = re.sub(r'_+', '_', sanitized)
+        # Remove leading/trailing underscores
+        sanitized = sanitized.strip('_')
+
+        # If nothing left, use default
+        if not sanitized:
+            sanitized = 'storyboard'
+
+        return sanitized.lower()
+
+    def _generate_output_dir(self, title: str, base_dir: str) -> Path:
+        """
+        Generate timestamped output directory name
+
+        Args:
+            title: Storyboard title
+            base_dir: Base output directory
+
+        Returns:
+            Path object for output directory
+        """
+        sanitized_title = self._sanitize_title(title)
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        dir_name = f"{sanitized_title}_{timestamp}"
+
+        return Path(base_dir) / dir_name
+
+    def _resolve_output_path(self, storyboard: StoryboardData, requested_dir: str) -> Path:
+        """
+        Resolve final output path based on config settings
+
+        Args:
+            storyboard: Storyboard data
+            requested_dir: User-requested output directory
+
+        Returns:
+            Resolved output path
+        """
+        if not self.config.auto_naming:
+            # Manual mode: use requested directory as-is
+            output_path = Path(requested_dir)
+
+            # Check if directory exists and handle overwrite
+            if output_path.exists() and not self.config.overwrite:
+                # Find next available version number
+                version = 2
+                while True:
+                    versioned_path = Path(f"{requested_dir}_v{version}")
+                    if not versioned_path.exists():
+                        output_path = versioned_path
+                        print(f"⚠️  Directory exists. Using: {output_path}")
+                        break
+                    version += 1
+
+            return output_path
+        else:
+            # Auto-naming mode: generate timestamped directory
+            return self._generate_output_dir(storyboard.title, requested_dir)
+
     def save_storyboard(self, storyboard: StoryboardData, output_dir: str):
-        """Save storyboard to JSON"""
-        output_path = Path(output_dir)
+        """Save storyboard to JSON with automatic naming to prevent overwrites"""
+        output_path = self._resolve_output_path(storyboard, output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
 
         json_path = output_path / 'storyboard.json'

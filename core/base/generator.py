@@ -19,6 +19,8 @@ class GeneratorConfig:
     generate_music: bool = True
     output_dir: str = "output"
     title: str = "AI Generated Storyboard"
+    auto_naming: bool = True
+    overwrite: bool = False
 
     def to_dict(self) -> Dict:
         return {
@@ -28,7 +30,9 @@ class GeneratorConfig:
             'generate_images': self.generate_images,
             'generate_music': self.generate_music,
             'output_dir': self.output_dir,
-            'title': self.title
+            'title': self.title,
+            'auto_naming': self.auto_naming,
+            'overwrite': self.overwrite
         }
 
 
