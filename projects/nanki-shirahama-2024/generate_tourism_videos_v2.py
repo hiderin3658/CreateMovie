@@ -5,12 +5,19 @@
 コアシステム（CoreStoryboardGenerator）を使用し、
 南紀白浜特有の制約をプラグインで実装
 
+画像生成: Gemini 2.5 Flash Image (最大3枚の参照画像対応)
+
 使用方法:
+    # 基本
     python generate_tourism_videos_v2.py "白浜の観光体験を描いた30秒動画"
+
+    # 参照画像1枚
     python generate_tourism_videos_v2.py "白浜旅行" --character-ref tourist.png
+
+    # 参照画像複数枚（最大3枚）
+    python generate_tourism_videos_v2.py "白浜旅行" --character-ref char1.png char2.png style.png
 """
 
-import os
 import sys
 import argparse
 from pathlib import Path
@@ -39,7 +46,7 @@ class ShirahamaTourismVideoGenerator:
         story_description: str,
         duration: int = 30,
         num_videos: int = 4,
-        character_reference: Optional[Path] = None,
+        character_reference: Optional[list] = None,
         output_dir: Optional[Path] = None
     ):
         """
@@ -49,14 +56,18 @@ class ShirahamaTourismVideoGenerator:
             story_description: ストーリーの説明
             duration: 総時間（秒）
             num_videos: 動画本数
-            character_reference: キャラクター参照画像
+            character_reference: キャラクター参照画像リスト（最大3枚、Gemini 2.5 Flash Image仕様）
             output_dir: 出力ディレクトリ
         """
         self.story_description = story_description
         self.total_duration = duration
         self.num_videos = num_videos
         self.video_duration = duration // num_videos  # 各動画の時間
-        self.character_reference = character_reference
+        # 参照画像は最大3枚に制限（Gemini 2.5 Flash Image の仕様）
+        if character_reference:
+            self.character_reference = character_reference[:3] if isinstance(character_reference, list) else [character_reference]
+        else:
+            self.character_reference = None
         self.project_dir = Path(__file__).parent
         self.output_dir = output_dir or self.project_dir / "generated_v2"
 
@@ -149,14 +160,17 @@ class ShirahamaTourismVideoGenerator:
         }
 
         # キャラクター参照があれば追加
-        if self.character_reference and self.character_reference.exists():
-            story_input['key_visual_path'] = str(self.character_reference)
+        if self.character_reference:
+            # 複数の参照画像に対応
+            story_input['reference_images'] = [str(ref) for ref in self.character_reference]
+            # 後方互換性のため、最初の画像をkey_visual_pathにも設定
+            story_input['key_visual_path'] = str(self.character_reference[0])
 
         # プラグイン: 事前処理
         story_input = generator.process_plugins(story_input, 'pre_generation')
 
         # コアシステムで絵コンテ生成
-        print(f"  ⏳ 絵コンテ生成中...")
+        print("  ⏳ 絵コンテ生成中...")
         storyboard = generator.generate_storyboard(story_input)
 
         # プラグイン: 事後処理（制約チェック）
@@ -277,7 +291,8 @@ def main():
     parser.add_argument(
         '--character-ref',
         type=str,
-        help='キャラクター参照画像のパス'
+        nargs='+',
+        help='キャラクター参照画像のパス（最大3枚、Gemini 2.5 Flash Image仕様）'
     )
     parser.add_argument(
         '--output',
@@ -287,7 +302,13 @@ def main():
 
     args = parser.parse_args()
 
-    character_ref = Path(args.character_ref) if args.character_ref else None
+    # 参照画像をPathオブジェクトのリストに変換
+    character_ref = None
+    if args.character_ref:
+        character_ref = [Path(ref) for ref in args.character_ref]
+        if len(character_ref) > 3:
+            print(f"⚠️  警告: 参照画像が{len(character_ref)}枚指定されていますが、最大3枚まで使用されます（Gemini 2.5 Flash Image仕様）")
+
     output_dir = Path(args.output) if args.output else None
 
     try:

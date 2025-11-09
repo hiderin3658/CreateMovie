@@ -29,7 +29,8 @@ def main():
         description='AI Video Storyboard Generator V2 (Modular)'
     )
     parser.add_argument('story', help='Story description')
-    parser.add_argument('--key-visual', help='Key visual reference image path')
+    parser.add_argument('--key-visual', help='Key visual reference image path (single image)')
+    parser.add_argument('--reference-images', nargs='+', help='Reference images (up to 3 images for Gemini 2.5 Flash Image)')
     parser.add_argument('--duration', type=int, default=60, help='Video duration in seconds')
     parser.add_argument('--cuts', type=int, help='Number of cuts (default: auto)')
     parser.add_argument('--output', default='outputs', help='Output base directory (default: outputs)')
@@ -61,22 +62,33 @@ def main():
         narration_language=args.narration_language
     )
 
-    print("="*60)
+    print("=" * 60)
     print("🎬 AI Video Storyboard Generator V2 (Modular)")
-    print("="*60)
+    print("=" * 60)
     print(f"\nStory: {args.story}")
-    if args.key_visual:
+
+    # Handle reference images (support both --key-visual and --reference-images)
+    reference_images = []
+    if args.reference_images:
+        reference_images = args.reference_images[:3]  # Limit to 3 images (Gemini 2.5 Flash Image limit)
+        print(f"Reference Images: {len(reference_images)} images")
+        for i, img in enumerate(reference_images, 1):
+            print(f"  {i}. {img}")
+    elif args.key_visual:
+        reference_images = [args.key_visual]
         print(f"Key Visual: {args.key_visual}")
+
     print(f"Duration: {args.duration}s")
     print(f"Output: {args.output}")
     print()
 
-    # Step 1: Analyze key visual if provided
+    # Step 1: Analyze reference images if provided
     visual_analysis = None
-    if args.key_visual:
-        print(f"📸 Analyzing key visual: {args.key_visual}")
+    if reference_images:
+        print(f"📸 Analyzing reference images ({len(reference_images)} images)...")
         analyzer = VisualAnalyzer()
-        visual_analysis_obj = analyzer.analyze_key_visual(args.key_visual)
+        # Analyze the first reference image for style
+        visual_analysis_obj = analyzer.analyze_key_visual(reference_images[0])
         visual_analysis = visual_analysis_obj.to_dict()
         print(f"  ✓ Style: {visual_analysis['style']}")
         print(f"  ✓ Colors: {', '.join(visual_analysis['colors'][:3])}")
@@ -87,7 +99,8 @@ def main():
 
     input_data = {
         'story_description': args.story,
-        'key_visual_path': args.key_visual,
+        'key_visual_path': reference_images[0] if reference_images else None,
+        'reference_images': reference_images if reference_images else None,
         'visual_analysis': visual_analysis
     }
 
@@ -119,9 +132,9 @@ def main():
     # Step 6: Save results
     generator.save_storyboard(storyboard, config.output_dir)
 
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("✅ Generation Complete!")
-    print("="*60)
+    print("=" * 60)
     print("\nOutput files:")
     print(f"  📄 {args.output}/storyboard.json")
     print(f"  📄 {args.output}/storyboard_report.md")

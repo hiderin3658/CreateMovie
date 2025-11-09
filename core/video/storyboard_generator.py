@@ -455,6 +455,16 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
         report.append(f"**Duration**: {storyboard.duration}s | **Cuts**: {storyboard.num_cuts}\n")
         report.append(f"**Created**: {storyboard.created_at}\n")
 
+        # Check if any images were generated
+        images_generated = any(cut.generated_image_path for cut in storyboard.cuts)
+        if not images_generated and storyboard.num_cuts > 0:
+            report.append("\n---\n")
+            report.append("\n> ⚠️ **画像生成について**\n")
+            report.append("> \n")
+            report.append("> APIが設定されていないか使用できなかったため、画像生成できませんでした。\n")
+            report.append("> 各カットの「Image Prompt」を使用して、Gemini 2.5 Flash Image または他の画像生成サービスで手動で生成してください。\n")
+            report.append("\n---\n")
+
         if storyboard.key_visual_analysis:
             report.append("\n## 🎨 Visual Style\n")
             va = storyboard.key_visual_analysis
