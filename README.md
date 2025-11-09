@@ -2,6 +2,12 @@
 
 Claude Skill for automated video storyboard creation with AI-powered image generation, camera work selection, and music prompt generation.
 
+> **💡 About This Project**
+> This project is implemented using the **Claude Code Skills** framework.
+> Simply tell Claude in natural language "Create a video storyboard for..." and this skill
+> automatically activates to handle everything from storyboard generation to image creation
+> and prompt generation. It can also be used as a standalone Python script.
+
 ## 🎬 Features
 
 - **Automated Storyboard Generation**: Create 6-10 cut storyboards from story descriptions
