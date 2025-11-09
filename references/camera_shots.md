@@ -1,10 +1,10 @@
-# Camera Shots Reference Guide
+# カメラショット リファレンスガイド
 
-Comprehensive guide to camera shots with auto-selection rules and adjustment tips.
+カメラショットの包括的なガイド、自動選択ルール、調整のコツを含みます。
 
-## Auto-Selection Rules
+## 自動選択ルール
 
-The AI automatically selects camera shots based on scene type:
+AIはシーンタイプに基づいてカメラショットを自動的に選択します：
 
 ```python
 scene_camera_rules = {
@@ -17,328 +17,328 @@ scene_camera_rules = {
 }
 ```
 
-## Shot Types
+## ショットタイプ
 
 ### 1. Extreme Long Shot (ELS) - 超遠景
 
-**Auto-selected for**: Opening scenes, scene transitions, endings
+**自動選択される場面**: オープニングシーン、シーン遷移、エンディング
 
-**Visual Effect**:
-- Conveys grandeur and scale
-- Shows character in relation to environment
-- Creates sense of isolation or vastness
+**ビジュアル効果**:
+- 壮大さと規模感を表現
+- 環境に対するキャラクターの位置関係を表示
+- 孤立感や広大さの感覚を演出
 
-**Prompt Keywords**:
+**プロンプトキーワード**:
 ```
 extreme wide shot, aerial view, vast landscape, establishing shot,
 environmental context, panoramic view
 ```
 
-**Usage Examples**:
-- Opening: "A lone figure walking across vast desert plains"
-- Transition: "Cityscape at dawn, skyscrapers reaching into clouds"
-- Ending: "The group standing on hilltop overlooking valley below"
+**使用例**:
+- オープニング: "広大な砂漠平原を歩く孤独な人物"
+- 遷移: "夜明けの都市風景、雲に届く高層ビル"
+- エンディング: "グループが丘の頂上に立ち、下の谷を見下ろす"
 
-**Adjustment Tips**:
-- "Want closer view" → Change to LS
-- "Want drone perspective" → Add `drone aerial view, bird's eye`
-- "Too distant" → Use `high angle wide shot` (between ELS and LS)
+**調整のコツ**:
+- "もっと近い視点が欲しい" → LSに変更
+- "ドローンの視点が欲しい" → `drone aerial view, bird's eye`を追加
+- "遠すぎる" → `high angle wide shot`を使用（ELSとLSの中間）
 
 ---
 
 ### 2. Long Shot (LS) - 遠景
 
-**Auto-selected for**: Action sequences, group shots, body language
+**自動選択される場面**: アクションシーン、グループショット、身体言語
 
-**Visual Effect**:
-- Full body visible with environmental context
-- Shows relationships between characters
-- Balances subject and surroundings
+**ビジュアル効果**:
+- フレーム内に全身が見える環境コンテキスト付き
+- キャラクター間の関係性を表示
+- 対象と周囲のバランスを取る
 
-**Prompt Keywords**:
+**プロンプトキーワード**:
 ```
 wide shot, full body visible, environmental context,
 full figure, establishing distance
 ```
 
-**Usage Examples**:
-- Action: "Two characters fighting, full bodies visible in frame"
-- Group: "Five students gathered around table, all visible"
-- Movement: "Character walking through corridor, full body"
+**使用例**:
+- アクション: "2人のキャラクターが戦い、全身がフレームに収まる"
+- グループ: "5人の学生がテーブルを囲み、全員が見える"
+- 移動: "廊下を歩くキャラクター、全身が見える"
 
-**Adjustment Tips**:
-- "Want to see facial expressions" → Change to MS
-- "Too much empty space" → Use `tighter framing`
-- "Need more drama" → Add camera movement or diagonal composition
+**調整のコツ**:
+- "表情が見たい" → MSに変更
+- "空白が多すぎる" → `tighter framing`を使用
+- "ドラマが必要" → カメラムーブメントか対角線構図を追加
 
 ---
 
 ### 3. Medium Shot (MS) - 中景
 
-**Auto-selected for**: Dialogue, normal interactions, character focus
+**自動選択される場面**: 会話、通常のやり取り、キャラクターに焦点
 
-**Visual Effect**:
-- Shows waist-up or knees-up
-- Balances intimacy with context
-- Most versatile and common shot
+**ビジュアル効果**:
+- ウエスト以上またはひざ以上を表示
+- 親密さとコンテキストのバランス
+- 最も汎用的で一般的なショット
 
-**Prompt Keywords**:
+**プロンプトキーワード**:
 ```
 medium shot, waist up, conversational distance,
 mid-shot, half body, comfortable framing
 ```
 
-**Usage Examples**:
-- Dialogue: "Two characters talking, waist up, facing each other"
-- Presentation: "Teacher explaining at whiteboard, upper body visible"
-- Interaction: "Character working at desk, hands and face visible"
+**使用例**:
+- 会話: "2人のキャラクターが話し、ウエスト以上、互いに向き合っている"
+- プレゼンテーション: "ホワイトボードで説明する教師、上半身が見える"
+- やり取り: "デスクで作業するキャラクター、手と顔が見える"
 
-**Adjustment Tips**:
-- "Want more energy" → Add dynamic camera movement
-- "Too static" → Use `slight dutch angle` or `over-shoulder`
-- "Need intimacy" → Change to MCU or CU
+**調整のコツ**:
+- "エネルギーが欲しい" → ダイナミックなカメラムーブメントを追加
+- "静的すぎる" → `slight dutch angle`または`over-shoulder`を使用
+- "親密さが必要" → MCUまたはCUに変更
 
 ---
 
 ### 4. Medium Close-Up (MCU) - 中クローズアップ
 
-**Auto-selected for**: Important dialogue, emotional nuance, character focus
+**自動選択される場面**: 重要な会話、感情的なニュアンス、キャラクターに焦点
 
-**Visual Effect**:
-- Shows chest and head
-- Captures facial expressions clearly
-- More intimate than MS
+**ビジュアル効果**:
+- 胸部と頭部を表示
+- 顔の表情を明確に捉える
+- MSより親密
 
-**Prompt Keywords**:
+**プロンプトキーワード**:
 ```
 medium close-up, chest and head, facial detail visible,
 upper chest shot, intimate framing
 ```
 
-**Usage Examples**:
-- Dialogue: "Character speaking with emotion, shoulders up"
-- Reaction: "Character listening intently, face and chest visible"
-- Interview: "Subject answering question, professional framing"
+**使用例**:
+- 会話: "感情をこめて話すキャラクター、肩以上"
+- リアクション: "真摯に聞く キャラクター、顔と胸部が見える"
+- インタビュー: "質問に答える被写体、プロフェッショナルなフレーミング"
 
-**Adjustment Tips**:
-- "Too tight" → Change to MS
-- "Want more emotion" → Change to CU
-- "Need context" → Pull back to MS with background
+**調整のコツ**:
+- "きつすぎる" → MSに変更
+- "もっと感情を" → CUに変更
+- "コンテキストが必要" → 背景を入れてMSに広げる
 
 ---
 
 ### 5. Close-Up (CU) - クローズアップ
 
-**Auto-selected for**: Emotional moments, important details, emphasis
+**自動選択される場面**: 感情的な瞬間、重要な詳細、強調
 
-**Visual Effect**:
-- Shows face and shoulders
-- Captures subtle emotions
-- Creates intimacy and connection
+**ビジュアル効果**:
+- 顔と肩を表示
+- 微妙な感情を捉える
+- 親密さと接続感を演出
 
-**Prompt Keywords**:
+**プロンプトキーワード**:
 ```
 close-up shot, face and shoulders, emotional focus,
 tight framing on face, detailed expression
 ```
 
-**Usage Examples**:
-- Emotion: "Character's face showing surprise, eyes wide"
-- Emphasis: "Character making important decision, contemplative look"
-- Connection: "Two characters' faces close, intimate moment"
+**使用例**:
+- 感情: "驚きを表すキャラクターの顔、目が大きく開く"
+- 強調: "重大な決断を下すキャラクター、思慮深い表情"
+- 接続: "2人のキャラクターの顔が近い、親密な瞬間"
 
-**Adjustment Tips**:
-- "Want eyes only" → Change to ECU
-- "Too intense" → Change to MCU
-- "Need more context" → Use MS with shallow depth of field
+**調整のコツ**:
+- "目だけが欲しい" → ECUに変更
+- "強すぎる" → MCUに変更
+- "もっとコンテキストが必要" → 浅い被写界深度でMSを使用
 
 ---
 
 ### 6. Extreme Close-Up (ECU) - 超クローズアップ
 
-**Auto-selected for**: Extreme emotion, minute details, dramatic impact
+**自動選択される場面**: 極度の感情、微細な詳細、ドラマティックな効果
 
-**Visual Effect**:
-- Shows eyes, mouth, or specific detail
-- Creates intense focus
-- Maximum emotional impact
+**ビジュアル効果**:
+- 目、口、または特定の詳細を表示
+- 強烈な焦点を演出
+- 最大の感情的インパクト
 
-**Prompt Keywords**:
+**プロンプトキーワード**:
 ```
 extreme close-up, eyes only, intense detail,
 macro shot, single feature, dramatic focus
 ```
 
-**Usage Examples**:
-- Drama: "Character's eyes filling with tears, extreme close-up"
-- Detail: "Hand reaching for important object, fingers in focus"
-- Tension: "Character's trembling lip, extreme close-up"
+**使用例**:
+- ドラマ: "涙で満たされるキャラクターの目、超クローズアップ"
+- 詳細: "重要なオブジェクトに手を伸ばす、指にピント"
+- 緊張: "震えるキャラクターの唇、超クローズアップ"
 
-**Adjustment Tips**:
-- **Use sparingly** - Loses impact if overused
-- "Too intense" → Change to CU
-- "Need more face" → Use CU showing full face
-- Best for: Climactic moments, revelations, key decisions
-
----
-
-## Combining Shots
-
-### Typical Sequence Patterns
-
-**Opening Sequence**:
-1. ELS - Establish location
-2. LS - Show character in environment
-3. MS - Character doing action
-4. CU - Character's expression
-
-**Dialogue Sequence**:
-1. MS - Two-shot of both characters
-2. MCU - Speaker A
-3. CU - Listener B reaction
-4. MCU - Speaker B responds
-
-**Action Sequence**:
-1. LS - Wide view of action starting
-2. MS - Character performing action
-3. CU - Character's determined face
-4. LS - Action result/impact
-
-**Emotional Climax**:
-1. MS - Character approaching moment
-2. MCU - Building emotion
-3. CU - Emotion peaks
-4. ECU - Tears/eyes (climax)
-5. MS - Resolution/aftermath
+**調整のコツ**:
+- **控えめに使用** - 過度に使用すると効果が落ちる
+- "強すぎる" → CUに変更
+- "顔がもっと必要" → 全顔を表示するCUを使用
+- 最適: クライマックスの瞬間、露呈、重要な決断
 
 ---
 
-## Shot Duration Guidelines
+## ショットの組み合わせ
 
-| Shot Type | Typical Duration | Reason |
+### 典型的なシーケンスパターン
+
+**オープニングシーケンス**:
+1. ELS - 位置を確立
+2. LS - 環境内のキャラクターを表示
+3. MS - アクションを実行するキャラクター
+4. CU - キャラクターの表情
+
+**会話シーケンス**:
+1. MS - 両キャラクターの2ショット
+2. MCU - スピーカーA
+3. CU - リスナーBのリアクション
+4. MCU - スピーカーBが返答
+
+**アクションシーケンス**:
+1. LS - アクション開始の広い視点
+2. MS - アクションを実行するキャラクター
+3. CU - キャラクターの決意の顔
+4. LS - アクションの結果/インパクト
+
+**感情的クライマックス**:
+1. MS - その瞬間に近づくキャラクター
+2. MCU - 感情が高まる
+3. CU - 感情がピークに達する
+4. ECU - 涙/目（クライマックス）
+5. MS - 解決/その後
+
+---
+
+## ショット時間ガイドライン
+
+| ショットタイプ | 一般的な時間 | 理由 |
 |-----------|------------------|---------|
-| ELS | 8-12 seconds | Need time to absorb environment |
-| LS | 6-10 seconds | Establish context and action |
-| MS | 5-8 seconds | Standard pace, comfortable viewing |
-| MCU | 4-6 seconds | Focused attention, quicker read |
-| CU | 3-5 seconds | Intense emotion, brief impact |
-| ECU | 2-4 seconds | Maximum intensity, very brief |
+| ELS | 8-12秒 | 環境を吸収するために時間が必要 |
+| LS | 6-10秒 | コンテキストとアクションを確立 |
+| MS | 5-8秒 | 標準的なペース、快適な視聴 |
+| MCU | 4-6秒 | 焦点を絞った注意、素早い読み込み |
+| CU | 3-5秒 | 強烈な感情、簡潔なインパクト |
+| ECU | 2-4秒 | 最大限の強度、非常に簡潔 |
 
-**Note**: Adjust based on:
-- **Fast-paced action**: Shorter durations
-- **Contemplative scenes**: Longer durations
-- **Dialogue**: Match to speaking pace
-- **Music sync**: Align with musical beats
-
----
-
-## Common Mistakes to Avoid
-
-### 1. Too Many Close-Ups
-**Problem**: Loses sense of space and context
-**Solution**: Intersperse with wider shots (LS, MS)
-
-### 2. Static Shot Selection
-**Problem**: All same shot type becomes monotonous
-**Solution**: Vary shots - use shot progression patterns
-
-### 3. Wrong Shot for Scene
-**Problem**: CU in action scene, ELS for intimate moment
-**Solution**: Follow auto-selection rules or adjust purposefully
-
-### 4. Rapid Shot Changes
-**Problem**: Cuts too fast between different shot sizes
-**Solution**: Use gradual progression (LS → MS → CU)
-
-### 5. Neglecting Transitions
-**Problem**: Jarring jumps between shots
-**Solution**: Use similar shot sizes or natural breaks
+**注記**: 次に基づいて調整：
+- **高速アクション**: より短い時間
+- **思慮深いシーン**: より長い時間
+- **会話**: 話す速度に合わせる
+- **音楽シンク**: 音楽のビートに合わせる
 
 ---
 
-## Pro Tips
+## よくある間違いと回避方法
 
-### 1. Match Shot to Emotion
-- **Distant emotions** (loneliness, isolation) → ELS, LS
-- **Moderate emotions** (conversation, interaction) → MS, MCU
-- **Intense emotions** (love, anger, fear) → CU, ECU
+### 1. クローズアップが多すぎる
+**問題**: 空間感とコンテキストが失われる
+**解決策**: より広いショット（LS、MS）を混ぜる
 
-### 2. Consider Aspect Ratio
-- **16:9 (Standard)**: All shots work well
-- **2.35:1 (Cinematic)**: Favors wider shots (ELS, LS)
-- **9:16 (Vertical)**: Favors tighter shots (MS, CU)
+### 2. 静的なショット選択
+**問題**: 同じショットタイプが単調になる
+**解決策**: ショットを変える - ショット進行パターンを使用
 
-### 3. Use Depth of Field
-- **Wide shots**: Keep everything in focus (deep DOF)
-- **Close shots**: Blur background (shallow DOF)
+### 3. シーンに合わないショット
+**問題**: アクションシーンでCU、親密な瞬間でELS
+**解決策**: 自動選択ルールに従うか、意図的に調整
 
-### 4. Frame for Next Shot
-- If cutting from LS to CU, frame subject in lower third of LS
-- Prepares viewer's eye for the transition
+### 4. 急速なショット変更
+**問題**: さまざまなショットサイズの間で速すぎるカット
+**解決策**: 段階的な進行を使用（LS → MS → CU）
 
-### 5. Break Rules Intentionally
-- ECU at opening for mystery/intrigue
-- ELS for emotional moment to show loneliness
-- MS throughout for documentary-style realism
+### 5. トランジションを無視する
+**問題**: ショット間のぎくしゃくしたジャンプ
+**解決策**: 同様のショットサイズまたは自然な改行を使用
 
 ---
 
-## Quick Reference Table
+## プロのコツ
 
-| Shot | Distance | Use Case | Duration | DOF |
+### 1. ショットを感情と一致させる
+- **遠い感情**（孤独、隔離） → ELS、LS
+- **中程度の感情**（会話、やり取り） → MS、MCU
+- **強い感情**（愛、怒り、恐怖） → CU、ECU
+
+### 2. アスペクト比を考慮
+- **16:9（標準）**: すべてのショットがうまく機能
+- **2.35:1（シネマティック）**: より広いショットを優先（ELS、LS）
+- **9:16（縦向き）**: よりタイトなショットを優先（MS、CU）
+
+### 3. 被写界深度を使用
+- **広いショット**: すべてにピントを合わせる（深いDOF）
+- **クローズショット**: 背景をぼかす（浅いDOF）
+
+### 4. 次のショットのためにフレーミング
+- LSからCUにカットする場合、LSの下部3分の1に被写体をフレーミング
+- トランジションに向けてビューアーの視線を準備
+
+### 5. 意図的にルールを破る
+- オープニングでECUを使って神秘性/陰謀を演出
+- 孤独を示すために感情的な瞬間にELSを使用
+- ドキュメンタリー風のリアリズムのためにMS全体を使用
+
+---
+
+## クイックリファレンステーブル
+
+| ショット | 距離 | ユースケース | 時間 | 被写界深度 |
 |------|----------|----------|----------|-----|
-| ELS | Very Far | Establish, scale | 8-12s | Deep |
-| LS | Far | Action, groups | 6-10s | Deep |
-| MS | Medium | Dialogue, default | 5-8s | Medium |
-| MCU | Close | Emotion, focus | 4-6s | Medium |
-| CU | Very Close | Intensity, detail | 3-5s | Shallow |
-| ECU | Extreme | Climax, emphasis | 2-4s | Very Shallow |
+| ELS | 非常に遠い | 確立、規模 | 8-12秒 | 深い |
+| LS | 遠い | アクション、グループ | 6-10秒 | 深い |
+| MS | 中程度 | 会話、デフォルト | 5-8秒 | 中程度 |
+| MCU | 近い | 感情、焦点 | 4-6秒 | 中程度 |
+| CU | 非常に近い | 強度、詳細 | 3-5秒 | 浅い |
+| ECU | 極端 | クライマックス、強調 | 2-4秒 | 非常に浅い |
 
 ---
 
-## Troubleshooting
+## トラブルシューティング
 
-### "My shots feel disconnected"
-→ Use shot progression: Don't jump from ELS to ECU
-→ Add transitional MS or MCU shots
+### "ショットが断片的に感じられる"
+→ ショット進行を使用：ELSからECUにジャンプしない
+→ トランジショナルなMSまたはMCUショットを追加
 
-### "My video feels slow"
-→ Use more MS and MCU, fewer long holds on ELS
-→ Increase pace of cuts in action scenes
+### "ビデオが遅く感じられる"
+→ より多くのMSとMCU、ELSの長い保持は少なく
+→ アクションシーンでカットの速度を上げる
 
-### "My video feels rushed"
-→ Let wider shots (ELS, LS) breathe longer
-→ Don't cut away from CU too quickly
+### "ビデオが急いでいるように感じられる"
+→ より広いショット（ELS、LS）にもっと時間をかける
+→ CUからカットしすぎないようにする
 
-### "Can't decide between two shot types"
-→ Consider the emotion: Closer = more intimate
-→ Consider the context: Wider = more information
-→ Generate both and compare
-
----
-
-## Examples by Genre
-
-### Educational Video
-- Primary: MS (explain), CU (detail)
-- Secondary: LS (demonstrate), MCU (engage)
-- Rare: ELS, ECU
-
-### Marketing/Commercial
-- Primary: MS (product), MCU (person), CU (feature)
-- Secondary: LS (lifestyle), ECU (detail)
-- Pattern: Fast-paced variety
-
-### Narrative Drama
-- Full range: ELS to ECU
-- Follow emotional arc
-- More CU/ECU at climax
-
-### Documentary
-- Primary: MS (interview), LS (context)
-- Secondary: CU (emotion), ELS (scope)
-- Natural, less stylized
+### "2つのショットタイプの間で決定できない"
+→ 感情を考慮：より近い = より親密
+→ コンテキストを考慮：より広い = より多くの情報
+→ 両方を生成して比較
 
 ---
 
-This guide helps you understand and adjust the AI's automatic shot selection for optimal storytelling.
+## ジャンル別の例
+
+### 教育ビデオ
+- 主要: MS（説明）、CU（詳細）
+- 副次的: LS（デモンストレーション）、MCU（エンゲージ）
+- 稀: ELS、ECU
+
+### マーケティング/コマーシャル
+- 主要: MS（製品）、MCU（人物）、CU（機能）
+- 副次的: LS（ライフスタイル）、ECU（詳細）
+- パターン: 高速ペースの多様性
+
+### ナラティブドラマ
+- フルレンジ: ELSからECUまで
+- 感情的なアークに従う
+- クライマックスでより多くのCU/ECU
+
+### ドキュメンタリー
+- 主要: MS（インタビュー）、LS（コンテキスト）
+- 副次的: CU（感情）、ELS（スコープ）
+- 自然、様式化が少ない
+
+---
+
+このガイドは、最適なストーリーテリングのためにAIの自動ショット選択を理解および調整するのに役立ちます。

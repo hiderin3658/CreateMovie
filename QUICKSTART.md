@@ -1,46 +1,46 @@
-# Quick Start Guide
+# クイックスタートガイド
 
-Get started with AI Video Storyboard Generator in 5 minutes!
+5分でAI動画絵コンテジェネレーターを始めよう!
 
-## Step 1: Install Dependencies
+## ステップ1: 依存関係のインストール
 
 ```bash
 cd ai-video-storyboard
 pip install -r requirements.txt
 ```
 
-## Step 2: Set API Key
+## ステップ2: APIキーの設定
 
-Get your free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+[Google AI Studio](https://makersuite.google.com/app/apikey)から無料APIキーを取得
 
 ```bash
 export GEMINI_API_KEY='your-api-key-here'
 ```
 
-Or create a `.env` file:
+または `.env` ファイルを作成:
 
 ```bash
 echo "GEMINI_API_KEY=your-api-key-here" > .env
 ```
 
-## Step 3: Generate Your First Storyboard
+## ステップ3: 最初の絵コンテを生成
 
-### Basic Example
+### 基本例
 
 ```bash
 python scripts/generate_storyboard.py "高校の文化祭準備を題材にした60秒の青春動画"
 ```
 
-This will:
-- ✅ Analyze your story
-- ✅ Create 8 cuts with camera angles
-- ✅ Generate first-frame images (Imagen 3)
-- ✅ Create ItoV prompts for video generation
-- ✅ Generate BGM prompts for Suno
+これにより:
+- ✅ ストーリーを分析
+- ✅ カメラアングルで8カットを作成
+- ✅ ファーストフレーム画像を生成（Imagen 3）
+- ✅ 動画生成用ItoVプロンプトを作成
+- ✅ Suno用BGMプロンプトを生成
 
-### With Key Visual
+### キービジュアルあり
 
-Maintain visual consistency:
+視覚的一貫性を維持:
 
 ```bash
 python scripts/generate_storyboard.py \
@@ -48,7 +48,7 @@ python scripts/generate_storyboard.py \
   --key-visual "path/to/concept_art.jpg"
 ```
 
-### Custom Settings
+### カスタム設定
 
 ```bash
 python scripts/generate_storyboard.py \
@@ -56,38 +56,38 @@ python scripts/generate_storyboard.py \
   --duration 60 \
   --cuts 8 \
   --output my_output \
-  --title "Space Video"
+  --title "宇宙動画"
 ```
 
-## Step 4: Check Output
+## ステップ4: 出力を確認
 
-After generation, find your files in:
+生成後、以下の場所でファイルを確認:
 
 ```
 output/
-├── storyboard.json          # Complete data
-├── storyboard_report.md     # Visual report
-└── frames/                  # Generated images
+├── storyboard.json          # 完全なデータ
+├── storyboard_report.md     # 視覚レポート
+└── frames/                  # 生成画像
     ├── cut_01.jpg
     ├── cut_02.jpg
     └── ...
 ```
 
-## Common Options
+## よく使うオプション
 
-| Flag | Description | Example |
-|------|-------------|---------|
-| `--duration` | Video length in seconds | `--duration 60` |
-| `--cuts` | Number of cuts | `--cuts 8` |
-| `--key-visual` | Reference image | `--key-visual ref.jpg` |
-| `--output` | Output directory | `--output my_video` |
-| `--style` | Visual style | `--style anime` |
-| `--no-images` | Skip image generation | `--no-images` |
-| `--no-music` | Skip music prompts | `--no-music` |
+| フラグ | 説明 | 例 |
+|------|------|-----|
+| `--duration` | 動画の長さ（秒） | `--duration 60` |
+| `--cuts` | カット数 | `--cuts 8` |
+| `--key-visual` | 参照画像 | `--key-visual ref.jpg` |
+| `--output` | 出力ディレクトリ | `--output my_video` |
+| `--style` | 視覚スタイル | `--style anime` |
+| `--no-images` | 画像生成をスキップ | `--no-images` |
+| `--no-music` | 音楽プロンプトをスキップ | `--no-music` |
 
-## Examples by Use Case
+## ユースケース別の例
 
-### Educational Video
+### 教育動画
 
 ```bash
 python scripts/generate_storyboard.py \
@@ -96,7 +96,7 @@ python scripts/generate_storyboard.py \
   --duration 60
 ```
 
-### Marketing Video
+### マーケティング動画
 
 ```bash
 python scripts/generate_storyboard.py \
@@ -106,7 +106,7 @@ python scripts/generate_storyboard.py \
   --cuts 6
 ```
 
-### Narrative Short
+### ナラティブショート
 
 ```bash
 python scripts/generate_storyboard.py \
@@ -115,42 +115,45 @@ python scripts/generate_storyboard.py \
   --duration 60
 ```
 
-## Next Steps
+## 次のステップ
 
-1. **Review Output**: Check `output/storyboard_report.md`
-2. **Adjust if Needed**: Modify prompts and regenerate specific cuts
-3. **Generate Video**: Use ItoV prompts with video generation tools
-4. **Add Music**: Use Suno prompts to generate BGM
+1. **出力をレビュー**: `output/storyboard_report.md`を確認
+2. **必要に応じて調整**: プロンプトを修正して特定のカットを再生成
+3. **動画を生成**: ItoVプロンプトを動画生成ツールで使用
+4. **音楽を追加**: SunoプロンプトでBGMを生成
 
-## Troubleshooting
+## トラブルシューティング
 
-### "API key not found"
+### 「APIキーが見つかりません」
+
 ```bash
 export GEMINI_API_KEY='your-key'
 ```
 
-### "Module not found"
+### 「モジュールが見つかりません」
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### "Images too dark"
-Adjust prompts in output, regenerate with:
+### 「画像が暗すぎる」
+
+出力のプロンプトを調整して再生成:
 ```
-"bright lighting, well-lit, golden hour sunlight"
+"明るい照明、よく照らされた、ゴールデンアワーの太陽光"
 ```
 
-## Learn More
+## さらに詳しく
 
-- **[SKILL.md](SKILL.md)** - Complete documentation
-- **[Camera Shots Guide](references/camera_shots.md)** - Shot selection
-- **[Troubleshooting](references/troubleshooting.md)** - Common issues
+- **[SKILL_ja.md](SKILL_ja.md)** - 完全なドキュメント
+- **[カメラショットガイド](references/camera_shots_ja.md)** - ショット選択
+- **[トラブルシューティング](references/troubleshooting_ja.md)** - 一般的な問題
 
-## Support
+## サポート
 
-Need help? Check:
-1. [Troubleshooting Guide](references/troubleshooting.md)
-2. [SKILL.md](SKILL.md) for detailed usage
-3. [Examples](assets/examples/) for sample storyboards
+ヘルプが必要ですか？以下を確認:
+1. [トラブルシューティングガイド](references/troubleshooting_ja.md)
+2. 詳細な使用方法は[SKILL_ja.md](SKILL_ja.md)
+3. サンプル絵コンテは[Examples](assets/examples/)
 
-Happy creating! 🎬
+楽しい制作を! 🎬
