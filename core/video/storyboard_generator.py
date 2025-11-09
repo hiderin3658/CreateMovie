@@ -200,6 +200,27 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
         num_cuts: Optional[int]
     ) -> List[Dict]:
         """Create basic story structure"""
+        # プロンプトからカット数を抽出（優先）
+        if num_cuts is None:
+            import re
+            # パターン: "4カット", "4つのカット", "4つのストーリー", "4個のカット" など
+            patterns = [
+                r'(\d+)\s*カット',
+                r'(\d+)\s*つのカット',
+                r'(\d+)\s*つのストーリー',
+                r'(\d+)\s*個のカット',
+                r'(\d+)\s*個のストーリー',
+                r'(\d+)\s*cuts',
+                r'(\d+)\s*stories'
+            ]
+            for pattern in patterns:
+                match = re.search(pattern, story, re.IGNORECASE)
+                if match:
+                    num_cuts = int(match.group(1))
+                    print(f"  ℹ️  プロンプトから検出: {num_cuts}カット構成")
+                    break
+
+        # デフォルト値を適用
         num_cuts = num_cuts or 8
         cut_duration = duration // num_cuts
 
