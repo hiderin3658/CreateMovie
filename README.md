@@ -1,58 +1,58 @@
-# AI Video Storyboard Generator
+# AI動画絵コンテジェネレーター
 
-Claude Skill for automated video storyboard creation with AI-powered image generation, camera work selection, and music prompt generation.
+AI画像生成、カメラワーク選択、音楽プロンプト生成による自動動画絵コンテ作成のためのClaude Skill。
 
-> **💡 About This Project**
-> This project is implemented using the **Claude Code Skills** framework.
-> Simply tell Claude in natural language "Create a video storyboard for..." and this skill
-> automatically activates to handle everything from storyboard generation to image creation
-> and prompt generation. It can also be used as a standalone Python script.
+> **💡 このプロジェクトについて**
+> このプロジェクトは **Claude Code Skills** フレームワークを使用して実装されています。
+> Claudeに自然言語で「動画の絵コンテを作成して」と依頼するだけで、自動的にこのスキルが起動し、
+> 絵コンテ生成から画像生成、プロンプト作成までを一貫して処理します。
+> スタンドアロンのPythonスクリプトとしても使用可能です。
 
-## 🎬 Features
+## 🎬 機能
 
-- **Automated Storyboard Generation**: Create 6-10 cut storyboards from story descriptions
-- **AI Image Generation**: Generate first-frame images using Gemini API (Imagen 3)
-- **Smart Camera Work**: Automatic selection of camera angles, compositions, and movements
-- **ItoV Prompt Generation**: Optimized prompts for image-to-video conversion
-- **Visual Consistency**: Key visual reference support for unified art style
-- **BGM Generation**: Automatic Suno-optimized music prompts
-- **Model Optimization**: Support for both Veo 3.1 and Sora 2
+- **自動絵コンテ生成**: ストーリー説明から6-10カットの絵コンテを作成
+- **AI画像生成**: Gemini API（Imagen 3）を使用してファーストフレーム画像を生成
+- **スマートカメラワーク**: カメラアングル、構図、動きの自動選択
+- **ItoVプロンプト生成**: 画像から動画への変換用に最適化されたプロンプト
+- **視覚的一貫性**: 統一されたアートスタイルのためのキービジュアル参照サポート
+- **BGM生成**: Suno最適化された自動音楽プロンプト
+- **モデル最適化**: Veo 3.1とSora 2の両方をサポート
 
-## 📋 Prerequisites
+## 📋 前提条件
 
-### Required
+### 必須
 
-**Gemini API Key**: Get your free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+**Gemini APIキー**: [Google AI Studio](https://makersuite.google.com/app/apikey)から無料APIキーを取得
 
 ```bash
 export GEMINI_API_KEY='your-api-key-here'
 ```
 
-### Python Dependencies
+### Python依存関係
 
 ```bash
 pip install google-generativeai pillow numpy scikit-learn scipy
 ```
 
-Or use requirements.txt:
+またはrequirements.txtを使用:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 🚀 Quick Start
+## 🚀 クイックスタート
 
-### Basic Usage
+### 基本的な使い方
 
-Generate a complete storyboard:
+完全な絵コンテを生成:
 
 ```bash
 python scripts/generate_storyboard.py "高校の文化祭準備を題材にした60秒の青春動画"
 ```
 
-### With Key Visual Reference
+### キービジュアル参照を使用
 
-Maintain visual consistency across all cuts:
+全カットで視覚的一貫性を維持:
 
 ```bash
 python scripts/generate_storyboard.py \
@@ -60,7 +60,7 @@ python scripts/generate_storyboard.py \
   --key-visual "path/to/concept_art.jpg"
 ```
 
-### Custom Configuration
+### カスタム設定
 
 ```bash
 python scripts/generate_storyboard.py \
@@ -69,35 +69,35 @@ python scripts/generate_storyboard.py \
   --cuts 8 \
   --output my_output \
   --style "educational" \
-  --title "Space Education Video"
+  --title "宇宙教育動画"
 ```
 
-## 📖 Documentation
+## 📖 ドキュメント
 
-- **[SKILL.md](SKILL.md)** - Complete usage guide and examples
-- **[Camera Shots Reference](references/camera_shots.md)** - Shot types and selection guide
-- **[Composition Guide](references/composition_guide.md)** - Visual composition techniques
-- **[Camera Movements](references/camera_movements.md)** - Movement types and patterns
-- **[ItoV Patterns](references/itov_patterns.md)** - Video prompt optimization
-- **[Troubleshooting](references/troubleshooting.md)** - Common issues and solutions
+- **[SKILL_ja.md](SKILL_ja.md)** - 完全な使用ガイドと例
+- **[カメラショットリファレンス](references/camera_shots_ja.md)** - ショットタイプと選択ガイド
+- **[構図ガイド](references/composition_guide_ja.md)** - 視覚構図テクニック
+- **[カメラ動き](references/camera_movements_ja.md)** - 動きのタイプとパターン
+- **[ItoVパターン](references/itov_patterns_ja.md)** - 動画プロンプト最適化
+- **[トラブルシューティング](references/troubleshooting_ja.md)** - 一般的な問題と解決策
 
-## 🏗️ Project Structure
+## 🏗️ プロジェクト構造
 
 ```
 ai-video-storyboard/
-├── SKILL.md                           # Main skill documentation
-├── README.md                          # This file
-├── scripts/                           # Executable scripts
-│   ├── generate_storyboard.py        # Main storyboard generator
-│   ├── visual_reference_analyzer.py  # Key visual analysis
-│   └── music_generator_suno.py       # BGM prompt generation
-├── references/                        # Reference documentation
-│   ├── camera_shots.md
-│   ├── composition_guide.md
-│   ├── camera_movements.md
-│   ├── itov_patterns.md
-│   └── troubleshooting.md
-└── assets/                           # Templates and examples
+├── SKILL_ja.md                        # メインスキルドキュメント
+├── README_ja.md                       # このファイル
+├── scripts/                           # 実行スクリプト
+│   ├── generate_storyboard.py        # メイン絵コンテジェネレーター
+│   ├── visual_reference_analyzer.py  # キービジュアル解析
+│   └── music_generator_suno.py       # BGMプロンプト生成
+├── references/                        # リファレンスドキュメント
+│   ├── camera_shots_ja.md
+│   ├── composition_guide_ja.md
+│   ├── camera_movements_ja.md
+│   ├── itov_patterns_ja.md
+│   └── troubleshooting_ja.md
+└── assets/                           # テンプレートと例
     ├── templates/
     │   ├── storyboard_template.json
     │   └── character_sheet.json
@@ -105,9 +105,9 @@ ai-video-storyboard/
         └── educational_video.json
 ```
 
-## 💡 Usage Examples
+## 💡 使用例
 
-### Educational Content
+### 教育コンテンツ
 
 ```python
 from scripts.generate_storyboard import create_complete_storyboard
@@ -122,7 +122,7 @@ storyboard = create_complete_storyboard(
 )
 ```
 
-### Marketing Video
+### マーケティング動画
 
 ```python
 storyboard = create_complete_storyboard(
@@ -135,7 +135,7 @@ storyboard = create_complete_storyboard(
 )
 ```
 
-### With Key Visual
+### キービジュアルあり
 
 ```python
 storyboard = create_complete_storyboard(
@@ -144,87 +144,88 @@ storyboard = create_complete_storyboard(
     config={
         "enforce_visual_consistency": True
     }
+)
 ```
 
-## 🎨 Output Files
+## 🎨 出力ファイル
 
-After generation:
+生成後:
 
 ```
 output/
-├── storyboard.json           # Complete storyboard data (JSON)
-├── storyboard_report.md      # Visual report with images (Markdown)
-├── music_plan.json           # BGM section data (optional)
-└── frames/                   # Generated images
+├── storyboard.json           # 完全な絵コンテデータ（JSON）
+├── storyboard_report.md      # 画像付き視覚レポート（Markdown）
+├── music_plan.json           # BGMセクションデータ（オプション）
+└── frames/                   # 生成画像
     ├── cut_01.jpg
     ├── cut_02.jpg
     └── ...
 ```
 
-## 🔧 Configuration Options
+## 🔧 設定オプション
 
-| Option | Description | Default |
-|--------|-------------|---------|
-| `--duration` | Video duration in seconds | 60 |
-| `--cuts` | Number of cuts | auto (6-10) |
-| `--key-visual` | Reference image path | None |
-| `--output` | Output directory | output |
-| `--title` | Storyboard title | AI Generated Storyboard |
-| `--style` | Visual style | cinematic |
-| `--no-images` | Skip image generation | False |
-| `--no-music` | Skip music generation | False |
-| `--model` | Video model (veo3/sora2/auto) | auto |
+| オプション | 説明 | デフォルト |
+|-----------|------|----------|
+| `--duration` | 動画の長さ（秒） | 60 |
+| `--cuts` | カット数 | 自動（6-10） |
+| `--key-visual` | 参照画像パス | なし |
+| `--output` | 出力ディレクトリ | output |
+| `--title` | 絵コンテタイトル | AI Generated Storyboard |
+| `--style` | 視覚スタイル | cinematic |
+| `--no-images` | 画像生成をスキップ | False |
+| `--no-music` | 音楽生成をスキップ | False |
+| `--model` | 動画モデル（veo3/sora2/auto） | auto |
 
-## 📊 API Costs
+## 📊 APIコスト
 
-Using Gemini API (Imagen 3):
+Gemini API（Imagen 3）の使用:
 
-- **Image generation**: ~$0.03 per image
-- **8-cut video**: ~$0.24 total
-- **10-cut video**: ~$0.30 total
-- **Vision analysis**: ~$0.001 per image
+- **画像生成**: 1画像あたり約$0.03
+- **8カット動画**: 合計約$0.24
+- **10カット動画**: 合計約$0.30
+- **ビジョン解析**: 1画像あたり約$0.001
 
-## 🤝 Contributing
+## 🤝 貢献
 
-This is a Claude Skill for the Claude Code system. For improvements:
+これはClaude Codeシステム用のClaude Skillです。改善のため:
 
-1. Test changes thoroughly
-2. Update documentation
-3. Follow existing code style
-4. Add examples for new features
+1. 変更を十分にテスト
+2. ドキュメントを更新
+3. 既存のコードスタイルに従う
+4. 新機能の例を追加
 
-## 📝 License
+## 📝 ライセンス
 
-MIT License - See LICENSE file for details
+MITライセンス - 詳細はLICENSEファイルを参照
 
-## 🆘 Support
+## 🆘 サポート
 
-- **Documentation**: See [SKILL.md](SKILL.md)
-- **Troubleshooting**: See [references/troubleshooting.md](references/troubleshooting.md)
-- **Examples**: Check `assets/examples/` for sample storyboards
+- **ドキュメント**: [SKILL_ja.md](SKILL_ja.md)を参照
+- **トラブルシューティング**: [references/troubleshooting_ja.md](references/troubleshooting_ja.md)を参照
+- **例**: サンプル絵コンテは`assets/examples/`を確認
 
-## 🔄 Version History
+## 🔄 バージョン履歴
 
-### v1.0.0 (2025-01-02)
+### v1.0.0（2025-01-02）
 
-- Initial release
-- Core storyboard generation
-- Imagen 3 image generation
-- Automatic camera work selection
-- ItoV prompt generation
-- Key visual reference support
-- BGM prompt generation for Suno
-- Model optimization (Veo 3.1 / Sora 2)
+- 初回リリース
+- コア絵コンテ生成
+- Imagen 3画像生成
+- 自動カメラワーク選択
+- ItoVプロンプト生成
+- キービジュアル参照サポート
+- Suno用BGMプロンプト生成
+- モデル最適化（Veo 3.1 / Sora 2）
 
-## 🎯 Roadmap
+## 🎯 ロードマップ
 
-- [ ] Video model integration (direct ItoV generation)
-- [ ] Advanced character consistency
-- [ ] Multi-language support
-- [ ] Web UI interface
-- [ ] Batch processing
-- [ ] Template library expansion
+- [ ] 動画モデル統合（直接ItoV生成）
+- [ ] 高度なキャラクター一貫性
+- [ ] 多言語サポート
+- [ ] Web UIインターフェース
+- [ ] バッチ処理
+- [ ] テンプレートライブラリ拡張
 
 ---
 
-**Made for Claude Code** - AI-powered video production assistant
+**Claude Code向けに作成** - AI駆動動画制作アシスタント

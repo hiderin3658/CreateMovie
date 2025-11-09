@@ -1,95 +1,95 @@
 ---
 name: ai-video-storyboard
-description: AI video production assistant for creating storyboards, image prompts, and ItoV prompts for 1-minute videos (6-10 cuts). Generates first-frame images using Gemini API (Imagen 3). Automatically selects optimal compositions and camera work. Use when creating AI-generated videos, storyboards, video production planning, or educational content with visual narratives.
+description: 1分動画（6-10カット）の絵コンテ、画像プロンプト、ItoVプロンプトを作成するAI動画制作アシスタント。Gemini API（Imagen 3）を使用してファーストフレーム画像を生成。最適な構図とカメラワークを自動選択。AI生成動画、絵コンテ、動画制作計画、視覚的なナラティブを持つ教育コンテンツの作成時に使用。
 ---
 
-# AI Video Storyboard Generator
+# AI動画絵コンテジェネレーター
 
-Automate video storyboard creation with AI-powered image generation, camera work selection, and music prompt generation.
+AI画像生成、カメラワーク選択、音楽プロンプト生成で動画絵コンテ作成を自動化。
 
-## How to Use This Skill
+## このスキルの使い方
 
-### As a Claude Skill (Recommended)
+### Claude Skillとして使用（推奨）
 
-This is a **Claude Skill** designed to be used within Claude Code. Simply describe what you want to create:
+これは**Claude Skill**で、Claude Code内で使用するように設計されています。作りたいものを自然言語で説明するだけです：
 
-**Example conversations with Claude:**
+**Claudeとの会話例：**
 
 ```
-You: "高校の文化祭準備を題材にした60秒の青春動画の絵コンテを作成して"
+あなた: "高校の文化祭準備を題材にした60秒の青春動画の絵コンテを作成して"
 
-Claude will:
-1. Analyze your story
-2. Create 6-10 cuts with optimal camera work
-3. Generate image prompts for Imagen 3
-4. Create ItoV prompts for video generation
-5. Generate BGM prompts for Suno
+Claudeが自動で:
+1. ストーリーを分析
+2. 最適なカメラワークで6-10カットを作成
+3. Imagen 3用の画像プロンプトを生成
+4. 動画生成用のItoVプロンプトを作成
+5. Suno用のBGMプロンプトを生成
 ```
 
-**With key visual:**
+**キービジュアルあり:**
 ```
-You: "このコンセプトアート(image.jpg)のスタイルで魔法学校の動画を作って"
+あなた: "このコンセプトアート(image.jpg)のスタイルで魔法学校の動画を作って"
 
-Claude will:
-1. Analyze the key visual style
-2. Apply consistent style to all cuts
-3. Generate cohesive storyboard
+Claudeが自動で:
+1. キービジュアルのスタイルを解析
+2. 全カットに一貫したスタイルを適用
+3. 統一感のある絵コンテを生成
 ```
 
-### As a Python Script (Advanced)
+### Pythonスクリプトとして使用（上級者向け）
 
-You can also run the Python scripts directly from terminal:
+ターミナルから直接Pythonスクリプトを実行することもできます：
 
 ```bash
-python scripts/generate_storyboard.py "story description"
+python scripts/generate_storyboard.py "ストーリー説明"
 ```
 
-## Prerequisites
+## 前提条件
 
-### Required: Gemini API Key
+### 必須: Gemini APIキー
 
-Set your Gemini API key as an environment variable:
+Gemini APIキーを環境変数として設定:
 
 ```bash
 export GEMINI_API_KEY='your-api-key-here'
 ```
 
-Or create a `.env` file:
+または `.env` ファイルを作成:
 
 ```bash
 echo "GEMINI_API_KEY=your-api-key-here" > .env
 ```
 
-### Optional Dependencies
+### オプション依存関係
 
-Install Python dependencies:
+Python依存関係をインストール:
 
 ```bash
 pip install google-generativeai pillow numpy scikit-learn scipy
 ```
 
-## Quick Start
+## クイックスタート
 
-### Basic Usage (Fully Automatic)
+### 基本的な使い方（完全自動）
 
-Generate a complete storyboard with one command:
+1つのコマンドで完全な絵コンテを生成:
 
 ```bash
 python scripts/generate_storyboard.py "高校の文化祭準備を題材にした60秒の青春動画"
 ```
 
-The AI will automatically:
-- ✅ Decide on 6-10 cuts structure
-- ✅ Select camera angles and movements
-- ✅ Choose compositions (rule of thirds, centered, etc.)
-- ✅ Set lighting and mood
-- ✅ Generate Imagen 3 images
-- ✅ Create ItoV prompts for video generation
-- ✅ Generate BGM prompts for Suno
+AIが自動的に:
+- ✅ 6-10カットの構成を決定
+- ✅ カメラアングルと動きを選択
+- ✅ 構図を選択（三分割法、中央配置など）
+- ✅ 照明とムードを設定
+- ✅ Imagen 3画像を生成
+- ✅ 動画生成用ItoVプロンプトを作成
+- ✅ Suno用BGMプロンプトを生成
 
-### With Key Visual Reference
+### キービジュアル参照を使用
 
-Use a reference image to maintain visual consistency:
+参照画像を使用して視覚的一貫性を維持:
 
 ```bash
 python scripts/generate_storyboard.py \
@@ -97,31 +97,31 @@ python scripts/generate_storyboard.py \
   --key-visual "path/to/concept_art.jpg"
 ```
 
-This will:
-- Extract art style, colors, and mood from the reference
-- Apply consistent style to all cuts
-- Maintain visual coherence throughout
+これにより:
+- 参照からアートスタイル、色、ムードを抽出
+- 全カットに一貫したスタイルを適用
+- 全体を通して視覚的な一貫性を維持
 
-### With Video Model Selection
+### 動画モデル選択
 
-Generate prompts optimized for specific AI video models:
+特定のAI動画モデルに最適化されたプロンプトを生成:
 
 ```bash
-# For Veo 3.1 (technical, precise)
+# Veo 3.1用（技術的、正確）
 python scripts/generate_storyboard.py "アクション動画" --model veo3
 
-# For Sora 2 (descriptive, artistic)
+# Sora 2用（描写的、芸術的）
 python scripts/generate_storyboard.py "感動的な動画" --model sora2
 
-# Auto (both models)
+# 自動（両モデル）
 python scripts/generate_storyboard.py "動画" --model auto
 ```
 
-## Workflow
+## ワークフロー
 
-### 1. Story Input
+### 1. ストーリー入力
 
-Provide a story description:
+ストーリー説明を提供:
 
 ```python
 from scripts.generate_storyboard import create_complete_storyboard
@@ -136,77 +136,77 @@ storyboard = create_complete_storyboard(
 )
 ```
 
-### 2. Automatic Scene Breakdown
+### 2. 自動シーン分解
 
-The AI analyzes your story and creates:
-- Cut structure (6-10 cuts)
-- Scene descriptions
-- Camera angles (ELS, LS, MS, CU, ECU)
-- Compositions (rule of thirds, golden ratio, etc.)
-- Camera movements (pan, zoom, dolly, tracking)
+AIがストーリーを分析して作成:
+- カット構成（6-10カット）
+- シーン説明
+- カメラアングル（ELS、LS、MS、CU、ECU）
+- 構図（三分割法、黄金比など）
+- カメラ動き（パン、ズーム、ドリー、トラッキング）
 
-### 3. Image Generation
+### 3. 画像生成
 
-First-frame images are generated using Gemini API (Imagen 3):
+Gemini API（Imagen 3）を使用してファーストフレーム画像を生成:
 
 ```python
-# Images are automatically generated and saved to output/frames/
+# 画像は自動生成され output/frames/ に保存されます
 # - cut_01.jpg
 # - cut_02.jpg
 # - ...
 ```
 
-### 4. ItoV Prompt Generation
+### 4. ItoVプロンプト生成
 
-Video prompts are created for image-to-video conversion:
+画像から動画への変換用の動画プロンプトを作成:
 
 ```
-Example ItoV prompt:
-"slow zoom in, bustling student activity, 10 seconds,
-establishing mood, maintain first frame composition throughout"
+ItoVプロンプト例:
+"ゆっくりズームイン、賑やかな学生の活動、10秒、
+ムードを確立、最初のフレーム構図を全体で維持"
 ```
 
-### 5. BGM Prompt Generation
+### 5. BGMプロンプト生成
 
-Music prompts for Suno are automatically generated:
+Suno用の音楽プロンプトを自動生成:
 
 ```python
-# Section 1 (Cuts 1-3, 25s)
+# セクション1（カット1-3、25秒）
 "[Hopeful intro] Cinematic orchestral, 80bpm, soft,
 anticipation building, piano, strings, soft percussion"
 
-# Section 2 (Cuts 4-6, 20s)
+# セクション2（カット4-6、20秒）
 "[Energetic main] Uplifting pop-rock, 120bpm, energetic,
 excitement, guitar, drums, bass, synth"
 ```
 
-## Advanced Features
+## 高度な機能
 
-### Iterative Refinement
+### 反復改善
 
-Review and adjust generated prompts:
+生成されたプロンプトをレビューして調整:
 
 ```python
-# 1. Generate initial storyboard
+# 1. 初期絵コンテを生成
 storyboard = create_complete_storyboard(story)
 
-# 2. Review specific cut
+# 2. 特定のカットをレビュー
 print(storyboard.cuts[2].image_prompt)
 
-# 3. Modify if needed
+# 3. 必要に応じて修正
 storyboard.cuts[2].image_prompt = """
-extreme wide shot, dramatic clouds forming,
-time-lapse effect, volumetric lighting,
-epic scale, detailed cumulus clouds
+超広角ショット、ドラマチックな雲が形成、
+タイムラプス効果、ボリューメトリックライティング、
+壮大なスケール、詳細な積乱雲
 """
 
-# 4. Regenerate that cut
+# 4. そのカットを再生成
 regenerate_cut(storyboard, cut_number=3)
 ```
 
-### Key Visual Analysis
+### キービジュアル解析
 
-Extract style from reference images:
+参照画像からスタイルを抽出:
 
 ```python
 from scripts.visual_reference_analyzer import VisualReferenceAnalyzer
@@ -214,14 +214,14 @@ from scripts.visual_reference_analyzer import VisualReferenceAnalyzer
 analyzer = VisualReferenceAnalyzer()
 analysis = analyzer.analyze_key_visual("concept_art.jpg")
 
-print(f"Style: {analysis.style}")
-print(f"Colors: {analysis.colors}")
-print(f"Mood: {analysis.mood}")
+print(f"スタイル: {analysis.style}")
+print(f"色: {analysis.colors}")
+print(f"ムード: {analysis.mood}")
 ```
 
-### Music Emotional Arc
+### 音楽の感情アーク
 
-Analyze and generate music sections:
+音楽セクションを分析して生成:
 
 ```python
 from scripts.music_generator_suno import MusicPromptGenerator
@@ -229,112 +229,112 @@ from scripts.music_generator_suno import MusicPromptGenerator
 music_gen = MusicPromptGenerator()
 music_plan = music_gen.generate_complete_music_plan(storyboard)
 
-print(f"Sections: {len(music_plan['sections'])}")
-print(f"Emotional Arc: {music_plan['emotional_arc']['overall_journey']}")
+print(f"セクション数: {len(music_plan['sections'])}")
+print(f"感情アーク: {music_plan['emotional_arc']['overall_journey']}")
 ```
 
-## Output Files
+## 出力ファイル
 
-After generation, you'll find:
+生成後、以下が作成されます:
 
 ```
 output/
-├── storyboard.json              # Complete storyboard data
-├── storyboard_report.md         # Visual report with images
-├── music_plan.json              # BGM section data
-├── suno_prompts.md              # Ready-to-use Suno prompts
-└── frames/                      # Generated images
+├── storyboard.json              # 完全な絵コンテデータ
+├── storyboard_report.md         # 画像付き視覚レポート
+├── music_plan.json              # BGMセクションデータ
+├── suno_prompts.md              # すぐに使えるSunoプロンプト
+└── frames/                      # 生成画像
     ├── cut_01.jpg
     ├── cut_02.jpg
     └── ...
 ```
 
-## Camera Work Reference
+## カメラワークリファレンス
 
-### Automatic Shot Selection
+### 自動ショット選択
 
-The AI automatically selects appropriate shots based on scene type:
+AIはシーンタイプに基づいて適切なショットを自動選択:
 
-- **Establishing scenes** → ELS (Extreme Long Shot)
-- **Character introduction** → MS (Medium Shot)
-- **Dialogue** → MS/MCU (Medium Close-Up)
-- **Action sequences** → LS/MS (Long Shot/Medium Shot)
-- **Emotional moments** → CU/ECU (Close-Up/Extreme Close-Up)
-- **Conclusion** → LS/ELS
+- **確立シーン** → ELS（超遠景）
+- **キャラクター紹介** → MS（中景）
+- **対話** → MS/MCU（中景/ミディアムクローズアップ）
+- **アクションシーケンス** → LS/MS（遠景/中景）
+- **感情的な瞬間** → CU/ECU（クローズアップ/超クローズアップ）
+- **結論** → LS/ELS
 
-### Camera Movements
+### カメラ動き
 
-Automatically selected based on mood and action:
+ムードとアクションに基づいて自動選択:
 
-- **Static**: Dialogue, observation
-- **Pan**: Wide space introduction
-- **Zoom**: Drawing attention, surprise
-- **Dolly**: Immersion, approach
-- **Tracking**: Following action
+- **静止**: 対話、観察
+- **パン**: 広い空間の紹介
+- **ズーム**: 注意を引く、驚き
+- **ドリー**: 没入感、接近
+- **トラッキング**: アクションの追跡
 
-See [references/camera_shots.md](references/camera_shots.md) for detailed explanations.
+詳細は [references/camera_shots.md](references/camera_shots.md) を参照。
 
-## Composition Guide
+## 構図ガイド
 
-### Auto-Selected Compositions
+### 自動選択される構図
 
-- **Rule of Thirds**: General scenes, landscapes
-- **Golden Ratio**: Artistic scenes, beauty emphasis
-- **Centered**: Character introduction, formal scenes
-- **Diagonal**: Action, dynamic scenes
+- **三分割法**: 一般的なシーン、風景
+- **黄金比**: 芸術的なシーン、美しさの強調
+- **中央配置**: キャラクター紹介、フォーマルなシーン
+- **対角線**: アクション、ダイナミックなシーン
 
-See [references/composition_guide.md](references/composition_guide.md) for details.
+詳細は [references/composition_guide.md](references/composition_guide.md) を参照。
 
-## Troubleshooting
+## トラブルシューティング
 
-### API Errors
+### APIエラー
 
-**Error: API key not found**
+**エラー: APIキーが見つかりません**
 ```bash
-# Set API key
+# APIキーを設定
 export GEMINI_API_KEY='your-key'
 ```
 
-**Error: Rate limit exceeded**
+**エラー: レート制限超過**
 ```python
-# Add delay between requests
-config = {"api_delay": 2.0}  # 2 seconds between calls
+# リクエスト間に遅延を追加
+config = {"api_delay": 2.0}  # 呼び出し間に2秒
 ```
 
-### Image Generation Issues
+### 画像生成の問題
 
-**Problem: Images too dark**
+**問題: 画像が暗すぎる**
 ```python
-# Add lighting modifiers
-"bright lighting, well-lit, golden hour"
+# 照明修飾子を追加
+"明るい照明、よく照らされた、ゴールデンアワー"
 ```
 
-**Problem: Not enough characters**
+**問題: キャラクターが足りない**
 ```python
-# Specify number
-"crowded scene, 15-20 people, busy atmosphere"
+# 数を指定
+"混雑したシーン、15-20人、忙しい雰囲気"
 ```
 
-**Problem: Composition off-center**
+**問題: 構図が中心からずれている**
 ```python
-# Specify composition explicitly
-"centered composition, symmetrical layout"
+# 構図を明示的に指定
+"中央配置構図、対称的なレイアウト"
 ```
 
-### Prompt Optimization
+### プロンプト最適化
 
-For better results:
+より良い結果を得るために:
 
-1. **Be specific**: "soft morning sunlight from left window" > "good lighting"
-2. **Add context**: "students in school uniforms preparing festival decorations"
-3. **Include mood**: "cheerful atmosphere, warm colors, optimistic mood"
-4. **Specify style**: "anime style, cel-shaded, vibrant colors"
+1. **具体的に**: "窓からの柔らかい朝日" > "良い照明"
+2. **文脈を追加**: "制服を着た生徒が文化祭の飾り付けを準備"
+3. **ムードを含める**: "明るい雰囲気、暖かい色、楽観的なムード"
+4. **スタイルを指定**: "アニメスタイル、セルシェーディング、鮮やかな色"
 
-See [references/troubleshooting.md](references/troubleshooting.md) for more solutions.
+詳細なソリューションは [references/troubleshooting.md](references/troubleshooting.md) を参照。
 
-## Examples
+## 例
 
-### Educational Video
+### 教育動画
 
 ```python
 storyboard = create_complete_storyboard(
@@ -347,7 +347,7 @@ storyboard = create_complete_storyboard(
 )
 ```
 
-### Marketing Video
+### マーケティング動画
 
 ```python
 storyboard = create_complete_storyboard(
@@ -360,7 +360,7 @@ storyboard = create_complete_storyboard(
 )
 ```
 
-### Narrative Video
+### ナラティブ動画
 
 ```python
 storyboard = create_complete_storyboard(
@@ -373,36 +373,36 @@ storyboard = create_complete_storyboard(
 )
 ```
 
-## API Costs
+## APIコスト
 
-Using Gemini API (Imagen 3):
+Gemini API（Imagen 3）の使用:
 
-- **Image generation**: ~$0.03 per image
-- **8-cut video**: ~$0.24 total
-- **10-cut video**: ~$0.30 total
+- **画像生成**: 1画像あたり約$0.03
+- **8カット動画**: 合計約$0.24
+- **10カット動画**: 合計約$0.30
 
-Vision analysis (for key visual):
-- **Per image**: ~$0.001
+ビジョン解析（キービジュアル用）:
+- **画像あたり**: 約$0.001
 
-## Tips for Best Results
+## ベストな結果を得るためのヒント
 
-1. **Start simple**: Let AI handle the basics first
-2. **Iterate gradually**: Adjust one element at a time
-3. **Use references**: Key visuals improve consistency
-4. **Check compositions**: Review auto-selected camera work
-5. **Test music sync**: Ensure BGM matches emotional flow
-6. **Save iterations**: Keep version history for comparison
+1. **シンプルに始める**: 最初はAIに基本を任せる
+2. **徐々に反復**: 一度に1つの要素を調整
+3. **参照を使用**: キービジュアルは一貫性を向上
+4. **構図をチェック**: 自動選択されたカメラワークをレビュー
+5. **音楽の同期をテスト**: BGMが感情の流れに合っているか確認
+6. **反復を保存**: 比較のためにバージョン履歴を保持
 
-## Support
+## サポート
 
-For detailed documentation:
-- [Camera Shots Reference](references/camera_shots.md)
-- [Composition Guide](references/composition_guide.md)
-- [Camera Movements](references/camera_movements.md)
-- [ItoV Patterns](references/itov_patterns.md)
-- [Video Model Optimization](references/video_model_patterns.md)
-- [Troubleshooting Guide](references/troubleshooting.md)
+詳細なドキュメント:
+- [カメラショットリファレンス](references/camera_shots.md)
+- [構図ガイド](references/composition_guide.md)
+- [カメラ動き](references/camera_movements.md)
+- [ItoVパターン](references/itov_patterns.md)
+- [動画モデル最適化](references/video_model_patterns.md)
+- [トラブルシューティングガイド](references/troubleshooting.md)
 
-## License
+## ライセンス
 
-MIT License
+MITライセンス

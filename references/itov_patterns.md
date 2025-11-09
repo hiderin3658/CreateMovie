@@ -1,16 +1,16 @@
-# ItoV Prompt Patterns Guide
+# ItoVプロンプトパターンガイド
 
-Comprehensive guide to Image-to-Video (ItoV) prompt optimization for consistent, high-quality video generation.
+画像からビデオへ（ItoV）プロンプト最適化の包括的ガイド。一貫性のある高品質なビデオ生成を実現します。
 
-## ItoV Prompt Structure
+## ItoVプロンプト構造
 
-### Basic Formula
+### 基本的な公式
 
 ```
 [Camera Movement] + [Subject Action] + [Duration] + [Mood/Atmosphere] + [Consistency Instructions]
 ```
 
-**Example**:
+**例**:
 ```
 slow zoom in, character looking around curiously,
 10 seconds, mysterious atmosphere,
@@ -19,36 +19,36 @@ maintain first frame composition throughout
 
 ---
 
-## Scene-Specific Templates
+## シーン別テンプレート
 
-### 1. Opening Scene
+### 1. オープニングシーン
 
-**Purpose**: Establish location and mood
+**目的**: ロケーションとムードを確立する
 
-**Template**:
+**テンプレート**:
 ```
 slow zoom in, subtle environmental movement,
 10 seconds, establishing mood,
 maintain first frame composition throughout
 ```
 
-**Variations**:
+**バリエーション**:
 
-**Calm opening**:
+**穏やかなオープニング**:
 ```
 gentle camera drift forward, peaceful morning atmosphere,
 12 seconds, soft natural movement,
 keep horizon level, maintain lighting consistency
 ```
 
-**Dynamic opening**:
+**ダイナミックなオープニング**:
 ```
 slow pan right then subtle zoom, bustling activity,
 10 seconds, energetic establishing mood,
 maintain subject positions, natural crowd movement
 ```
 
-**Mysterious opening**:
+**神秘的なオープニング**:
 ```
 slow dolly in, fog gently moving,
 12 seconds, mysterious atmosphere building,
@@ -57,11 +57,11 @@ maintain first frame shadows, subtle element reveals
 
 ---
 
-### 2. Dialogue Scene
+### 2. 対話シーン
 
-**Purpose**: Natural conversation with subtle life
+**目的**: 自然な会話と微妙な生命感
 
-**Template**:
+**テンプレート**:
 ```
 static camera with slight drift,
 natural gestures and facial expressions,
@@ -69,23 +69,23 @@ natural gestures and facial expressions,
 keep characters in frame, maintain eye contact
 ```
 
-**Variations**:
+**バリエーション**:
 
-**Intimate dialogue**:
+**親密な対話**:
 ```
 very subtle push in, character speaking emotionally,
 10 seconds, intimate atmosphere,
 maintain focus on face, slight head movements
 ```
 
-**Group dialogue**:
+**グループ対話**:
 ```
 gentle pan following speaker, multiple characters conversing,
 8 seconds, natural conversation flow,
 keep all characters visible, natural turn-taking
 ```
 
-**Tense dialogue**:
+**緊張した対話**:
 ```
 static camera with uncomfortable stillness,
 characters showing tension in posture,
@@ -95,11 +95,11 @@ maintain tight framing, minimal movement increases unease
 
 ---
 
-### 3. Action Scene
+### 3. アクションシーン
 
-**Purpose**: Dynamic movement and energy
+**目的**: ダイナミックな動きとエネルギー
 
-**Template**:
+**テンプレート**:
 ```
 dynamic camera movement following action,
 fast-paced character movement,
@@ -107,23 +107,23 @@ fast-paced character movement,
 maintain motion blur for speed, follow action clearly
 ```
 
-**Variations**:
+**バリエーション**:
 
-**Chase scene**:
+**チェイスシーン**:
 ```
 handheld tracking shot, character running,
 6 seconds, urgent pacing,
 shake increases sense of speed, maintain character in frame
 ```
 
-**Fight scene**:
+**格闘シーン**:
 ```
 quick pan following strike, dynamic combat movement,
 4 seconds, intense action,
 motion blur on fast movements, maintain impact clarity
 ```
 
-**Subtle action**:
+**微妙なアクション**:
 ```
 smooth tracking, character walking purposefully,
 8 seconds, determined mood,
@@ -132,11 +132,11 @@ maintain steady pace, natural stride rhythm
 
 ---
 
-### 4. Emotional Scene
+### 4. 感情シーン
 
-**Purpose**: Capture and amplify emotion
+**目的**: 感情をキャプチャして増幅する
 
-**Template**:
+**テンプレート**:
 ```
 slow push in on face,
 subtle facial micro-expressions,
@@ -144,23 +144,23 @@ subtle facial micro-expressions,
 maintain eye contact with camera, subtle head movements
 ```
 
-**Variations**:
+**バリエーション**:
 
-**Sadness**:
+**悲しみ**:
 ```
 very slow dolly in, character's eyes welling up,
 12 seconds, melancholic atmosphere,
 maintain focus on eyes, subtle head drop
 ```
 
-**Joy**:
+**喜び**:
 ```
 gentle zoom in, character's face lighting up with smile,
 8 seconds, warm happiness spreading,
 maintain expression center frame, natural smile progression
 ```
 
-**Anger**:
+**怒り**:
 ```
 tight static shot with subtle tension,
 character's jaw clenching, eyes hardening,
@@ -168,7 +168,7 @@ character's jaw clenching, eyes hardening,
 maintain sharp focus, minimal movement increases intensity
 ```
 
-**Realization**:
+**気づき**:
 ```
 subtle zoom in as expression changes,
 character's eyes widening with understanding,
@@ -178,27 +178,27 @@ maintain focus on face, capture the exact moment of realization
 
 ---
 
-### 5. Transition Scene
+### 5. トランジションシーン
 
-**Purpose**: Bridge between locations or times
+**目的**: ロケーションまたは時間をつなぐ
 
-**Template**:
+**テンプレート**:
 ```
 slow pan across environment, gentle time passage indicators,
 10 seconds, transitional mood,
 maintain color temperature shift, smooth movement
 ```
 
-**Variations**:
+**バリエーション**:
 
-**Time passage**:
+**時間経過**:
 ```
 slow zoom out, shadows lengthening,
 12 seconds, time passing atmosphere,
 maintain main elements, lighting subtly shifts
 ```
 
-**Location transition**:
+**ロケーション遷移**:
 ```
 pan from previous location toward new direction,
 8 seconds, spatial connection,
@@ -207,11 +207,11 @@ maintain visual style consistency, smooth directional flow
 
 ---
 
-### 6. Establishing Wide Shot
+### 6. エスタブリッシング広角ショット
 
-**Purpose**: Show environment and context
+**目的**: 環境と文脈を表示する
 
-**Template**:
+**テンプレート**:
 ```
 slow pan or zoom revealing scope,
 environmental elements moving naturally (trees, clouds),
@@ -219,16 +219,16 @@ environmental elements moving naturally (trees, clouds),
 maintain depth layers, parallax movement
 ```
 
-**Variations**:
+**バリエーション**:
 
-**Grand landscape**:
+**グランドランドスケープ**:
 ```
 crane-style rising movement, vast environment revealed,
 15 seconds, epic scale,
 maintain horizon line, clouds drifting naturally
 ```
 
-**Urban establishing**:
+**都市エスタブリッシング**:
 ```
 slow pan across cityscape, city life indicators,
 10 seconds, urban atmosphere,
@@ -237,27 +237,27 @@ maintain building lines, subtle traffic movement
 
 ---
 
-### 7. Close-Up Detail
+### 7. クローズアップディテール
 
-**Purpose**: Emphasize specific details
+**目的**: 特定の詳細を強調する
 
-**Template**:
+**テンプレート**:
 ```
 static or very subtle movement, object/detail in focus,
 6 seconds, emphasis and attention,
 maintain sharp focus, minimal distraction
 ```
 
-**Variations**:
+**バリエーション**:
 
-**Object reveal**:
+**オブジェクト表示**:
 ```
 slow zoom in on important object, background slightly defocuses,
 8 seconds, revealing significance,
 maintain object centered, lighting highlights detail
 ```
 
-**Hand action**:
+**ハンドアクション**:
 ```
 static shot, hands performing delicate action,
 8 seconds, focused attention,
@@ -266,40 +266,40 @@ maintain hand position, natural finger movements
 
 ---
 
-## Consistency Instructions
+## 一貫性の指示
 
-Critical for maintaining visual continuity from first frame to end of video.
+最初のフレームから動画の終わりまで視覚的な連続性を保つために重要です。
 
-### Must-Include Phrases
+### 必須フレーズ
 
-**Basic consistency**:
+**基本的な一貫性**:
 ```
 maintain first frame composition throughout
 ```
 
-**Character consistency**:
+**キャラクター一貫性**:
 ```
 keep character positions stable, consistent appearance
 ```
 
-**Lighting consistency**:
+**ライティング一貫性**:
 ```
 maintain lighting direction and quality, consistent shadows
 ```
 
-**Color consistency**:
+**色の一貫性**:
 ```
 preserve color palette, maintain color grading throughout
 ```
 
-**Environmental consistency**:
+**環境一貫性**:
 ```
 background elements stay consistent, no sudden changes
 ```
 
-### Combined Consistency Instruction
+### 組み合わせた一貫性指示
 
-For critical shots, combine multiple:
+重要なショットの場合は複数を組み合わせます:
 ```
 maintain first frame composition, consistent lighting throughout,
 preserve character appearance, stable background elements
@@ -307,121 +307,121 @@ preserve character appearance, stable background elements
 
 ---
 
-## Duration Guidelines
+## 期間ガイドライン
 
-| Scene Type | Recommended Duration | Reason |
+| シーンタイプ | 推奨期間 | 理由 |
 |-----------|---------------------|--------|
-| **Opening** | 10-12 seconds | Need time to absorb |
-| **Dialogue** | 6-10 seconds | Match speech length |
-| **Action** | 3-6 seconds | High energy, quick pace |
-| **Emotion** | 8-15 seconds | Let emotion build |
-| **Transition** | 8-10 seconds | Smooth bridge |
-| **Establishing** | 10-15 seconds | Show full scope |
-| **Detail** | 5-8 seconds | Focus attention |
+| **オープニング** | 10～12秒 | 吸収するのに時間が必要 |
+| **対話** | 6～10秒 | 音声の長さに合わせる |
+| **アクション** | 3～6秒 | 高エネルギー、クイックペース |
+| **感情** | 8～15秒 | 感情を構築するための時間を確保 |
+| **トランジション** | 8～10秒 | スムーズなつなぎ |
+| **エスタブリッシング** | 10～15秒 | 全体的な範囲を表示 |
+| **詳細** | 5～8秒 | 注意力を集中 |
 
-**Note**: Adjust based on:
-- Overall video pace
-- Music timing
-- Narrative needs
-- Emotional intensity
+**注意**: 以下に基づいて調整します:
+- 全体的なビデオペース
+- 音楽のタイミング
+- ナレーティブのニーズ
+- 感情的強度
 
 ---
 
-## Movement Quality Descriptors
+## 動きの質の記述子
 
-### Speed Descriptors
+### スピード記述子
 
-**Very Slow**:
+**非常に遅い**:
 ```
 barely perceptible, extremely gradual, subtle drift
 ```
 
-**Slow**:
+**遅い**:
 ```
 gentle, leisurely, unhurried, gradual
 ```
 
-**Medium**:
+**中程度**:
 ```
 steady, moderate, even-paced, natural
 ```
 
-**Fast**:
+**速い**:
 ```
 quick, rapid, brisk, energetic
 ```
 
-**Very Fast**:
+**非常に速い**:
 ```
 sudden, whip-fast, instantaneous, explosive
 ```
 
-### Quality Descriptors
+### 品質記述子
 
-**Smooth**:
+**スムーズ**:
 ```
 fluid, seamless, gliding, effortless, silky
 ```
 
-**Natural**:
+**自然**:
 ```
 organic, realistic, human-like, authentic
 ```
 
-**Mechanical**:
+**機械的**:
 ```
 precise, controlled, robotic, technical
 ```
 
-**Organic**:
+**有機的**:
 ```
 breathing, living, subtle variation, hand-held feel
 ```
 
-**Dramatic**:
+**ドラマティック**:
 ```
 sweeping, grand, cinematic, impactful
 ```
 
 ---
 
-## Subject Action Guidelines
+## サブジェクトアクションガイドライン
 
-### Character Actions
+### キャラクターアクション
 
-**Subtle**:
+**微妙**:
 ```
 slight head turn, gentle breathing, minimal blinking,
 natural small movements
 ```
 
-**Moderate**:
+**中程度**:
 ```
 turning body, walking forward, reaching for object,
 normal activity pace
 ```
 
-**Dynamic**:
+**ダイナミック**:
 ```
 running, jumping, fighting, dancing,
 high-energy full-body movement
 ```
 
-### Environmental Actions
+### 環境アクション
 
-**Minimal**:
+**最小限**:
 ```
 leaves rustling gently, curtains swaying slightly,
 water rippling softly
 ```
 
-**Noticeable**:
+**顕著**:
 ```
 trees bending in wind, flags waving,
 water flowing visibly
 ```
 
-**Dramatic**:
+**ドラマティック**:
 ```
 storm winds, heavy rain, explosive effects,
 intense environmental action
@@ -429,84 +429,84 @@ intense environmental action
 
 ---
 
-## Mood/Atmosphere Descriptors
+## ムード・雰囲気の記述子
 
-### Positive Moods
+### ポジティブなムード
 
-**Peaceful**:
+**平和的**:
 ```
 serene atmosphere, tranquil mood, calm ambiance
 ```
 
-**Joyful**:
+**喜びに満ちた**:
 ```
 cheerful energy, playful atmosphere, upbeat mood
 ```
 
-**Hopeful**:
+**希望に満ちた**:
 ```
 optimistic atmosphere, bright mood, anticipation building
 ```
 
-### Neutral Moods
+### ニュートラルなムード
 
-**Contemplative**:
+**思索的**:
 ```
 thoughtful atmosphere, reflective mood, quiet intensity
 ```
 
-**Mysterious**:
+**神秘的**:
 ```
 enigmatic atmosphere, intriguing mood, curiosity building
 ```
 
-### Tense Moods
+### 緊張したムード
 
-**Suspenseful**:
+**サスペンスフル**:
 ```
 tension building, anxious atmosphere, uncertain mood
 ```
 
-**Dramatic**:
+**ドラマティック**:
 ```
 intense atmosphere, powerful mood, emotional weight
 ```
 
-**Urgent**:
+**緊急**:
 ```
 pressing atmosphere, hurried mood, time pressure
 ```
 
 ---
 
-## Advanced Techniques
+## 高度なテクニック
 
-### 1. Parallax Effect
+### 1. パラレックス効果
 
-For depth and dimension:
+奥行きと次元性のために:
 ```
 slow lateral movement, foreground elements moving faster than background,
 parallax depth layers, maintain spatial relationships
 ```
 
-### 2. Focus Shift
+### 2. フォーカスシフト
 
-Directing attention:
+注意を向ける:
 ```
 rack focus from foreground to background,
 attention shifting naturally, maintain depth of field
 ```
 
-### 3. Time Manipulation
+### 3. 時間操作
 
-Creating time effects:
+時間効果の作成:
 ```
 subtle speed ramping, moment elongating, time slowing perception
 ```
 
-### 4. Weather/Atmosphere Integration
+### 4. 天候・雰囲気の統合
 
-Environmental mood:
+環境的ムード:
 ```
 fog gently drifting through scene, atmospheric depth,
 maintain visibility of key elements
@@ -514,68 +514,68 @@ maintain visibility of key elements
 
 ---
 
-## Common Mistakes and Fixes
+## よくある間違いと修正
 
-### Mistake 1: Too Vague
+### 間違い1: あまりに曖昧
 
-❌ **Bad**:
+❌ **悪い例**:
 ```
 camera moves, things happen
 ```
 
-✅ **Good**:
+✅ **良い例**:
 ```
 slow dolly forward, character turning to look at camera,
 8 seconds, mysterious atmosphere building,
 maintain first frame lighting and composition
 ```
 
-### Mistake 2: Conflicting Instructions
+### 間違い2: 矛盾した指示
 
-❌ **Bad**:
+❌ **悪い例**:
 ```
 static camera, fast pan, zooming in
 ```
 
-✅ **Good**:
+✅ **良い例**:
 ```
 start static then slow zoom in over 8 seconds
 ```
 
-### Mistake 3: Missing Duration
+### 間違い3: 期間がない
 
-❌ **Bad**:
+❌ **悪い例**:
 ```
 zoom in on character's face
 ```
 
-✅ **Good**:
+✅ **良い例**:
 ```
 slow zoom in on character's face, 10 seconds
 ```
 
-### Mistake 4: No Consistency Instruction
+### 間違い4: 一貫性指示がない
 
-❌ **Bad**:
+❌ **悪い例**:
 ```
 character walks forward, camera follows
 ```
 
-✅ **Good**:
+✅ **良い例**:
 ```
 character walks forward, smooth tracking shot following,
 8 seconds, maintain character in center frame throughout
 ```
 
-### Mistake 5: Overcomplicating
+### 間違い5: 過度に複雑化
 
-❌ **Bad**:
+❌ **悪い例**:
 ```
 camera dollies in while panning left and tilting up while zooming out
 while character runs and jumps while spinning
 ```
 
-✅ **Good**:
+✅ **良い例**:
 ```
 smooth tracking shot following character running,
 6 seconds, dynamic action, maintain character in frame
@@ -583,97 +583,97 @@ smooth tracking shot following character running,
 
 ---
 
-## Scene-Specific Best Practices
+## シーン別ベストプラクティス
 
-### Opening Scene
+### オープニングシーン
 
-**Do**:
-- Give time to establish (10-15s)
-- Use slow, exploratory movements
-- Set the mood clearly
-- Show scale and context
+**すること**:
+- 確立のための時間を与える（10～15秒）
+- ゆっくりした探索的な動きを使用する
+- ムードを明確に設定する
+- スケールと文脈を表示する
 
-**Don't**:
-- Rush the introduction
-- Use chaotic movement
-- Neglect atmosphere setup
+**しないこと**:
+- 導入を急ぐ
+- 混沌とした動きを使用する
+- 雰囲気設定を怠る
 
-### Dialogue Scene
+### 対話シーン
 
-**Do**:
-- Keep movements subtle
-- Allow natural gestures
-- Maintain character positions
-- Match speech rhythm
+**すること**:
+- 動きを微妙に保つ
+- 自然なジェスチャーを許可する
+- キャラクター位置を保持する
+- 音声のリズムに合わせる
 
-**Don't**:
-- Distract with camera movement
-- Cut off characters mid-sentence
-- Use unnecessary motion
+**しないこと**:
+- カメラの動きで気を散らす
+- キャラクターを途中で切る
+- 不要な動きを使用する
 
-### Action Scene
+### アクションシーン
 
-**Do**:
-- Match camera energy to action
-- Keep action clear and followable
-- Use motion blur appropriately
-- Maintain spatial coherence
+**すること**:
+- カメラのエネルギーをアクションに合わせる
+- アクションを明確で追いやすくする
+- モーションブラーを適切に使用する
+- 空間的一貫性を保持する
 
-**Don't**:
-- Make it too chaotic to follow
-- Use static camera for high energy
-- Lose the subject in motion
+**しないこと**:
+- 追いづらいほど混沌とさせる
+- 高エネルギーで静止カメラを使用する
+- モーション中にサブジェクトを失う
 
-### Emotional Scene
+### 感情シーン
 
-**Do**:
-- Give emotion time to build
-- Use subtle, supportive movement
-- Focus on face/expressions
-- Match camera to emotional intensity
+**すること**:
+- 感情を構築するための時間を与える
+- 微妙で支援的な動きを使用する
+- 顔・表情に焦点を当てる
+- カメラを感情的強度に合わせる
 
-**Don't**:
-- Rush emotional beats
-- Distract with fancy moves
-- Cut away too soon
-
----
-
-## Testing Your Prompts
-
-Before finalizing, ask:
-
-1. **Is movement clear?** Can the AI understand what to do?
-2. **Is duration appropriate?** Match to scene needs?
-3. **Is mood specified?** Atmosphere clear?
-4. **Are consistency instructions included?** First frame maintained?
-5. **Is subject action defined?** What happens in the shot?
-6. **Is it achievable?** Not too complex or contradictory?
-7. **Does it serve the story?** Support narrative goals?
+**しないこと**:
+- 感情的なビートを急ぐ
+- 派手な動きで気を散らす
+- 早すぎてカットを切る
 
 ---
 
-## Quick Reference Formulas
+## プロンプトのテスト
 
-### Standard Formula
+最終化する前に、以下を自問してください:
+
+1. **動きは明確ですか?** AIが何をすべきかを理解できますか?
+2. **期間は適切ですか?** シーンのニーズに合致していますか?
+3. **ムードが指定されていますか?** 雰囲気は明確ですか?
+4. **一貫性の指示が含まれていますか?** 最初のフレームが維持されていますか?
+5. **サブジェクトアクションが定義されていますか?** ショットで何が起こりますか?
+6. **実現可能ですか?** 複雑すぎたり矛盾していたりしていませんか?
+7. **ストーリーに役立ちますか?** ナレーティブの目標をサポートしていますか?
+
+---
+
+## クイックリファレンス公式
+
+### 標準的な公式
 ```
 [movement] [subject], [duration], [mood], [consistency]
 ```
 
-### Detailed Formula
+### 詳細な公式
 ```
 [movement quality] [movement type], [subject action] [action quality],
 [duration] seconds, [mood/atmosphere] [intensity],
 [consistency instruction], [specific technical notes]
 ```
 
-### Example (Standard)
+### 例（標準）
 ```
 slow zoom in, character smiling, 8 seconds, warm atmosphere,
 maintain composition
 ```
 
-### Example (Detailed)
+### 例（詳細）
 ```
 gentle slow dolly forward, character gradually turning to camera with warm smile,
 10 seconds building connection, intimate and inviting atmosphere,
@@ -683,21 +683,21 @@ natural head movement, eyes making contact near end
 
 ---
 
-## Prompt Optimization Checklist
+## プロンプト最適化チェックリスト
 
-Before generating, verify your prompt has:
+生成する前に、プロンプトに以下があることを確認してください:
 
-- [ ] Clear camera movement (or explicitly static)
-- [ ] Subject action description
-- [ ] Duration specified in seconds
-- [ ] Mood or atmosphere
-- [ ] Consistency instruction (maintain first frame...)
-- [ ] No conflicting instructions
-- [ ] Appropriate complexity (not too simple or complex)
-- [ ] Natural language (not overly technical)
-- [ ] Specific details where needed
-- [ ] Achievable expectations
+- [ ] 明確なカメラ動き（または明示的に静止）
+- [ ] サブジェクトアクションの説明
+- [ ] 期間（秒単位）を指定
+- [ ] ムードまたは雰囲気
+- [ ] 一貫性指示（最初のフレームを保持...）
+- [ ] 矛盾する指示がない
+- [ ] 適切な複雑さ（単純すぎたり複雑すぎたりしない）
+- [ ] 自然な言語（過度に技術的ではない）
+- [ ] 必要な場合は具体的な詳細
+- [ ] 実現可能な期待
 
 ---
 
-This guide provides templates and patterns for creating effective ItoV prompts that generate consistent, high-quality video from your storyboard images.
+このガイドは、ストーリーボード画像から一貫性があり高品質なビデオを生成する効果的なItoVプロンプトを作成するためのテンプレートとパターンを提供しています。

@@ -1,118 +1,118 @@
-# Troubleshooting Guide
+# トラブルシューティング ガイド
 
-Comprehensive solutions to common problems in AI video storyboard generation.
+AIビデオストーリーボード生成における一般的な問題への包括的な解決策。
 
-## Table of Contents
+## 目次
 
-1. [API and Setup Issues](#api-and-setup-issues)
-2. [Image Generation Problems](#image-generation-problems)
-3. [Video Prompt Issues](#video-prompt-issues)
-4. [Composition and Camera Issues](#composition-and-camera-issues)
-5. [Style Consistency Problems](#style-consistency-problems)
-6. [Music Generation Issues](#music-generation-issues)
-7. [Performance and Quality](#performance-and-quality)
+1. [APIおよびセットアップの問題](#apiおよびセットアップの問題)
+2. [画像生成の問題](#画像生成の問題)
+3. [ビデオプロンプトの問題](#ビデオプロンプトの問題)
+4. [構図とカメラの問題](#構図とカメラの問題)
+5. [スタイル一貫性の問題](#スタイル一貫性の問題)
+6. [音楽生成の問題](#音楽生成の問題)
+7. [パフォーマンスと品質](#パフォーマンスと品質)
 
 ---
 
-## API and Setup Issues
+## APIおよびセットアップの問題
 
-### Problem: "GEMINI_API_KEY not found"
+### 問題: "GEMINI_API_KEY not found"
 
-**Symptoms**: Error message on startup, no image generation
+**症状**: スタートアップ時のエラーメッセージ、画像生成なし
 
-**Solutions**:
+**解決策**:
 
-1. **Set environment variable**:
+1. **環境変数を設定**:
 ```bash
 export GEMINI_API_KEY='your-api-key-here'
 ```
 
-2. **Create .env file**:
+2. **.envファイルを作成**:
 ```bash
 echo "GEMINI_API_KEY=your-api-key-here" > .env
 ```
 
-3. **Pass directly in code**:
+3. **コード内で直接渡す**:
 ```python
 generator = StoryboardGenerator(api_key='your-key')
 ```
 
-4. **Verify key is set**:
+4. **キーが設定されていることを確認**:
 ```bash
 echo $GEMINI_API_KEY
 ```
 
 ---
 
-### Problem: "Rate limit exceeded"
+### 問題: "Rate limit exceeded"
 
-**Symptoms**: API errors after several requests
+**症状**: 複数のリクエスト後のAPIエラー
 
-**Solutions**:
+**解決策**:
 
-1. **Add delay between requests**:
+1. **リクエスト間に遅延を追加**:
 ```python
 config = {"api_delay": 2.0}  # 2 seconds between calls
 ```
 
-2. **Batch process fewer cuts**:
+2. **少ない数のカットでバッチ処理**:
 ```python
 config = {"num_cuts": 6}  # Reduce from default 8
 ```
 
-3. **Wait and retry**:
-- Gemini free tier: 60 requests/minute
-- Wait 60 seconds and retry
+3. **待機して再試行**:
+- Gemini無料版: 毎分60リクエスト
+- 60秒待ってから再試行
 
-4. **Upgrade API plan**:
-- Consider paid tier for higher limits
-
----
-
-### Problem: "API authentication failed"
-
-**Symptoms**: 401 or 403 errors
-
-**Solutions**:
-
-1. **Verify API key is correct**:
-- Check for typos
-- Ensure no extra spaces
-- Copy fresh key from Google AI Studio
-
-2. **Check API key permissions**:
-- Ensure Imagen 3 access enabled
-- Verify Gemini API access
-
-3. **Regenerate API key**:
-- Go to Google AI Studio
-- Generate new key
-- Update in environment
+4. **APIプランをアップグレード**:
+- より高い制限のための有料版を検討
 
 ---
 
-### Problem: "Module not found errors"
+### 問題: "API authentication failed"
 
-**Symptoms**: ImportError for google.genai or other modules
+**症状**: 401または403エラー
 
-**Solutions**:
+**解決策**:
 
-1. **Install dependencies**:
+1. **APIキーが正しいことを確認**:
+- タイプミスがないか確認
+- 余分なスペースがないか確認
+- Google AI StudioからAPIキーをコピーし直す
+
+2. **APIキーの権限を確認**:
+- Imagen 3へのアクセスが有効化されていることを確認
+- Gemini APIへのアクセスを確認
+
+3. **APIキーを再生成**:
+- Google AI Studioへ移動
+- 新しいキーを生成
+- 環境内で更新
+
+---
+
+### 問題: "Module not found errors"
+
+**症状**: google.genaiまたは他のモジュールのImportError
+
+**解決策**:
+
+1. **依存関係をインストール**:
 ```bash
 pip install google-generativeai pillow numpy scikit-learn scipy
 ```
 
-2. **Use requirements file**:
+2. **requirements ファイルを使用**:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Check Python version**:
+3. **Pythonバージョンを確認**:
 ```bash
 python --version  # Should be 3.8+
 ```
 
-4. **Use virtual environment**:
+4. **仮想環境を使用**:
 ```bash
 python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
@@ -121,34 +121,34 @@ pip install -r requirements.txt
 
 ---
 
-## Image Generation Problems
+## 画像生成の問題
 
-### Problem: "Generated images are too dark"
+### 問題: "Generated images are too dark"
 
-**Symptoms**: All images appear dim or shadowy
+**症状**: すべての画像が暗いまたは影がかった状態に見える
 
-**Solutions**:
+**解決策**:
 
-1. **Add explicit lighting**:
+1. **明示的なライティングを追加**:
 ```python
 "bright lighting, well-lit scene, golden hour sunlight"
 ```
 
-2. **Specify light source**:
+2. **光源を指定**:
 ```python
 "natural daylight from window, soft diffused lighting"
 ```
 
-3. **Increase brightness**:
+3. **明るさを上げる**:
 ```python
 "high key lighting, bright atmosphere, overexposed for brightness"
 ```
 
-4. **Adjust mood descriptor**:
-- Change from "moody" to "cheerful"
-- Change from "dramatic" to "bright"
+4. **ムード記述を調整**:
+- 「moody（暗い）」から「cheerful（明るい）」に変更
+- 「dramatic（劇的）」から「bright（明るい）」に変更
 
-**Example Fix**:
+**修正例**:
 ```
 # Before (too dark)
 "classroom scene, students preparing"
@@ -161,33 +161,33 @@ cheerful atmosphere"
 
 ---
 
-### Problem: "Not enough characters/people in scene"
+### 問題: "Not enough characters/people in scene"
 
-**Symptoms**: Expected crowd but only 1-2 people appear
+**症状**: 期待した群衆だが、1～2人しか現れない
 
-**Solutions**:
+**解決策**:
 
-1. **Specify number explicitly**:
+1. **人数を明確に指定**:
 ```python
 "15-20 students, crowded classroom, many people"
 ```
 
-2. **Use crowd descriptors**:
+2. **群衆記述子を使用**:
 ```python
 "busy scene, populated, bustling with activity"
 ```
 
-3. **Describe distribution**:
+3. **分布を説明**:
 ```python
 "students throughout frame, some in foreground, groups in background"
 ```
 
-4. **Add activity indicators**:
+4. **活動インジケーターを追加**:
 ```python
 "multiple students working on different tasks, various groups"
 ```
 
-**Example Fix**:
+**修正例**:
 ```
 # Before (too few people)
 "classroom with students"
@@ -200,60 +200,60 @@ students in foreground and background, bustling atmosphere"
 
 ---
 
-### Problem: "Characters don't match description"
+### 問題: "Characters don't match description"
 
-**Symptoms**: Characters look different than specified
+**症状**: キャラクターが指定されたものと異なる
 
-**Solutions**:
+**解決策**:
 
-1. **Use very specific descriptions**:
+1. **非常に具体的な説明を使用**:
 ```python
 "teenage girl, long black hair, school uniform, specific appearance"
 ```
 
-2. **Reference key visual**:
+2. **主要ビジュアルを参照**:
 ```python
 # Use --key-visual flag
 python scripts/generate_storyboard.py "story" --key-visual "character.jpg"
 ```
 
-3. **Specify in every prompt**:
+3. **すべてのプロンプトで指定**:
 ```python
 "same teenage girl as before, long black hair, consistent appearance"
 ```
 
-4. **Use character sheets**:
-- Generate character reference first
-- Reference in each subsequent cut
+4. **キャラクターシートを使用**:
+- まずキャラクター参照を生成
+- その後の各カットで参照
 
 ---
 
-### Problem: "Composition is off-center or unbalanced"
+### 問題: "Composition is off-center or unbalanced"
 
-**Symptoms**: Important elements cut off or poorly framed
+**症状**: 重要な要素がカットオフされたか、フレーミングが不十分
 
-**Solutions**:
+**解決策**:
 
-1. **Specify composition explicitly**:
+1. **構図を明示的に指定**:
 ```python
 "centered composition, subject in center frame"
 ```
 
-2. **Use specific placement**:
+2. **特定の配置を使用**:
 ```python
 "subject on left third following rule of thirds"
 ```
 
-3. **Add framing instructions**:
+3. **フレーミング指示を追加**:
 ```python
 "ensure full body visible in frame, well-framed"
 ```
 
-4. **Check shot type**:
-- ELS might be too wide
-- Try MS or LS instead
+4. **ショットタイプを確認**:
+- ELSは広すぎる可能性
+- MSまたはLSを試す
 
-**Example Fix**:
+**修正例**:
 ```
 # Before (cut off)
 "person in scene"
@@ -266,32 +266,32 @@ proper headroom, well-balanced framing"
 
 ---
 
-### Problem: "Generated image doesn't match prompt"
+### 問題: "Generated image doesn't match prompt"
 
-**Symptoms**: AI ignores key prompt elements
+**症状**: AIがキープロンプト要素を無視
 
-**Solutions**:
+**解決策**:
 
-1. **Simplify prompt**:
-- Too complex → AI picks what it understands
-- Break into essential elements only
+1. **プロンプトを単純化**:
+- 複雑すぎる → AIが理解する内容を選択
+- 重要な要素のみに分割
 
-2. **Prioritize elements**:
+2. **要素に優先順位を付ける**:
 ```python
 "[MOST IMPORTANT], [secondary], [nice to have]"
 ```
 
-3. **Remove conflicting instructions**:
+3. **矛盾する指示を削除**:
 ```python
 # Bad: "dark mysterious bright cheerful"
 # Good: "mysterious atmosphere with soft lighting"
 ```
 
-4. **Use consistent terminology**:
-- Stick to common filmmaking terms
-- Avoid jargon or mixed metaphors
+4. **一貫した用語を使用**:
+- 一般的な映画用語に固執
+- 専門用語や混合メタファーを避ける
 
-5. **Regenerate with variations**:
+5. **バリエーションで再生成**:
 ```python
 config = {"variations_per_cut": 3}
 # Pick best result
@@ -299,28 +299,28 @@ config = {"variations_per_cut": 3}
 
 ---
 
-### Problem: "Style inconsistency between cuts"
+### 問題: "Style inconsistency between cuts"
 
-**Symptoms**: Each cut looks like different art style
+**症状**: 各カットが異なるアートスタイルに見える
 
-**Solutions**:
+**解決策**:
 
-1. **Use key visual reference**:
+1. **主要ビジュアル参照を使用**:
 ```bash
 python scripts/generate_storyboard.py "story" --key-visual "reference.jpg"
 ```
 
-2. **Add style to every prompt**:
+2. **すべてのプロンプトにスタイルを追加**:
 ```python
 "anime style, cel-shaded, consistent art style"
 ```
 
-3. **Specify color palette consistently**:
+3. **カラーパレットを一貫して指定**:
 ```python
 "color palette: #FFE4B5, #87CEEB, #98FB98"
 ```
 
-4. **Use style guide**:
+4. **スタイルガイドを使用**:
 ```python
 config = {
     "visual_style": "cinematic",
@@ -330,18 +330,18 @@ config = {
 
 ---
 
-### Problem: "Safety filter blocked generation"
+### 問題: "Safety filter blocked generation"
 
-**Symptoms**: "Content policy violation" error
+**症状**: 「Content policy violation」エラー
 
-**Solutions**:
+**解決策**:
 
-1. **Review prompt for sensitive content**:
-- Remove violent terms
-- Avoid mature themes
-- Use safer alternatives
+1. **機密性のある内容がないかプロンプトを確認**:
+- 暴力的な用語を削除
+- 成熟したテーマを避ける
+- より安全な代替案を使用
 
-2. **Rephrase problematic terms**:
+2. **問題のある用語を言い換える**:
 ```python
 # Instead of "fighting"
 "sports competition, training scene"
@@ -350,25 +350,25 @@ config = {
 "training equipment, props"
 ```
 
-3. **Context matters**:
-- Add "educational" or "artistic context"
-- Specify "animated" or "illustrated"
+3. **コンテキストが重要**:
+- 「教育的」または「芸術的背景」を追加
+- 「アニメーション」または「イラスト」を指定
 
-4. **Simplify scene**:
-- Remove complex action
-- Focus on simpler compositions
+4. **シーンを単純化**:
+- 複雑なアクションを削除
+- より単純な構図に焦点を当てる
 
 ---
 
-## Video Prompt Issues
+## ビデオプロンプトの問題
 
-### Problem: "Video doesn't follow ItoV prompt"
+### 問題: "Video doesn't follow ItoV prompt"
 
-**Symptoms**: Generated video movement differs from prompt
+**症状**: 生成されたビデオの動きがプロンプトと異なる
 
-**Solutions**:
+**解決策**:
 
-1. **Simplify movement**:
+1. **動きを単純化**:
 ```python
 # Too complex
 "dolly in while panning left and tilting up"
@@ -377,7 +377,7 @@ config = {
 "slow zoom in, 8 seconds"
 ```
 
-2. **Be more specific**:
+2. **より具体的にする**:
 ```python
 # Vague
 "camera moves"
@@ -386,29 +386,29 @@ config = {
 "slow dolly forward, approaching subject, 10 seconds"
 ```
 
-3. **Add consistency instruction**:
+3. **一貫性の指示を追加**:
 ```python
 "maintain first frame composition throughout"
 ```
 
-4. **Match to first frame**:
-- Ensure movement makes sense from starting position
-- Design first frame with movement in mind
+4. **最初のフレームに合わせる**:
+- 開始位置から動きが理にかなっていることを確認
+- 動きを念頭に置いて最初のフレームを設計
 
 ---
 
-### Problem: "Video movement too fast or slow"
+### 問題: "Video movement too fast or slow"
 
-**Symptoms**: Pacing feels off
+**症状**: ペーシングがぎこちなく感じられる
 
-**Solutions**:
+**解決策**:
 
-1. **Specify exact duration**:
+1. **正確な期間を指定**:
 ```python
 "slow zoom in over exactly 12 seconds"
 ```
 
-2. **Use speed descriptors**:
+2. **速度記述子を使用**:
 ```python
 # Slower
 "very slow, gradual, barely perceptible"
@@ -417,97 +417,97 @@ config = {
 "quick, brisk, rapid"
 ```
 
-3. **Adjust for content**:
-- Emotion scenes: longer (10-15s)
-- Action scenes: shorter (3-6s)
+3. **コンテンツに合わせて調整**:
+- 感情シーン: より長く（10～15秒）
+- アクションシーン: より短く（3～6秒）
 
-4. **Test different durations**:
-- Try 6s, 8s, 10s versions
-- Compare results
+4. **異なる期間をテスト**:
+- 6秒、8秒、10秒版を試す
+- 結果を比較
 
 ---
 
-### Problem: "First frame changes in video"
+### 問題: "First frame changes in video"
 
-**Symptoms**: Starting image doesn't match ending video frame
+**症状**: 開始画像がビデオの終了フレームと一致していない
 
-**Solutions**:
+**解決策**:
 
-1. **Add explicit consistency**:
+1. **明示的な一貫性を追加**:
 ```python
 "maintain first frame composition, preserve starting image elements"
 ```
 
-2. **Minimize subject movement**:
+2. **サブジェクトの動きを最小化**:
 ```python
 "subtle movement only, keep character position stable"
 ```
 
-3. **Use locked camera**:
+3. **ロックカメラを使用**:
 ```python
 "static camera, no camera movement, stable frame"
 ```
 
-4. **Specify what to preserve**:
+4. **保持するものを指定**:
 ```python
 "keep character appearance consistent, maintain lighting throughout"
 ```
 
 ---
 
-## Composition and Camera Issues
+## 構図とカメラの問題
 
-### Problem: "Wrong camera angle for scene"
+### 問題: "Wrong camera angle for scene"
 
-**Symptoms**: Close-up when should be wide, or vice versa
+**症状**: クローズアップが必要な時に広角、またはその逆
 
-**Solutions**:
+**解決策**:
 
-1. **Check auto-selection**:
+1. **自動選択を確認**:
 ```python
 # Opening should be ELS
 # Dialogue should be MS
 # Emotion should be CU
 ```
 
-2. **Override manually**:
+2. **手動でオーバーライド**:
 ```python
 cut.camera_angle = 'ELS'  # Force extreme long shot
 ```
 
-3. **Regenerate with specific angle**:
+3. **特定の角度で再生成**:
 ```python
 "extreme wide shot, vast landscape, establishing shot"
 ```
 
-4. **Review scene type**:
-- Might be categorized wrong
-- Adjust scene type to match intent
+4. **シーンタイプを確認**:
+- 誤って分類された可能性
+- シーンタイプを意図に合わせて調整
 
 ---
 
-### Problem: "Camera movement doesn't match mood"
+### 問題: "Camera movement doesn't match mood"
 
-**Symptoms**: Fast movement in calm scene, static in action scene
+**症状**: 静かなシーンで高速移動、アクションシーンで静止
 
-**Solutions**:
+**解決策**:
 
-1. **Check mood-movement matrix**:
-- Calm → static or slow dolly
-- Action → tracking or handheld
-- Emotion → slow push or static
+1. **気分と動きのマトリックスを確認**:
+- 落ち着き → 静止またはスローダリー
+- アクション → トラッキングまたはハンドヘルド
+- 感情 → スロープッシュまたは静止
 
-2. **Specify mood clearly**:
+2. **気分を明確に指定**:
 ```python
 "calm atmosphere, gentle slow movement"
 ```
 
-3. **Override movement**:
+3. **動きをオーバーライド**:
 ```python
 cut.camera_movement = 'static'
 ```
 
-4. **Match movement to emotion**:
+4. **感情に合わせて動きを合わせる**:
 ```python
 # Tense scene
 "uncomfortable static shot, building tension"
@@ -518,135 +518,135 @@ cut.camera_movement = 'static'
 
 ---
 
-### Problem: "Composition looks amateur"
+### 問題: "Composition looks amateur"
 
-**Symptoms**: Unbalanced, awkward framing
+**症状**: 不均衡、ぎこちないフレーミング
 
-**Solutions**:
+**解決策**:
 
-1. **Use proven compositions**:
+1. **実証済みの構図を使用**:
 ```python
 "rule of thirds composition"  # Safe default
 "centered composition"  # For portraits
 "golden ratio"  # For aesthetics
 ```
 
-2. **Add professional terms**:
+2. **プロの用語を追加**:
 ```python
 "proper headroom, lead room for gaze direction"
 ```
 
-3. **Study references**:
-- Look at professional storyboards
-- Analyze frame composition
-- Apply learned principles
+3. **参考資料を研究**:
+- プロのストーリーボードを見る
+- フレーム構成を分析
+- 学んだ原理を適用
 
-4. **Use composition checklist**:
-- Focal point clear?
-- Balance achieved?
-- Negative space purposeful?
-- Lines level?
+4. **構図チェックリストを使用**:
+- 焦点は明確か？
+- バランスは取れているか？
+- ネガティブスペースに目的があるか？
+- ラインは水平か？
 
 ---
 
-## Style Consistency Problems
+## スタイル一貫性の問題
 
-### Problem: "Colors don't match key visual"
+### 問題: "Colors don't match key visual"
 
-**Symptoms**: Generated images have wrong color palette
+**症状**: 生成された画像が間違ったカラーパレット
 
-**Solutions**:
+**解決策**:
 
-1. **Verify key visual analysis**:
+1. **キービジュアル分析を確認**:
 ```python
 python scripts/visual_reference_analyzer.py "keyvisual.jpg"
 # Check extracted colors
 ```
 
-2. **Force color palette**:
+2. **カラーパレットを強制**:
 ```python
 "color palette: #FFE4B5, #87CEEB, #98FB98"
 ```
 
-3. **Add color temperature**:
+3. **色温を追加**:
 ```python
 "warm color temperature, golden tones"
 ```
 
-4. **Specify color mood**:
+4. **色の気分を指定**:
 ```python
 "vibrant saturated colors" or "desaturated muted colors"
 ```
 
 ---
 
-### Problem: "Art style changes between cuts"
+### 問題: "Art style changes between cuts"
 
-**Symptoms**: Anime in cut 1, realistic in cut 2
+**症状**: カット1ではアニメ、カット2ではリアルなど
 
-**Solutions**:
+**解決策**:
 
-1. **Add style to every prompt**:
+1. **すべてのプロンプトにスタイルを追加**:
 ```python
 "anime style, cel-shaded, 2D animation look"
 ```
 
-2. **Use key visual**:
+2. **キービジュアルを使用**:
 ```bash
 --key-visual "style_reference.jpg"
 ```
 
-3. **Be very specific**:
+3. **非常に具体的にする**:
 ```python
 "exactly same art style as previous cuts,
 matching cel-shading technique, consistent line art"
 ```
 
-4. **Reference existing cut**:
+4. **既存のカットを参照**:
 ```python
 "matching Cut 1 visual style, same rendering technique"
 ```
 
 ---
 
-## Music Generation Issues
+## 音楽生成の問題
 
-### Problem: "Music sections don't match video mood"
+### 問題: "Music sections don't match video mood"
 
-**Symptoms**: Happy music in sad scene
+**症状**: 悲しいシーンで楽しい音楽
 
-**Solutions**:
+**解決策**:
 
-1. **Review emotional arc**:
+1. **感情的なアーク を確認**:
 ```python
 music_gen.analyze_emotional_arc(storyboard)
 # Check detected moods
 ```
 
-2. **Manually set cut moods**:
+2. **カットムードを手動で設定**:
 ```python
 cut.mood = 'melancholic'  # Override auto-detected
 ```
 
-3. **Adjust music generation**:
+3. **音楽生成を調整**:
 ```python
 # Regenerate with corrected moods
 music_plan = music_gen.generate_complete_music_plan(storyboard)
 ```
 
-4. **Edit Suno prompts**:
-- Manually adjust genre, tempo, mood
-- Fine-tune after generation
+4. **Sunoプロンプトを編集**:
+- ジャンル、テンポ、ムードを手動で調整
+- 生成後に微調整
 
 ---
 
-### Problem: "Too many/few music sections"
+### 問題: "Too many/few music sections"
 
-**Symptoms**: Music changes too often or not enough
+**症状**: 音楽が頻繁に変わるか、ほとんど変わらない
 
-**Solutions**:
+**解決策**:
 
-1. **Manual section control**:
+1. **セクション制御を手動で実行**:
 ```python
 # Force 3 sections
 sections = [
@@ -656,171 +656,171 @@ sections = [
 ]
 ```
 
-2. **Adjust transition sensitivity**:
-- Lower threshold = fewer sections
-- Higher threshold = more sections
+2. **遷移感度を調整**:
+- 低い閾値 = セクション数少ない
+- 高い閾値 = セクション数多い
 
-3. **Group similar moods**:
-- Manually combine adjacent similar moods
-- Create longer sections
+3. **類似のムードをグループ化**:
+- 隣接する同じようなムードを手動で組み合わせ
+- より長いセクションを作成
 
 ---
 
-### Problem: "Music doesn't sync with video cuts"
+### 問題: "Music doesn't sync with video cuts"
 
-**Symptoms**: Music transitions don't align with cut changes
+**症状**: 音楽の遷移がカット変更と一致していない
 
-**Solutions**:
+**解決策**:
 
-1. **Check timing sheet**:
+1. **タイミングシートを確認**:
 ```python
 timing_sheet = music_gen.generate_timing_sheet(suno_prompts, storyboard)
 # Review sync points
 ```
 
-2. **Adjust cut durations**:
-- Match music phrase lengths
-- Use 4, 8, 12, 16 second patterns
+2. **カット期間を調整**:
+- 音楽フレーズの長さに一致させる
+- 4、8、12、16秒のパターンを使用
 
-3. **Manual sync points**:
+3. **同期ポイントを手動で設定**:
 ```python
 # Specify exact sync points
 sync_points = [0, 25, 45, 60]  # seconds
 ```
 
-4. **Post-process in DAW**:
-- Fine-tune in audio editor
-- Stretch/compress music sections
+4. **DAWで後処理**:
+- オーディオエディターで微調整
+- 音楽セクションを伸縮
 
 ---
 
-## Performance and Quality
+## パフォーマンスと品質
 
-### Problem: "Generation is very slow"
+### 問題: "Generation is very slow"
 
-**Symptoms**: Takes long time to complete
+**症状**: 完了に長時間かかる
 
-**Solutions**:
+**解決策**:
 
-1. **Reduce number of cuts**:
+1. **カット数を削減**:
 ```bash
 --cuts 6  # Instead of default 8-10
 ```
 
-2. **Skip image generation initially**:
+2. **最初は画像生成をスキップ**:
 ```bash
 --no-images  # Generate storyboard only
 ```
 
-3. **Batch in stages**:
+3. **段階的にバッチ処理**:
 ```python
 # Generate storyboard first
 # Then generate images separately
 ```
 
-4. **Use faster model**:
+4. **より高速なモデルを使用**:
 ```python
 config = {"image_model": "imagen-2.0"}  # If available and faster
 ```
 
 ---
 
-### Problem: "Output quality is inconsistent"
+### 問題: "Output quality is inconsistent"
 
-**Symptoms**: Some cuts great, others poor
+**症状**: いくつかのカットは素晴らしい、他は貧しい
 
-**Solutions**:
+**解決策**:
 
-1. **Generate multiple variations**:
+1. **複数のバリエーションを生成**:
 ```python
 config = {"variations_per_cut": 3}
 # Select best of each
 ```
 
-2. **Iterate on poor cuts**:
+2. **不良なカットを反復処理**:
 ```python
 # Regenerate specific cuts
 regenerate_cut(storyboard, cut_number=3)
 ```
 
-3. **Refine prompts incrementally**:
-- Start with auto-generated
-- Identify issues
-- Adjust specific elements
-- Regenerate
+3. **プロンプトを段階的に調整**:
+- 自動生成から開始
+- 問題を特定
+- 特定の要素を調整
+- 再生成
 
-4. **Use prompt templates**:
-- Start from proven templates
-- Customize for your needs
-
----
-
-### Problem: "Results not meeting expectations"
-
-**Symptoms**: Overall quality lower than hoped
-
-**Solutions**:
-
-1. **Set realistic expectations**:
-- AI generation has limitations
-- Not photorealistic in all cases
-- Iteration is part of process
-
-2. **Iterate and refine**:
-- First generation = draft
-- Second generation = refined
-- Third generation = polished
-
-3. **Learn from results**:
-- What works? Do more of that
-- What doesn't? Adjust approach
-- Build personal prompt library
-
-4. **Use reference images**:
-- Key visuals improve results dramatically
-- Provide style examples
-- Show desired quality level
+4. **プロンプトテンプレートを使用**:
+- 実証済みテンプレートから開始
+- ニーズに合わせてカスタマイズ
 
 ---
 
-## Quick Diagnostic Checklist
+### 問題: "Results not meeting expectations"
 
-When something goes wrong, check:
+**症状**: 全体的な品質が期待より低い
 
-- [ ] Is API key set correctly?
-- [ ] Are dependencies installed?
-- [ ] Is prompt clear and specific?
-- [ ] Are there conflicting instructions?
-- [ ] Is duration appropriate?
-- [ ] Is composition specified?
-- [ ] Is style consistent?
-- [ ] Is mood clear?
-- [ ] Are there too many complex elements?
-- [ ] Does first frame support intended movement?
+**解決策**:
+
+1. **現実的な期待を設定**:
+- AI生成には制限がある
+- すべての場合にフォトリアルなわけではない
+- 反復は過程の一部
+
+2. **反復と洗練**:
+- 最初の生成 = ドラフト
+- 2番目の生成 = 洗練
+- 3番目の生成 = ポリッシング
+
+3. **結果から学ぶ**:
+- 何が機能する？それ以上やる
+- 機能しない？アプローチを調整
+- 個人的なプロンプトライブラリを構築
+
+4. **参照画像を使用**:
+- キービジュアルは結果を劇的に改善
+- スタイル例を提供
+- 希望される品質レベルを表示
 
 ---
 
-## Getting More Help
+## クイック診断チェックリスト
 
-### Review Documentation
+何か問題が発生した場合は、以下を確認してください:
+
+- [ ] APIキーが正しく設定されているか？
+- [ ] 依存関係がインストールされているか？
+- [ ] プロンプトは明確で具体的か？
+- [ ] 矛盾する指示はないか？
+- [ ] 期間は適切か？
+- [ ] 構図が指定されているか？
+- [ ] スタイルは一貫しているか？
+- [ ] 気分は明確か？
+- [ ] 複雑な要素が多すぎないか？
+- [ ] 最初のフレームが意図された動きをサポートしているか？
+
+---
+
+## さらなるヘルプの取得
+
+### ドキュメントを確認
 - [Camera Shots Reference](camera_shots.md)
 - [Composition Guide](composition_guide.md)
 - [Camera Movements](camera_movements.md)
 - [ItoV Patterns](itov_patterns.md)
 
-### Test Systematically
-1. Identify exact problem
-2. Isolate variable
-3. Test single change
-4. Compare results
-5. Iterate
+### 体系的にテスト
+1. 正確な問題を特定
+2. 変数を分離
+3. 単一の変更をテスト
+4. 結果を比較
+5. 反復
 
-### Build Knowledge
-- Save working prompts
-- Document what works
-- Create personal templates
-- Learn from iterations
+### 知識を構築
+- 機能するプロンプトを保存
+- 機能することを文書化
+- 個人的なテンプレートを作成
+- 反復から学ぶ
 
 ---
 
-This troubleshooting guide covers most common issues. For specific problems not listed, break down the issue systematically and test individual elements.
+このトラブルシューティングガイドは、ほとんどの一般的な問題をカバーしています。リストされていない特定の問題については、問題を体系的に分解し、個々の要素をテストしてください。
