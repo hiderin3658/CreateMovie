@@ -7,6 +7,7 @@
 
 import json
 import yaml
+import re
 from pathlib import Path
 from typing import List, Dict, Optional
 from dataclasses import dataclass, asdict
@@ -62,9 +63,16 @@ class MaterialManager:
 
     def load_materials(self) -> List[Material]:
         """素材メタデータを読み込む"""
-        if not self.metadata_file.exists():
-            raise FileNotFoundError(f"Metadata file not found: {self.metadata_file}")
+        # メタデータファイルがある場合は読み込む
+        if self.metadata_file.exists():
+            return self._load_from_metadata()
+        else:
+            # メタデータがない場合はファイルから自動検出
+            print("  ℹ️  メタデータファイルが見つかりません。ファイルから自動検出します...")
+            return self._load_from_files()
 
+    def _load_from_metadata(self) -> List[Material]:
+        """メタデータファイルから素材を読み込む"""
         with open(self.metadata_file, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
 
@@ -96,6 +104,66 @@ class MaterialManager:
 
         # カテゴリ別に整理
         self._organize_by_category()
+
+        return self.materials
+
+    def _load_from_files(self) -> List[Material]:
+        """ファイルシステムから素材を自動検出"""
+        from PIL import Image
+        import os
+
+        self.materials = []
+        raw_dir = self.materials_root / "raw"
+
+        if not raw_dir.exists():
+            raise FileNotFoundError(f"Materials directory not found: {raw_dir}")
+
+        # カテゴリディレクトリを走査
+        for category_dir in raw_dir.iterdir():
+            if not category_dir.is_dir():
+                continue
+
+            category = category_dir.name
+
+            # 画像ファイルを検出
+            for image_file in category_dir.glob("*"):
+                if image_file.suffix.lower() not in ['.jpg', '.jpeg', '.png']:
+                    continue
+
+                try:
+                    # 画像サイズを取得
+                    with Image.open(image_file) as img:
+                        width, height = img.size
+
+                    # ファイル名から場所情報を抽出
+                    filename = image_file.name
+                    # 拡張子を除去
+                    name_without_ext = filename.rsplit('.', 1)[0]
+                    # 括弧とその中身を除去（全角・半角両対応）
+                    location = re.split(r'[（(]', name_without_ext)[0]
+                    # 数字とスペースを除去（例: "白良浜1" → "白良浜"）
+                    location = re.sub(r'[\d\s]+$', '', location).strip()
+
+                    material = Material(
+                        filename=filename,
+                        category=category,
+                        location=location,
+                        description=f"{location}の写真",
+                        width=width,
+                        height=height,
+                        file_size=os.path.getsize(image_file),
+                        path=str(image_file),
+                        main_subject=location
+                    )
+                    self.materials.append(material)
+
+                except Exception as e:
+                    print(f"  ⚠️  Failed to load {image_file.name}: {e}")
+
+        # カテゴリ別に整理
+        self._organize_by_category()
+
+        print(f"  ✓ {len(self.materials)} 枚の素材を自動検出しました")
 
         return self.materials
 

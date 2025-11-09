@@ -1,227 +1,214 @@
 project: nanki-shirahama-2024
 total_materials: 16
 photos:
-- filename: 白良浜2（全景）.JPG
-  category: beach
-  location: 白浜
-  description: beach photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: beach
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
-  width: 2000
-  height: 1333
-  file_size: 331322
-- filename: 白良浜4（南向き）.jpeg
-  category: beach
-  location: 白浜
-  description: beach photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: beach
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
-  width: 2000
-  height: 1333
-  file_size: 205914
+# Beach Category (5 images)
 - filename: 白良浜1（海向き全景）.jpeg
   category: beach
-  location: 白浜
-  description: beach photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: beach
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
+  location: 白良浜
+  description: 空撮による白良浜の全景。三日月型の美しい白い砂浜と透明度の高いエメラルドグリーンの海が特徴。遠浅のビーチで観光客が少なく、リゾートホテル群と駐車場が周囲に見える。
+  time_of_day: daytime
+  weather: sunny
+  main_subject: 白い砂浜とエメラルドグリーンの海
+  composition: aerial_view
+  color_tone: blue_turquoise_white
   width: 1000
   height: 562
   file_size: 93056
+
+- filename: 白良浜2（全景）.JPG
+  category: beach
+  location: 白良浜
+  description: 高台から見た白良浜の全景。広々とした白い砂浜、澄んだ青い海、ヤシの木が立ち並ぶプロムナード、背景にリゾートホテル群が見える。快晴の日中撮影。
+  time_of_day: daytime
+  weather: sunny
+  main_subject: ビーチ全景とリゾート施設
+  composition: elevated_view
+  color_tone: blue_white_green
+  width: 2000
+  height: 1333
+  file_size: 331322
+
 - filename: 白良浜3（北向き）.jpeg
   category: beach
-  location: 白浜
-  description: beach photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: beach
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
+  location: 白良浜
+  description: ビーチレベルからの撮影。白く細かい砂、透明な浅瀬、エメラルドグリーンから深い青へのグラデーション。リゾートホテルが海岸線に並び、観光客が海水浴を楽しむ様子。
+  time_of_day: daytime
+  weather: sunny
+  main_subject: 白い砂浜と透明な海
+  composition: beach_level
+  color_tone: turquoise_beige_blue
   width: 2000
   height: 1333
   file_size: 175930
-- filename: 白良浜6（ビーチカフェ）.JPG
+
+- filename: 白良浜4（南向き）.jpeg
   category: beach
-  location: 白浜
-  description: beach photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: beach
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
+  location: 白良浜
+  description: ビーチレベルからの南向き撮影。白い砂浜、透明な浅瀬、岩の防波堤が特徴。青空に白い雲が浮かび、快晴の典型的なビーチシーン。
+  time_of_day: daytime
+  weather: sunny
+  main_subject: 砂浜と岩の防波堤
+  composition: beach_level
+  color_tone: blue_white_beige
+  width: 2000
+  height: 1333
+  file_size: 205914
+
+- filename: 白良浜6（ビーチカフェ）.JPG
+  category: beach
+  location: 白良浜
+  description: ビーチカフェの外観。モダンな白い建物、装飾的なファサード、白いパラソル、観葉植物のアクセント。砂浜に建つカフェで、曇り空の下。
+  time_of_day: daytime
+  weather: cloudy
+  main_subject: ビーチカフェ施設
+  composition: ground_level
+  color_tone: white_neutral
   width: 4032
   height: 3024
   file_size: 1719915
-- filename: 千畳敷2.jpeg
-  category: nature
-  location: 白浜
-  description: nature photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: nature
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
-  width: 1500
-  height: 996
-  file_size: 230231
-- filename: 円月島夕日１.jpeg
-  category: nature
-  location: 白浜
-  description: nature photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: nature
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
-  width: 1000
-  height: 666
-  file_size: 83221
-- filename: 三段壁.jpeg
-  category: nature
-  location: 白浜
-  description: nature photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: nature
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
-  width: 2000
-  height: 1333
-  file_size: 463525
-- filename: 番所山隧道.jpeg
-  category: nature
-  location: 白浜
-  description: nature photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: nature
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
-  width: 2000
-  height: 1333
-  file_size: 605012
-- filename: 円月島.jpeg
-  category: nature
-  location: 白浜
-  description: nature photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: nature
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
-  width: 1000
-  height: 666
-  file_size: 96781
-- filename: 千畳敷1.jpg
-  category: nature
-  location: 白浜
-  description: nature photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: nature
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
-  width: 1500
-  height: 996
-  file_size: 268586
+
+# Attractions Category (4 images)
 - filename: 崎の湯 (3).jpeg
   category: attractions
-  location: 白浜
-  description: attractions photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: attractions
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
+  location: 崎の湯
+  description: 海辺の露天風呂。岩場に囲まれた温泉、波が砕ける様子、木製の桶がアクセント。黄色い仕切りが特徴的。ダイナミックな自然と一体化した温泉体験。
+  time_of_day: daytime
+  weather: partly_cloudy
+  main_subject: 海辺の露天風呂
+  composition: close_up
+  color_tone: blue_brown_yellow
   width: 2000
   height: 1329
   file_size: 261679
-- filename: 白良浜5（花火）.jpg
-  category: attractions
-  location: 白浜
-  description: attractions photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: attractions
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
-  width: 593
-  height: 395
-  file_size: 43687
-- filename: 崎の湯2.jpg
-  category: attractions
-  location: 白浜
-  description: attractions photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: attractions
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
-  width: 1000
-  height: 664
-  file_size: 77225
+
 - filename: 崎の湯1.jpeg
   category: attractions
-  location: 白浜
-  description: attractions photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: attractions
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
+  location: 崎の湯
+  description: 露天風呂の静かな一面。岩の縁に囲まれた温泉、穏やかな海、柔らかい光。夕方または早朝の雰囲気で、平和な温泉体験を表現。
+  time_of_day: evening_or_morning
+  weather: clear
+  main_subject: 露天風呂と海
+  composition: low_angle
+  color_tone: blue_gray_brown
   width: 1000
   height: 664
   file_size: 90120
+
+- filename: 崎の湯2.jpg
+  category: attractions
+  location: 崎の湯
+  description: 温泉の湯が注がれる瞬間。木製の桶と柄杓、湯気、柔らかい光。室内温泉の雰囲気で、伝統的な温泉文化を表現。
+  time_of_day: indoor
+  weather: indoor
+  main_subject: 温泉の湯と木製道具
+  composition: close_up
+  color_tone: warm_brown_soft
+  width: 1000
+  height: 664
+  file_size: 77225
+
+- filename: 白良浜5（花火）.jpg
+  category: attractions
+  location: 白良浜
+  description: 夜の花火大会。海上に打ち上げられた金色とピンクの大きな花火、海面への反射、夜の海岸線の街灯。夏の風物詩を表現。
+  time_of_day: night
+  weather: clear
+  main_subject: 花火と夜の海
+  composition: wide_shot
+  color_tone: gold_pink_black
+  width: 593
+  height: 395
+  file_size: 43687
+
+# Nature Category (6 images)
+- filename: 三段壁.jpeg
+  category: nature
+  location: 三段壁
+  description: 高さ約50メートルの断崖絶壁。層状に重なった岩の地層、浸食された崖面、深い青い海。自然の力強さと地質学的な美しさを表現。
+  time_of_day: daytime
+  weather: sunny
+  main_subject: 断崖絶壁
+  composition: side_view
+  color_tone: brown_blue_green
+  width: 2000
+  height: 1333
+  file_size: 463525
+
+- filename: 円月島.jpeg
+  category: nature
+  location: 円月島
+  description: 白浜の象徴的な島。中央に円形の穴が開いた岩の島、透明な浅瀬、エメラルドグリーンの海、青空。日中の明るい光の中で撮影。
+  time_of_day: daytime
+  weather: sunny
+  main_subject: 円月島（穴の開いた岩の島）
+  composition: frontal_view
+  color_tone: turquoise_gray_blue
+  width: 1000
+  height: 666
+  file_size: 96781
+
+- filename: 円月島夕日１.jpeg
+  category: nature
+  location: 円月島
+  description: 円月島の夕景。夕日が島の穴を通過するシルエット、オレンジ・ピンク・金色のグラデーション空、海面の反射。白浜を代表する絶景。
+  time_of_day: sunset
+  weather: clear
+  main_subject: 円月島と夕日
+  composition: silhouette
+  color_tone: orange_pink_gold
+  width: 1000
+  height: 666
+  file_size: 83221
+
+- filename: 千畳敷1.jpg
+  category: nature
+  location: 千畳敷
+  description: 波の浸食で作られた平らな岩の地形。層状の地層が明確に見え、独特の風化パターン。青い海と対比する黄褐色の岩。
+  time_of_day: daytime
+  weather: sunny
+  main_subject: 浸食された岩の地形
+  composition: wide_angle
+  color_tone: yellow_brown_blue
+  width: 1500
+  height: 996
+  file_size: 268586
+
+- filename: 千畳敷2.jpeg
+  category: nature
+  location: 千畳敷
+  description: 千畳敷の広い平地。畳を敷き詰めたような広大な岩の平面、人物が小さく見えスケール感を表現。青い海と空のコントラスト。
+  time_of_day: daytime
+  weather: sunny
+  main_subject: 広大な岩の平地
+  composition: ground_level
+  color_tone: gray_white_blue
+  width: 1500
+  height: 996
+  file_size: 230231
+
+- filename: 番所山隧道.jpeg
+  category: nature
+  location: 番所山隧道
+  description: 歴史的なレンガ造りのトンネル。アーチ型の入口、苔むしたレンガ壁、緑の植物に覆われた周囲、トンネルの先に見える明かり。歴史と自然の融合。
+  time_of_day: daytime
+  weather: shaded
+  main_subject: 歴史的なトンネル
+  composition: frontal_view
+  color_tone: green_brown_gray
+  width: 2000
+  height: 1333
+  file_size: 605012
+
+# Culture Category (1 image)
 - filename: 世界遺産（熊野古道富田坂）.jpg
   category: culture
-  location: 白浜
-  description: culture photo from Shirahama
-  time_of_day: unknown
-  weather: unknown
-  main_subject: culture
-  composition: unknown
-  color_tone: unknown
-  assigned_video: null
-  usage_notes: ''
+  location: 熊野古道富田坂
+  description: 世界遺産の熊野古道。苔むした古い石壁、石段の巡礼路、緑豊かな森に囲まれた道。歴史的な雰囲気と自然の静寂が漂う。
+  time_of_day: daytime
+  weather: shaded
+  main_subject: 石段の巡礼路
+  composition: path_view
+  color_tone: green_gray_brown
   width: 1000
   height: 750
   file_size: 211774

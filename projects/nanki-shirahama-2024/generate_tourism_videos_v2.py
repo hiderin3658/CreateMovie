@@ -210,6 +210,19 @@ class ShirahamaTourismVideoGenerator:
 
     def _build_story_for_video(self, video_id: int, video_config: dict) -> str:
         """動画用のストーリー記述を構築"""
+        # 指定カテゴリの素材を取得
+        categories = video_config.get('categories', [])
+        available_materials = []
+        for category in categories:
+            if category in self.material_manager.materials_by_category:
+                available_materials.extend(self.material_manager.materials_by_category[category])
+
+        # 素材リストを文字列化
+        materials_list = "\n".join([
+            f"  - {m.location} ({m.category})"
+            for m in available_materials
+        ])
+
         story = f"""
         {self.story_description}
 
@@ -221,7 +234,16 @@ class ShirahamaTourismVideoGenerator:
         この動画では、{video_config['title']}をテーマに、
         白浜の魅力を{self.video_duration}秒で表現します。
 
-        使用する素材カテゴリ: {', '.join(video_config.get('categories', []))}
+        使用する素材カテゴリ: {', '.join(categories)}
+
+        *** 重要: 利用可能な実際の素材（背景写真）***
+        以下の実際の白浜の場所・観光スポットの写真が利用可能です。
+        ストーリーはこれらの場所を基に作成してください：
+
+{materials_list}
+
+        注意: 上記以外の場所（アドベンチャーワールドなど）は素材がないため使用しないでください。
+        必ず上記リストの場所を基にストーリーを作成してください。
         """
         return story.strip()
 
