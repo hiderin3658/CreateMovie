@@ -61,6 +61,7 @@ story_structure:
       title: "出会いの予感"
       theme: "arrival_and_first_impression"
       duration: 10
+      cuts: 4
       mood: "hopeful, excited"
       tempo: 120
       materials_count: 3-4
@@ -70,6 +71,7 @@ story_structure:
       title: "自然の驚き"
       theme: "natural_wonders"
       duration: 10
+      cuts: 4
       mood: "awe, wonder"
       tempo: 110
       materials_count: 3-4
@@ -79,6 +81,7 @@ story_structure:
       title: "体験の楽しみ"
       theme: "activities_and_local_experience"
       duration: 10
+      cuts: 4
       mood: "joyful, satisfied"
       tempo: 130
       materials_count: 3-4
@@ -88,6 +91,7 @@ story_structure:
       title: "もう一度来たい"
       theme: "farewell_and_longing"
       duration: 10
+      cuts: 4
       mood: "nostalgic, hopeful"
       tempo: 95
       materials_count: 3-4
