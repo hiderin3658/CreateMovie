@@ -26,17 +26,23 @@ class CutData:
     lighting: str
     mood: str
     image_prompt: str
-    video_prompt: str
+    video_prompt: str = ''  # Deprecated: 後方互換性のため残す
     generated_image_path: Optional[str] = None
-    veo3_prompt: Optional[str] = None
-    sora2_prompt: Optional[str] = None
-    recommended_model: Optional[str] = None
+    veo3_prompt: str = ''  # Veo 3プロンプト（推奨）
+    sora2_prompt: str = ''  # Sora 2プロンプト（推奨）
+    recommended_model: str = 'Veo 3'  # 推奨モデル
     # Narration fields
     narration_text: Optional[str] = None
     narration_needed: bool = False
     narration_duration: Optional[float] = None
     narration_timing: Optional[str] = None
     narration_style: Optional[str] = None
+    # Material fields (for projects using existing photos/materials)
+    material_photo_path: Optional[str] = None
+    material_photo_name: Optional[str] = None
+    material_category: Optional[str] = None
+    # Reference images for image generation (optional, can override global references)
+    reference_images: Optional[List[str]] = None
 
     def to_dict(self) -> Dict:
         return asdict(self)
@@ -53,6 +59,7 @@ class StoryboardData:
     key_visual_analysis: Optional[Dict] = None
     music_sections: Optional[List[Dict]] = None
     created_at: Optional[str] = None
+    image_generation_errors: Optional[Dict] = None  # Track image generation errors
 
     def to_dict(self) -> Dict:
         return {
@@ -63,7 +70,8 @@ class StoryboardData:
             'style_guide': self.style_guide,
             'key_visual_analysis': self.key_visual_analysis,
             'music_sections': self.music_sections,
-            'created_at': self.created_at
+            'created_at': self.created_at,
+            'image_generation_errors': self.image_generation_errors
         }
 
 
@@ -261,7 +269,14 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
             visual_analysis
         )
 
-        video_prompt = self._generate_video_prompt(
+        # Veo 3とSora 2のプロンプトを生成
+        veo3_prompt = self._generate_veo3_prompt(
+            cut_info,
+            camera_movement,
+            cut_info.get('duration', 8)
+        )
+
+        sora2_prompt = self._generate_sora2_prompt(
             cut_info,
             camera_movement,
             cut_info.get('duration', 8)
@@ -278,7 +293,10 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
             lighting=self._determine_lighting(cut_info.get('mood', 'neutral')),
             mood=cut_info.get('mood', 'neutral'),
             image_prompt=image_prompt,
-            video_prompt=video_prompt
+            video_prompt='',  # 後方互換性のため空文字列
+            veo3_prompt=veo3_prompt,
+            sora2_prompt=sora2_prompt,
+            recommended_model='Veo 3'  # デフォルト推奨モデル
         )
 
     def _generate_image_prompt(
@@ -320,30 +338,73 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
 
         return ', '.join(filter(None, prompt_parts))
 
-    def _generate_video_prompt(
+    def _generate_veo3_prompt(
         self,
         cut_info: Dict,
         camera_movement: str,
         duration: int
     ) -> str:
-        """Generate ItoV prompt for video generation"""
+        """Generate Veo 3 prompt for video generation"""
+        # Veo 3用のカメラムーブメント記述
         movement_desc = {
-            'static': 'static camera with slight natural drift',
-            'slow_zoom_in': 'slow zoom in, gradually revealing details',
-            'slow_pull_back': 'slow pull back, revealing wider context',
-            'tracking': 'smooth tracking shot following action',
-            'dolly_in': 'dolly forward toward subject',
-            'pan': 'smooth pan across scene',
-            'slow_pan': 'slow pan across scene'
-        }.get(camera_movement, 'subtle camera movement')
+            'static': 'Camera: Static shot with minimal natural drift',
+            'slow_zoom_in': 'Camera: Slow zoom in, gradually revealing details',
+            'slow_pull_back': 'Camera: Slow pull back, revealing wider context',
+            'tracking': 'Camera: Smooth tracking shot following the action',
+            'dolly_in': 'Camera: Dolly forward toward subject',
+            'pan': 'Camera: Smooth pan across scene',
+            'slow_pan': 'Camera: Slow pan movement',
+            'pan_left': 'Camera: Pan left across scene',
+            'pan_right': 'Camera: Pan right across scene',
+            'zoom_in': 'Camera: Zoom in on subject',
+            'zoom_out': 'Camera: Zoom out revealing context',
+            'tilt_up': 'Camera: Tilt up movement',
+            'tilt_down': 'Camera: Tilt down movement'
+        }.get(camera_movement, 'Camera: Subtle movement')
 
-        prompt = f"""
-        {movement_desc},
-        {cut_info.get('action', 'natural movement')},
-        {duration} seconds,
-        {cut_info.get('mood', 'neutral')} atmosphere,
-        maintain first frame composition throughout
-        """.strip()
+        # Veo 3プロンプト構築
+        prompt_parts = [
+            f"Duration: {duration} seconds.",
+            f"{movement_desc}.",
+            f"Action: {cut_info.get('action', 'Natural movement and atmosphere')}.",
+            f"Mood: {cut_info.get('mood', 'neutral')} atmosphere.",
+            "Maintain composition and subject from the reference image.",
+            "Cinematic quality with natural motion."
+        ]
+
+        return ' '.join(prompt_parts)
+
+    def _generate_sora2_prompt(
+        self,
+        cut_info: Dict,
+        camera_movement: str,
+        duration: int
+    ) -> str:
+        """Generate Sora 2 prompt for video generation"""
+        # Sora 2用のカメラムーブメント記述（より自然言語的）
+        movement_desc = {
+            'static': 'The camera remains still, capturing a static moment with only slight natural movement',
+            'slow_zoom_in': 'The camera slowly zooms in, gradually revealing finer details of the scene',
+            'slow_pull_back': 'The camera pulls back slowly, expanding the view to show more context',
+            'tracking': 'The camera smoothly tracks the movement, following the action through the scene',
+            'dolly_in': 'The camera dollies forward, moving closer to the subject',
+            'pan': 'The camera pans smoothly across the scene',
+            'slow_pan': 'The camera pans slowly and deliberately across the frame',
+            'pan_left': 'The camera pans left, sweeping across the scene',
+            'pan_right': 'The camera pans right, revealing the environment',
+            'zoom_in': 'The camera zooms in on the subject',
+            'zoom_out': 'The camera zooms out, showing the broader context',
+            'tilt_up': 'The camera tilts upward',
+            'tilt_down': 'The camera tilts downward'
+        }.get(camera_movement, 'The camera moves subtly')
+
+        # Sora 2プロンプト構築（より詳細な記述）
+        scene_desc = cut_info.get('scene_description', '')
+        action = cut_info.get('action', 'natural movement')
+        mood = cut_info.get('mood', 'neutral')
+        lighting = cut_info.get('lighting', 'natural lighting')
+
+        prompt = f"""{scene_desc}. {action}. {movement_desc}. The {duration}-second shot captures a {mood} atmosphere with {lighting}. The composition maintains visual consistency with the reference image while allowing natural, cinematic motion.""".strip()
 
         return prompt
 
@@ -476,14 +537,73 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
         report.append(f"**Duration**: {storyboard.duration}s | **Cuts**: {storyboard.num_cuts}\n")
         report.append(f"**Created**: {storyboard.created_at}\n")
 
-        # Check if any images were generated
-        images_generated = any(cut.generated_image_path for cut in storyboard.cuts)
-        if not images_generated and storyboard.num_cuts > 0:
+        # Check if any images failed to generate
+        images_generated_count = sum(1 for cut in storyboard.cuts if cut.generated_image_path)
+        images_failed_count = storyboard.num_cuts - images_generated_count
+
+        if images_failed_count > 0:
             report.append("\n---\n")
             report.append("\n> ⚠️ **画像生成について**\n")
             report.append("> \n")
-            report.append("> APIが設定されていないか使用できなかったため、画像生成できませんでした。\n")
-            report.append("> 各カットの「Image Prompt」を使用して、Gemini 2.5 Flash Image または他の画像生成サービスで手動で生成してください。\n")
+
+            # Show generation statistics
+            if images_generated_count > 0:
+                report.append(f"> **生成結果**: {images_generated_count}/{storyboard.num_cuts} カット成功、{images_failed_count} カット失敗\n")
+            else:
+                report.append(f"> **生成結果**: 全 {storyboard.num_cuts} カットの画像生成に失敗しました\n")
+            report.append("> \n")
+
+            # Show detailed error information
+            if storyboard.image_generation_errors:
+                errors = storyboard.image_generation_errors
+
+                # Categorize errors
+                error_types = {}
+                for error in errors.get('errors', []):
+                    error_type = error.get('type', 'unknown')
+                    if error_type not in error_types:
+                        error_types[error_type] = []
+                    error_types[error_type].append(error)
+
+                report.append("> **エラー詳細**:\n")
+
+                for error_type, type_errors in error_types.items():
+                    if error_type == 'quota_exceeded':
+                        report.append("> - ⛔ **APIクォータ超過**: 無料枠の制限に達しました\n")
+                        if type_errors and 'cut_number' in type_errors[0]:
+                            failed_cuts = [str(e.get('cut_number')) for e in type_errors]
+                            report.append(f">   - 影響を受けたカット: {', '.join(failed_cuts)}\n")
+                        report.append(">   - 💡 **対処法**: しばらく時間を置いてから再実行、または有料プランへのアップグレードをご検討ください\n")
+                        report.append(">   - 📊 使用状況の確認: https://ai.dev/usage?tab=rate-limit\n")
+
+                    elif error_type == 'api_unavailable':
+                        report.append("> - ❌ **API利用不可**: Gemini APIが利用できません\n")
+                        report.append(">   - 💡 **対処法**: APIキーが正しく設定されているか確認してください\n")
+                        report.append(">   - 環境変数 `GEMINI_API_KEY` または `.env` ファイルを確認\n")
+
+                    elif error_type == 'permission_denied':
+                        report.append("> - 🔒 **権限エラー**: APIキーに必要な権限がありません\n")
+                        report.append(">   - 💡 **対処法**: APIキーの権限設定を確認してください\n")
+
+                    elif error_type == 'model_not_found':
+                        report.append("> - 🔍 **モデル未検出**: 指定された画像生成モデルが見つかりません\n")
+                        report.append(">   - 💡 **対処法**: モデル名を確認してください\n")
+
+                    elif error_type == 'network_error':
+                        report.append("> - 🌐 **ネットワークエラー**: API接続に失敗しました\n")
+                        report.append(">   - 💡 **対処法**: インターネット接続を確認してください\n")
+
+                    else:
+                        report.append(f"> - ⚠️ **その他のエラー** ({error_type})\n")
+                        if type_errors and type_errors[0].get('message'):
+                            # Show first error message as example
+                            sample_msg = type_errors[0]['message'][:150]
+                            report.append(f">   - {sample_msg}...\n")
+            else:
+                report.append("> APIが設定されていないか使用できなかったため、画像生成できませんでした。\n")
+
+            report.append("> \n")
+            report.append("> 📝 **画像プロンプトについて**: 失敗したカットの「Image Prompt」を使用して、Gemini 2.5 Flash Image または他の画像生成サービスで手動で生成できます。\n")
             report.append("\n---\n")
 
         if storyboard.key_visual_analysis:
@@ -502,8 +622,16 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
                 report.append(f"![Cut {cut.cut_number}](frames/{rel_path})\n\n")
             else:
                 # Display placeholder when image is not generated
-                report.append("\n> 📸 **Image not generated** (API key not available)\n")
-                report.append("> Use the Image Prompt below to generate this frame with Imagen 3 or other image generation services.\n\n")
+                report.append("\n```\n")
+                report.append("┌─────────────────────────────────────────────┐\n")
+                report.append("│                                             │\n")
+                report.append("│         📸  画像が生成されませんでした         │\n")
+                report.append("│                                             │\n")
+                report.append("│   下記の Image Prompt を使用して            │\n")
+                report.append("│   手動で画像を生成してください               │\n")
+                report.append("│                                             │\n")
+                report.append("└─────────────────────────────────────────────┘\n")
+                report.append("```\n\n")
 
             report.append(f"**Scene**: {cut.scene_description}\n")
             report.append(f"**Action**: {cut.action}\n")
@@ -521,15 +649,18 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
                     report.append(f"> 💡 Style: {cut.narration_style} | Timing: {cut.narration_timing or 'start'} | Duration: ~{cut.narration_duration or 0}s\n")
 
             report.append(f"\n**Image Prompt**:\n```\n{cut.image_prompt}\n```\n")
-            report.append(f"\n**Video Prompt**:\n```\n{cut.video_prompt}\n```\n")
 
-            # Add Veo3 and Sora2 prompts if available
+            # Video generation prompts (Veo 3 と Sora 2)
             if cut.veo3_prompt:
                 report.append(f"\n**Veo 3 Prompt**:\n```\n{cut.veo3_prompt}\n```\n")
             if cut.sora2_prompt:
                 report.append(f"\n**Sora 2 Prompt**:\n```\n{cut.sora2_prompt}\n```\n")
             if cut.recommended_model:
                 report.append(f"\n**Recommended Model**: {cut.recommended_model}\n")
+
+            # 後方互換性: video_promptが存在し、かつVeo3/Sora2が空の場合のみ表示
+            if cut.video_prompt and not (cut.veo3_prompt or cut.sora2_prompt):
+                report.append(f"\n**Video Prompt** (Legacy):\n```\n{cut.video_prompt}\n```\n")
 
             report.append("\n---\n")
 

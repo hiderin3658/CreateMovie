@@ -273,6 +273,89 @@ class MaterialManager:
 
         print(f"✓ Material mapping saved to: {self.mapping_file}")
 
+    def select_material_for_scene(
+        self,
+        scene_description: str,
+        categories: List[str],
+        mood: Optional[str] = None,
+        time_of_day: Optional[str] = None
+    ) -> Optional[Material]:
+        """
+        シーン説明から最適な素材を選択
+
+        Args:
+            scene_description: シーンの説明文
+            categories: 利用可能なカテゴリリスト
+            mood: ムード（オプション）
+            time_of_day: 時間帯（オプション）
+
+        Returns:
+            選択された素材、見つからない場合はNone
+        """
+        # カテゴリから候補を取得
+        candidates = []
+        for category in categories:
+            if category in self.materials_by_category:
+                candidates.extend(self.materials_by_category[category])
+
+        if not candidates:
+            return None
+
+        # シーン説明から場所名を抽出してマッチング
+        scene_lower = scene_description.lower()
+
+        # スコアリング
+        scored_materials = []
+        for material in candidates:
+            score = 0
+
+            # 場所名のマッチング（最優先）
+            if material.location and material.location in scene_description:
+                score += 100
+
+            # main_subjectのマッチング
+            if material.main_subject and material.main_subject in scene_description:
+                score += 50
+
+            # 時間帯のマッチング
+            if time_of_day and material.time_of_day:
+                if time_of_day.lower() in material.time_of_day.lower():
+                    score += 30
+
+            # color_toneとmoodの相性チェック
+            if mood and material.color_tone:
+                mood_color_map = {
+                    'hopeful': ['warm', 'gold', 'bright'],
+                    'adventurous': ['blue', 'bright', 'vivid'],
+                    'romantic': ['warm', 'pink', 'soft'],
+                    'peaceful': ['blue', 'soft', 'calm']
+                }
+                if mood in mood_color_map:
+                    for color_keyword in mood_color_map[mood]:
+                        if color_keyword in material.color_tone.lower():
+                            score += 20
+                            break
+
+            # HD画質ボーナス
+            if material.is_hd:
+                score += 10
+
+            # 未使用素材にボーナス
+            if material.assigned_video is None:
+                score += 5
+
+            scored_materials.append((score, material))
+
+        # スコア順にソート
+        scored_materials.sort(key=lambda x: x[0], reverse=True)
+
+        # 最高スコアの素材を返す
+        if scored_materials and scored_materials[0][0] > 0:
+            return scored_materials[0][1]
+
+        # マッチングに失敗した場合は最初の素材を返す
+        return candidates[0] if candidates else None
+
     def validate_constraints(self) -> List[str]:
         """
         素材制約の検証

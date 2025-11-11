@@ -28,7 +28,7 @@ project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 from core.base import GeneratorConfig
-from core.video import CoreStoryboardGenerator
+from core.video import CoreStoryboardGenerator, ImageGenerator
 
 # 南紀白浜プロジェクトのモジュール
 project_dir = Path(__file__).parent
@@ -76,6 +76,8 @@ class ShirahamaTourismVideoGenerator:
 
         # プラグイン
         self.tourism_plugin = create_plugin()
+        # プラグインにMaterialManagerを設定
+        self.tourism_plugin.set_material_manager(self.material_manager)
 
         print("=" * 70)
         print("南紀白浜観光プロモーション動画生成システム（コアシステム統合版）")
@@ -133,7 +135,7 @@ class ShirahamaTourismVideoGenerator:
             duration=self.video_duration,
             num_cuts=video_config.get('cuts', 3),
             visual_style='anime',
-            generate_images=False,  # 後で実装
+            generate_images=True,   # コアシステムのエラーハンドリングを活用
             generate_music=False,   # 後で実装
             output_dir=str(self.output_dir / f"video{video_id}"),
             title=video_config['title']
@@ -179,14 +181,48 @@ class ShirahamaTourismVideoGenerator:
         # プラグイン: バリデーション
         storyboard = generator.process_plugins(storyboard, 'validation')
 
+        # 画像生成（コアシステムのエラーハンドリングを活用）
+        if config.generate_images:
+            print("  🎨 画像生成中...")
+            image_gen = ImageGenerator()
+
+            # 各カットに対して、キャラ参照（最大2枚）+背景素材（1枚）を準備
+            for cut in storyboard.cuts:
+                # 参照画像リストを構築（合計最大3枚）
+                cut_reference_images = []
+
+                # 1. キャラクター参照画像（最大2枚）
+                if self.character_reference:
+                    # 最大2枚に制限（白浜プロジェクト固有の制約）
+                    cut_reference_images.extend([str(ref) for ref in self.character_reference[:2]])
+
+                # 2. 背景素材写真（1枚）
+                if hasattr(cut, 'material_photo_path') and cut.material_photo_path:
+                    cut_reference_images.append(cut.material_photo_path)
+                    print(f"    Cut {cut.cut_number}: 参照画像 = キャラ{len(self.character_reference[:2])}枚 + 背景1枚 ({Path(cut.material_photo_path).name})")
+                elif self.character_reference:
+                    # 背景素材がない場合は警告（キャラ参照のみで生成）
+                    print(f"    ⚠️  Cut {cut.cut_number}: 背景素材なし（キャラ参照のみ使用）")
+
+                # カットに参照画像リストを設定（ImageGeneratorで使用）
+                cut.reference_images = cut_reference_images
+
+            image_gen.generate_images(storyboard.cuts, str(self.output_dir / f"video{video_id}"))
+
+            # エラーサマリーを取得して絵コンテに追加
+            error_summary = image_gen.get_error_summary()
+            if error_summary['has_errors']:
+                storyboard.image_generation_errors = error_summary
+                print(f"  ⚠️  画像生成: {error_summary['total_generated']} 成功, {error_summary['total_failed']} 失敗")
+
         # 保存
         output_path = self.output_dir / f"video{video_id}"
         output_path.mkdir(parents=True, exist_ok=True)
 
-        storyboard_file = output_path / "storyboard.json"
-        generator.save_storyboard(storyboard, str(storyboard_file))
+        # コアシステムのsave_storyboard()はディレクトリパスを受け取る
+        generator.save_storyboard(storyboard, str(output_path))
 
-        print(f"  ✓ 絵コンテ保存: {storyboard_file}")
+        print(f"  ✓ 絵コンテ保存: {output_path / 'storyboard.json'}")
 
         # プラグインの警告があれば表示
         if 'plugin_warnings' in storyboard:

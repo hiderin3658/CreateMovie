@@ -68,6 +68,8 @@ class ShirahamaTourismPlugin(BasePlugin):
             'modification_allowed': False
         }
         self.warnings: List[str] = []
+        self.material_selection_errors: List[Dict] = []
+        self.material_manager = None  # MaterialManagerインスタンスを後で設定
 
     def setup(self, generator: 'BaseVideoGenerator'):
         """プラグインをセットアップ"""
@@ -75,6 +77,10 @@ class ShirahamaTourismPlugin(BasePlugin):
         print(f"[{self.name}] Shirahama Tourism Plugin initialized")
         print(f"  - Material constraints: Scale/Crop only")
         print(f"  - Camera movements: {len(self.ALLOWED_CAMERA_MOVEMENTS)} allowed types")
+
+    def set_material_manager(self, material_manager):
+        """MaterialManagerを設定"""
+        self.material_manager = material_manager
 
     def supports_stage(self, stage: str) -> bool:
         """サポートするステージ"""
@@ -117,14 +123,54 @@ class ShirahamaTourismPlugin(BasePlugin):
         return data
 
     def _post_generation_processing(self, data: Dict) -> Dict:
-        """生成後処理: 制約チェックと警告"""
-        print(f"[{self.name}] Post-generation: Validating constraints")
+        """生成後処理: 素材選択と制約チェック"""
+        print(f"[{self.name}] Post-generation: Selecting materials and validating constraints")
 
         self.warnings = []
+        self.material_selection_errors = []
 
         # カット情報をチェック
         if 'cuts' in data:
+            categories = data.get('categories', [])
+
             for i, cut in enumerate(data['cuts'], 1):
+                # 素材選択（MaterialManagerが設定されている場合）
+                if self.material_manager:
+                    try:
+                        material = self.material_manager.select_material_for_scene(
+                            scene_description=cut.get('scene_description', ''),
+                            categories=categories,
+                            mood=cut.get('mood'),
+                            time_of_day=cut.get('time_of_day')
+                        )
+
+                        if material:
+                            # CutDataに素材情報を追加
+                            cut['material_photo_path'] = material.path
+                            cut['material_photo_name'] = material.filename
+                            cut['material_category'] = material.category
+                            print(f"  ✓ Cut {i}: 素材選択 → {material.filename}")
+                        else:
+                            # 素材が見つからない
+                            error = {
+                                'cut_number': i,
+                                'type': 'material_not_found',
+                                'message': f'No suitable material found for scene: {cut.get("scene_description", "")[:50]}...',
+                                'categories': categories
+                            }
+                            self.material_selection_errors.append(error)
+                            self.warnings.append(f"Cut {i}: 適切な素材が見つかりませんでした")
+
+                    except Exception as e:
+                        error = {
+                            'cut_number': i,
+                            'type': 'material_selection_error',
+                            'message': str(e),
+                            'exception_type': type(e).__name__
+                        }
+                        self.material_selection_errors.append(error)
+                        self.warnings.append(f"Cut {i}: 素材選択エラー - {str(e)}")
+
                 # カメラワークチェック
                 camera_movement = cut.get('camera_movement', '').lower()
                 if camera_movement:
@@ -153,6 +199,17 @@ class ShirahamaTourismPlugin(BasePlugin):
                 if 'notes' not in cut:
                     cut['notes'] = ""
                 cut['notes'] += "\n[Material Constraint] Scale/Crop only - No shape modification allowed"
+
+        # 素材選択エラーをimage_generation_errors形式で追加
+        if self.material_selection_errors:
+            if 'image_generation_errors' not in data:
+                data['image_generation_errors'] = {
+                    'total_generated': 0,
+                    'total_failed': len(self.material_selection_errors),
+                    'errors': [],
+                    'has_errors': True
+                }
+            data['image_generation_errors']['errors'].extend(self.material_selection_errors)
 
         # 警告をデータに追加
         if self.warnings:

@@ -112,6 +112,12 @@ def main():
         image_gen = ImageGenerator()
         image_gen.generate_images(storyboard.cuts, config.output_dir)
 
+        # Capture image generation errors
+        error_summary = image_gen.get_error_summary()
+        if error_summary['has_errors']:
+            storyboard.image_generation_errors = error_summary
+            print(f"\n⚠️  Image generation: {error_summary['total_generated']} succeeded, {error_summary['total_failed']} failed")
+
     # Step 4: Generate narrations if requested
     if config.generate_narrations:
         narration_gen = NarrationGenerator()

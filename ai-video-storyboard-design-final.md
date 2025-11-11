@@ -2598,6 +2598,388 @@ class PromptCache:
         return new_prompt
 ```
 
+### 7.5 実装完了機能（2025年1月実装）
+
+#### 7.5.1 参照画像対応（ImageGenerator）
+
+**実装日**: 2025-01-11
+
+**目的**: Gemini 2.5 Flash Imageモデルを使用したマルチモーダル画像生成の実現
+
+**実装内容**:
+
+1. **マルチ画像入力対応**:
+   - 最大3枚の参照画像を同時に使用可能（Gemini 2.5 Flash Image制限）
+   - PIL.Imageを使用した画像読み込み
+   - 画像とテキストプロンプトの組み合わせ
+
+2. **コード変更箇所**: `core/video/image_generator.py`
+
+```python
+from PIL import Image
+
+# 参照画像がある場合は画像とプロンプトを組み合わせる
+content_parts = []
+if hasattr(cut, 'reference_images') and cut.reference_images:
+    # 参照画像を読み込み（最大3枚）
+    reference_count = 0
+    for ref_img_path in cut.reference_images[:3]:  # Gemini 2.5 Flash Image limit
+        ref_path = Path(ref_img_path)
+        if ref_path.exists():
+            try:
+                # PIL.Imageで画像を読み込み
+                img = Image.open(ref_path)
+                content_parts.append(img)
+                reference_count += 1
+                print(f"    + Reference image {reference_count}: {ref_path.name}")
+            except Exception as img_error:
+                print(f"    ⚠️  Failed to load reference image {ref_path.name}: {img_error}")
+        else:
+            print(f"    ⚠️  Reference image not found: {ref_path}")
+
+    if reference_count > 0:
+        print(f"    → Using {reference_count} reference image(s)")
+
+# プロンプトを追加
+content_parts.append(cut.image_prompt)
+
+# 画像生成リクエスト
+response = model.generate_content(content_parts)
+```
+
+3. **エラーハンドリング**:
+   - 画像ファイルが存在しない場合の警告
+   - 画像読み込み失敗時の個別エラーハンドリング
+   - 参照画像なしでのフォールバック動作
+
+4. **使用例**（白浜プロジェクト）:
+```python
+# キャラクター参照（2枚）+ 背景素材（1枚）
+cut.reference_images = [
+    'materials/character_front.jpg',
+    'materials/character_side.jpg',
+    'materials/shirahama_beach.jpg'
+]
+```
+
+**効果**:
+- スタイル一貫性の大幅な向上
+- 観光写真を背景として使用可能
+- キャラクター外見の一貫性維持
+
+---
+
+#### 7.5.2 Veo 3 / Sora 2 動画プロンプト生成
+
+**実装日**: 2025-01-11
+
+**目的**: Runway Gen-3に代わる次世代動画生成モデルへの対応
+
+**実装内容**:
+
+1. **CutDataフィールド拡張**: `core/video/storyboard_generator.py`
+
+```python
+@dataclass
+class CutData:
+    # ... existing fields ...
+    video_prompt: str = ''  # Deprecated: 後方互換性のため残す
+    generated_image_path: Optional[str] = None
+    veo3_prompt: str = ''  # Veo 3プロンプト（推奨）
+    sora2_prompt: str = ''  # Sora 2プロンプト（推奨）
+    recommended_model: str = 'Veo 3'  # 推奨モデル
+```
+
+2. **Veo 3プロンプト生成**:
+   - **特徴**: 構造化された技術的プロンプト
+   - **形式**: パラメータ列挙型
+
+```python
+def _generate_veo3_prompt(
+    self,
+    cut_info: Dict,
+    camera_movement: str,
+    duration: int
+) -> str:
+    """Generate Veo 3 prompt for video generation"""
+    # Veo 3用のカメラムーブメント記述
+    movement_desc = {
+        'static': 'Camera: Static shot with minimal natural drift',
+        'slow_zoom_in': 'Camera: Slow zoom in, gradually revealing details',
+        'slow_zoom_out': 'Camera: Slow zoom out, expanding view',
+        'pan_left': 'Camera: Smooth pan left across the scene',
+        'pan_right': 'Camera: Smooth pan right across the scene',
+        'tilt_up': 'Camera: Gentle tilt up, revealing sky or upper elements',
+        'tilt_down': 'Camera: Gentle tilt down to ground level',
+        'slow_pan': 'Camera: Slow, deliberate pan motion',
+    }.get(camera_movement, 'Camera: Subtle movement')
+
+    # Veo 3プロンプト構築（構造化形式）
+    prompt_parts = [
+        f"Duration: {duration} seconds.",
+        f"{movement_desc}.",
+        f"Action: {cut_info.get('action', 'Natural movement and atmosphere')}.",
+        f"Mood: {cut_info.get('mood', 'neutral')} atmosphere.",
+        "Maintain composition and subject from the reference image.",
+        "Cinematic quality with natural motion."
+    ]
+
+    return ' '.join(prompt_parts)
+```
+
+3. **Sora 2プロンプト生成**:
+   - **特徴**: 自然言語による物語型プロンプト
+   - **形式**: 流れるような描写的記述
+
+```python
+def _generate_sora2_prompt(
+    self,
+    cut_info: Dict,
+    camera_movement: str,
+    duration: int
+) -> str:
+    """Generate Sora 2 prompt for video generation"""
+    # Sora 2用のカメラムーブメント記述（より自然言語的）
+    movement_desc = {
+        'static': 'The camera remains still, capturing a static moment with only slight natural movement',
+        'slow_zoom_in': 'The camera slowly zooms in, gradually revealing finer details of the scene',
+        'slow_zoom_out': 'The camera gently zooms out, broadening the view and revealing more context',
+        'pan_left': 'The camera pans smoothly to the left, following the natural flow of the scene',
+        'pan_right': 'The camera pans gracefully to the right, unveiling new elements',
+        'tilt_up': 'The camera tilts upward, revealing the sky or upper architectural elements',
+        'tilt_down': 'The camera tilts downward, bringing focus to ground-level details',
+        'slow_pan': 'The camera moves in a slow, deliberate pan, allowing viewers to absorb the scene',
+    }.get(camera_movement, 'The camera moves subtly')
+
+    # Sora 2プロンプト構築（より詳細な自然言語記述）
+    scene_desc = cut_info.get('scene_description', '')
+    action = cut_info.get('action', 'natural movement')
+    mood = cut_info.get('mood', 'neutral')
+    lighting = cut_info.get('lighting', 'natural lighting')
+
+    prompt = f"""{scene_desc}. {action}. {movement_desc}. The {duration}-second shot captures a {mood} atmosphere with {lighting}. The composition maintains visual consistency with the reference image while allowing natural, cinematic motion.""".strip()
+
+    return prompt
+```
+
+4. **レポート出力対応**:
+
+```python
+# Video generation prompts (Veo 3 と Sora 2)
+if cut.veo3_prompt:
+    report.append(f"\n**Veo 3 Prompt**:\n```\n{cut.veo3_prompt}\n```\n")
+if cut.sora2_prompt:
+    report.append(f"\n**Sora 2 Prompt**:\n```\n{cut.sora2_prompt}\n```\n")
+if cut.recommended_model:
+    report.append(f"\n**Recommended Model**: {cut.recommended_model}\n")
+
+# 後方互換性: video_promptが存在し、かつVeo3/Sora2が空の場合のみ表示
+if cut.video_prompt and not (cut.veo3_prompt or cut.sora2_prompt):
+    report.append(f"\n**Video Prompt** (Legacy):\n```\n{cut.video_prompt}\n```\n")
+```
+
+**プロンプト特性比較**:
+
+| 特性 | Veo 3 | Sora 2 |
+|------|-------|--------|
+| **構造** | パラメータ列挙型 | 物語・描写型 |
+| **記述スタイル** | 技術的・明示的 | 自然言語・詩的 |
+| **カメラ記述** | `Camera: Static shot` | `The camera remains still` |
+| **時間制御** | `Duration: 8 seconds.` | `The 8-second shot` |
+| **推奨用途** | 精密な動作制御が必要なシーン | 雰囲気・感情重視のシーン |
+
+**後方互換性**:
+- `video_prompt`フィールドは空文字列でデフォルト保持
+- 既存のシステムへの影響を最小化
+- Veo3/Sora2が未生成の場合はlegacyプロンプトを表示
+
+---
+
+### 7.6 未実装・進行中の作業（2025年1月時点）
+
+#### 🟡 推奨優先度（Recommended Priority）
+
+##### 7.6.1 プラグイン処理のタイミング問題
+
+**課題**:
+- `ShirahamaTourismPlugin`の`_post_generation_processing()`が`data: Dict`を期待
+- しかし実際には`StoryboardData`オブジェクトが渡される
+- 型の不一致により素材選択処理が正しく動作しない可能性
+
+**影響範囲**:
+- `projects/nanki-shirahama-2024/plugins/shirahama_tourism_plugin.py`
+- プラグインの素材選択機能全般
+
+**解決策案**:
+1. プラグインインターフェースを`StoryboardData`対応に変更
+2. または、`StoryboardData.to_dict()`を呼び出してから渡す
+3. プラグインで両方の型をサポート
+
+**実装優先度**: 🟡 推奨（白浜プロジェクト実行時に必須）
+
+---
+
+##### 7.6.2 素材選択エラーのレポート表示
+
+**課題**:
+- `material_not_found`, `material_selection_error`エラーがJSONには記録される
+- しかしMarkdownレポートには表示されない
+- ユーザーが素材選択の失敗に気付けない
+
+**実装すべき内容**:
+1. レポート生成時にimage_generation_errorsを確認
+2. 素材選択エラーを専用セクションで表示
+3. エラータイプ別の対処法を提示
+
+**コード例**（追加予定）:
+```python
+# storyboard_generator.py の _generate_report() メソッドに追加
+if hasattr(storyboard, 'image_generation_errors') and storyboard.image_generation_errors:
+    errors = storyboard.image_generation_errors.get('errors', [])
+    material_errors = [e for e in errors if 'material' in e.get('type', '')]
+
+    if material_errors:
+        report.append("\n## ⚠️ Material Selection Issues\n\n")
+        for error in material_errors:
+            report.append(f"- **Cut {error['cut_number']}**: {error['message']}\n")
+            if error['type'] == 'material_not_found':
+                report.append(f"  - Suggestion: Check available materials in categories: {error.get('categories', [])}\n")
+```
+
+**実装優先度**: 🟡 推奨（ユーザビリティ向上）
+
+---
+
+##### 7.6.3 レポートへの素材情報表示
+
+**課題**:
+- 各カットでどの素材写真が選ばれたか表示されない
+- デバッグや品質確認が困難
+
+**実装すべき内容**:
+1. CutData詳細に素材情報セクションを追加
+2. 素材ファイル名、カテゴリ、パスを表示
+3. 素材のメタデータ（撮影場所、時間帯など）も表示
+
+**コード例**（追加予定）:
+```python
+# storyboard_generator.py の _generate_report() メソッドに追加
+if hasattr(cut, 'material_photo_name') and cut.material_photo_name:
+    report.append("\n**Material Information**:\n")
+    report.append(f"- Photo: `{cut.material_photo_name}`\n")
+    if hasattr(cut, 'material_category'):
+        report.append(f"- Category: {cut.material_category}\n")
+    if hasattr(cut, 'material_photo_path'):
+        report.append(f"- Path: `{cut.material_photo_path}`\n")
+```
+
+**実装優先度**: 🟡 推奨（品質管理向上）
+
+---
+
+##### 7.6.4 参照画像の柔軟使用プロンプト修正
+
+**背景**:
+- 白浜プロジェクトの新しい制約:
+  - 背景画像と完全一致不要（時間帯変更可: 昼→夕方/夜）
+  - ただし基本的なランドマーク・風景は保持
+  - 白浜町に存在する景色のみ
+
+**課題**:
+- 現在のプロンプトは「Maintain composition and subject from the reference image」（厳格）
+- 時間帯変更の柔軟性を反映していない
+
+**実装すべき内容**:
+1. プロンプトに時間帯の柔軟性を追加
+2. ランドマーク保持の重要性を明示
+3. 白浜プロジェクト専用のプロンプト修飾子
+
+**コード例**（追加予定）:
+```python
+# shirahama_tourism_plugin.py に追加
+def modify_image_prompt_for_flexibility(self, prompt: str, time_of_day: str) -> str:
+    """
+    時間帯の柔軟性を反映したプロンプト修正
+
+    Args:
+        prompt: 元のプロンプト
+        time_of_day: 希望する時間帯 (day, evening, night)
+    """
+    flexibility_note = """
+    Preserve the essential landmarks and scenery composition from the reference image,
+    but you may adjust lighting and atmosphere to match {time_of_day} conditions.
+    Keep recognizable features of Shirahama landmarks intact.
+    """.format(time_of_day=time_of_day)
+
+    return prompt + " " + flexibility_note.strip()
+```
+
+**実装優先度**: 🟡 推奨（白浜プロジェクトの新要件対応）
+
+---
+
+#### 🟢 オプション優先度（Optional）
+
+##### 7.6.5 キャラ参照画像の検証強化
+
+**課題**:
+- Gemini 2.5 Flash Imageの3画像制限
+- 白浜プロジェクト: キャラ2枚 + 背景1枚を推奨
+- 現状は制限超過時の警告なし
+
+**実装すべき内容**:
+```python
+def validate_reference_images(self, cut: CutData, project_type: str = 'general'):
+    """参照画像の妥当性チェック"""
+    if not hasattr(cut, 'reference_images') or not cut.reference_images:
+        return True
+
+    num_refs = len(cut.reference_images)
+
+    if num_refs > 3:
+        print(f"⚠️  Cut {cut.cut_number}: {num_refs} reference images exceed Gemini limit (max 3)")
+        return False
+
+    if project_type == 'shirahama_tourism' and num_refs > 2:
+        print(f"⚠️  Cut {cut.cut_number}: Shirahama project recommends max 2 character refs + 1 background")
+
+    return True
+```
+
+**実装優先度**: 🟢 オプション（品質向上）
+
+---
+
+##### 7.6.6 参照画像ファイル存在チェック
+
+**課題**:
+- 画像生成時にファイルが見つからない場合、実行時エラー
+- 事前チェックで早期発見可能
+
+**実装すべき内容**:
+```python
+def check_reference_images_exist(self, storyboard: StoryboardData) -> List[str]:
+    """全カットの参照画像の存在確認"""
+    missing_files = []
+
+    for cut in storyboard.cuts:
+        if hasattr(cut, 'reference_images') and cut.reference_images:
+            for ref_path in cut.reference_images:
+                if not Path(ref_path).exists():
+                    missing_files.append(f"Cut {cut.cut_number}: {ref_path}")
+
+    if missing_files:
+        print("⚠️  Missing reference images:")
+        for missing in missing_files:
+            print(f"  - {missing}")
+
+    return missing_files
+```
+
+**実装優先度**: 🟢 オプション（エラー予防）
+
+---
+
 ## 8. テストケース
 
 ### 8.1 単体テスト
