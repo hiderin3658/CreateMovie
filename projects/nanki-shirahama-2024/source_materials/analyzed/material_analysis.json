@@ -1,19 +1,167 @@
 {
-  "total_materials": 16,
+  "summary": {
+    "used": 0,
+    "total": 16,
+    "rate": 0.0,
+    "percentage": "0.0%"
+  },
   "by_category": {
-    "beach": 5,
-    "nature": 6,
-    "attractions": 4,
-    "culture": 1
+    "beach": {
+      "total": 5,
+      "used": 0,
+      "rate": 0.0,
+      "percentage": "0.0%"
+    },
+    "attractions": {
+      "total": 4,
+      "used": 0,
+      "rate": 0.0,
+      "percentage": "0.0%"
+    },
+    "nature": {
+      "total": 6,
+      "used": 0,
+      "rate": 0.0,
+      "percentage": "0.0%"
+    },
+    "culture": {
+      "total": 1,
+      "used": 0,
+      "rate": 0.0,
+      "percentage": "0.0%"
+    }
   },
-  "hd_quality": {
-    "count": 7,
-    "percentage": "43.8%"
-  },
-  "average_file_size_mb": "0.30",
-  "quality_assessment": "needs_improvement",
-  "recommendations": [
-    "nature: Excellent variety (6 photos)",
-    "Need more culture photos (current: 1, recommended: 3+)"
+  "used_materials": [],
+  "unused_materials": [
+    {
+      "filename": "白良浜1（海向き全景）.jpeg",
+      "category": "beach",
+      "reason": "Low quality (not HD resolution)",
+      "quality_score": 0.0,
+      "suggestions": [
+        "Consider using higher resolution version if available"
+      ]
+    },
+    {
+      "filename": "白良浜2（全景）.JPG",
+      "category": "beach",
+      "reason": "Low quality score (0.00)",
+      "quality_score": 0.0,
+      "suggestions": []
+    },
+    {
+      "filename": "白良浜3（北向き）.jpeg",
+      "category": "beach",
+      "reason": "Low quality score (0.00)",
+      "quality_score": 0.0,
+      "suggestions": []
+    },
+    {
+      "filename": "白良浜4（南向き）.jpeg",
+      "category": "beach",
+      "reason": "Low quality score (0.00)",
+      "quality_score": 0.0,
+      "suggestions": []
+    },
+    {
+      "filename": "白良浜6（ビーチカフェ）.JPG",
+      "category": "beach",
+      "reason": "Low quality score (0.00)",
+      "quality_score": 0.0,
+      "suggestions": []
+    },
+    {
+      "filename": "崎の湯 (3).jpeg",
+      "category": "attractions",
+      "reason": "Low quality score (0.00)",
+      "quality_score": 0.0,
+      "suggestions": []
+    },
+    {
+      "filename": "崎の湯1.jpeg",
+      "category": "attractions",
+      "reason": "Low quality (not HD resolution)",
+      "quality_score": 0.0,
+      "suggestions": [
+        "Consider using higher resolution version if available"
+      ]
+    },
+    {
+      "filename": "崎の湯2.jpg",
+      "category": "attractions",
+      "reason": "Low quality (not HD resolution)",
+      "quality_score": 0.0,
+      "suggestions": [
+        "Consider using higher resolution version if available"
+      ]
+    },
+    {
+      "filename": "白良浜5（花火）.jpg",
+      "category": "attractions",
+      "reason": "Low quality (not HD resolution)",
+      "quality_score": 0.0,
+      "suggestions": [
+        "Consider using higher resolution version if available"
+      ]
+    },
+    {
+      "filename": "三段壁.jpeg",
+      "category": "nature",
+      "reason": "Low quality score (0.00)",
+      "quality_score": 0.0,
+      "suggestions": []
+    },
+    {
+      "filename": "円月島.jpeg",
+      "category": "nature",
+      "reason": "Low quality (not HD resolution)",
+      "quality_score": 0.0,
+      "suggestions": [
+        "Consider using higher resolution version if available"
+      ]
+    },
+    {
+      "filename": "円月島夕日１.jpeg",
+      "category": "nature",
+      "reason": "Low quality (not HD resolution)",
+      "quality_score": 0.0,
+      "suggestions": [
+        "Consider using higher resolution version if available"
+      ]
+    },
+    {
+      "filename": "千畳敷1.jpg",
+      "category": "nature",
+      "reason": "Low quality (not HD resolution)",
+      "quality_score": 0.0,
+      "suggestions": [
+        "Consider using higher resolution version if available"
+      ]
+    },
+    {
+      "filename": "千畳敷2.jpeg",
+      "category": "nature",
+      "reason": "Low quality (not HD resolution)",
+      "quality_score": 0.0,
+      "suggestions": [
+        "Consider using higher resolution version if available"
+      ]
+    },
+    {
+      "filename": "番所山隧道.jpeg",
+      "category": "nature",
+      "reason": "Low quality score (0.00)",
+      "quality_score": 0.0,
+      "suggestions": []
+    },
+    {
+      "filename": "世界遺産（熊野古道富田坂）.jpg",
+      "category": "culture",
+      "reason": "Low quality (not HD resolution)",
+      "quality_score": 0.0,
+      "suggestions": [
+        "Consider using higher resolution version if available"
+      ]
+    }
   ]
 }
