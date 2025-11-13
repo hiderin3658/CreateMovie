@@ -1,0 +1,389 @@
+# 白浜観光資源データベース
+# Deep Researchから抽出した構造化データ
+
+project:
+  name: "南紀白浜観光プロモーション"
+  theme: "多層的な物語 - 古代から現代まで"
+  core_value: "多層性（古代の聖地・地質学の博物館・歴史的要衝・近代リゾート）"
+
+# ロケーション情報（10シーン）
+locations:
+  - id: "sakinoyu"
+    name: "崎の湯"
+    category: "attractions"
+    type: "露天風呂"
+
+    core_narrative: "荒々しい自然との一体化"
+    storytelling_theme: "自然への帰順"
+
+    key_features:
+      - "日本最古級の露天風呂"
+      - "太平洋と一体化する野趣"
+      - "波しぶきが降りかかる距離感"
+
+    visual_elements:
+      primary: "湯舟に迫る波しぶき、湯気と潮風"
+      contrast: "静（湯舟の水面）と動（波の轟音）の極端な対比"
+
+    filming_tips:
+      best_time: "早朝（光線）、または荒天時（波）"
+      shot_types:
+        - "三脚固定の静ショット（湯舟の水面）"
+        - "波のダイナミズムを追う動ショット"
+      sound_design: "太平洋の轟音（低周波）と湯の流れ（高周波）のコントラスト"
+
+    logistics:
+      price: "500円（3歳以上）"
+      hours:
+        summer: "7:00-19:00（7-8月）"
+        winter: "8:00-17:00（10-3月）"
+      access: "JR白浜駅から車で約15分"
+
+  - id: "yukemuri"
+    name: "湯けむり"
+    category: "culture"
+    type: "温泉文化"
+
+    core_narrative: "内なる感覚への集中"
+    storytelling_theme: "純粋な感覚の解放"
+
+    key_features:
+      - "かけ流しの源泉"
+      - "日本三美人の湯（龍神温泉）エリア"
+      - "ナトリウム炭酸水素塩泉（重曹泉）"
+
+    visual_elements:
+      primary: "湯口から注がれる湯、水面の波紋（マクロ）"
+      sensory_focus: "聴覚・嗅覚・触覚の強調"
+
+    filming_tips:
+      best_time: "湯気が立ちやすい早朝・夜間"
+      shot_types:
+        - "マクロレンズ必須（湯口の質感、水面の波紋）"
+        - "スローモーション（湯気の揺らぎ）"
+      sound_design: "ASMR - 水の音をクリアに録音"
+
+    narrative_role: "動画全体の句読点（動から静への転換）"
+
+  - id: "hanabi_rally"
+    name: "SHIRAHAMA花火ラリー"
+    category: "attractions"
+    type: "イベント"
+
+    core_narrative: "日常の中の非日常"
+    storytelling_theme: "凝縮された祝祭"
+
+    key_features:
+      - "15分間で約800発"
+      - "7-8月の日曜日開催"
+      - "水中スターマイン（海上ならでは）"
+
+    visual_elements:
+      primary: "水中スターマインの半円状の開き、三層の光（砂浜・ホテル・花火）"
+      unique_angle: "ドローンから真上撮影"
+
+    filming_tips:
+      schedule: "7-8月の日曜日 20:10-20:25（15分間）"
+      shot_types:
+        - "ドローン：水中スターマインを真上から"
+        - "三層構図：砂浜のシルエット、ホテルの灯り、空と海の花火"
+
+    distinction: "大会ではなくラリー（気軽な非日常）"
+
+  - id: "shirarahama"
+    name: "白良浜"
+    category: "beach"
+    type: "ビーチ"
+
+    core_narrative: "人間の情熱が維持する完璧な美"
+    storytelling_theme: "キュレーションされた楽園"
+
+    key_features:
+      - "延長620m、90%珪酸の石英砂"
+      - "ワイキキビーチと姉妹浜提携"
+      - "オーストラリアから砂を輸入（美しさの維持）"
+
+    visual_elements:
+      primary: "完璧な弧（ドローン俯瞰）、白いキャンバスと青・エメラルドグリーン"
+      texture: "指の間からこぼれる石英砂（マクロ）"
+
+    filming_tips:
+      best_time:
+        - "日中（海の青さ）"
+        - "夏（カラフルなパラソル）"
+        - "オフシーズン（静かな広大さ）"
+      contrast: "真夏の動 vs オフシーズンの静"
+
+    brand_identity: "白という色がブランド・アイデンティティ"
+
+  - id: "suntide"
+    name: "SUNTIDE Café&Bar"
+    category: "beach"
+    type: "ビーチカフェ"
+
+    core_narrative: "リゾートへのリブランディング"
+    storytelling_theme: "進化するビーチカルチャー"
+
+    key_features:
+      - "ラグジュアリービーチカフェ"
+      - "昼と夜で異なる表情"
+      - "モエ・エ・シャンドンを飲める上質な体験"
+
+    visual_elements:
+      primary: "白いカフェとシャンパン、昼/夜の対比"
+      transformation: "家族連れの海水浴場から上質なリゾートへ"
+
+    filming_tips:
+      best_time:
+        - "日中（強い日差し、白いパラソル）"
+        - "日没後のマジックアワー（間接照明、星空）"
+      shot_types:
+        - "同じアングルで昼と夜を撮影してトランジション"
+        - "洗練された人々をスローモーション"
+
+    slogan: "ここはもう、ビーチじゃない。リゾートだ。"
+
+  - id: "kumano_kodo_tonda"
+    name: "熊野古道・富田坂"
+    category: "culture"
+    type: "世界遺産"
+
+    core_narrative: "海から山への精神的移行"
+    storytelling_theme: "巡礼者の息遣いと森厳"
+
+    key_features:
+      - "世界遺産「紀伊山地の霊場と参詣道」"
+      - "大辺路ルートの難所（約5km登り）"
+      - "起点：草堂寺（長沢廬雪の虎図襖・重要文化財）"
+
+    visual_elements:
+      primary: "苔むした石段、登り切った先の田辺湾"
+      contrast: "ビーチの解放 vs 森の森厳"
+
+    filming_tips:
+      best_time: "森林の木漏れ日が美しい午前中"
+      sequence:
+        - "草堂寺の虎図（インサートショット）"
+        - "巡礼者の足元（石段）"
+        - "坂の中腹から見下ろす田辺湾（報酬）"
+      sound_design: "静寂 - 風の音、鳥の声、息遣いのみ（ASMR）"
+
+    spiritual_value: "祈りの道の歴史"
+
+  - id: "banshoyama_tunnel"
+    name: "番所山隧道"
+    category: "nature"
+    type: "トンネル（絶景への通路）"
+
+    core_narrative: "期待感を高めるフレーム"
+    storytelling_theme: "隠された歴史と絶景の融合"
+
+    key_features:
+      - "番所山公園内のレンガ造りトンネル"
+      - "江戸時代1643年の遠見番所（監視所）"
+      - "円月島を裏から眺める絶景への通路"
+
+    visual_elements:
+      primary: "トンネルの暗闇と出口の光（絶景）"
+      frame: "絶景への序章、期待感の演出"
+
+    filming_tips:
+      best_time: "日中（明暗のコントラスト）"
+      sequence:
+        - "暗い入口に歩いて入る"
+        - "トンネル内部を進む"
+        - "出口の光が円月島のシルエットに"
+        - "トンネルを抜けると絶景が広がる"
+
+    historical_depth: "軍事的監視所から愛すべき景勝地へ"
+
+  - id: "engetsuto"
+    name: "円月島"
+    category: "nature"
+    type: "島（名勝）"
+
+    core_narrative: "希少性という名のロマン"
+    storytelling_theme: "奇跡の瞬間に染まる空"
+
+    key_features:
+      - "国の名勝、正式名称：高嶋"
+      - "高さ25m、南北130m、中央に円月形の海食洞"
+      - "和歌山県・日本の夕陽百選"
+
+    visual_elements:
+      primary: "穴の中に夕日が沈む奇跡の瞬間（タイムラプス）"
+      rarity: "春分・秋分期（約2週間）のみ観測可能"
+
+    filming_tips:
+      miracle_moment:
+        spring: "3月20日頃"
+        autumn: "9月23日頃"
+      alternative:
+        summer: "18:30頃（穴の外に沈む夕焼け）"
+        winter: "16:30頃（穴の外に沈む夕焼け）"
+      shot_types:
+        - "タイムラプス（クライマックス）"
+        - "通常時の夕景（Bロール）"
+
+    symbolism: "手の届かない象徴（立ち入り禁止）"
+
+  - id: "sandanbeki"
+    name: "三段壁"
+    category: "nature"
+    type: "断崖"
+
+    core_narrative: "垂直の二重構造"
+    storytelling_theme: "熊野水軍の伝説を抱く断崖"
+
+    key_features:
+      - "高さ約50m（最大60m）、長さ2km"
+      - "名前の由来：見壇（みだん）= 見張り台"
+      - "地下36m：熊野水軍が船を隠した洞窟"
+
+    visual_elements:
+      primary: "地上（断崖美）と地下（洞窟と波）の対比"
+      vertical_structure: "上の絶景と下の物語"
+
+    filming_tips:
+      top_shots:
+        - "ドローン：断崖の雄大さ"
+        - "波が岩肌に打ち付けるダイナミズム"
+      bottom_shots:
+        - "エレベーター下降"
+        - "洞窟内の熊野水軍番所小屋（再現）"
+        - "潮吹き岩の迫力"
+
+    historical_legend: "源平合戦の帰趨を決めた軍事拠点"
+
+  - id: "senjojiki"
+    name: "千畳敷"
+    category: "nature"
+    type: "海岸段丘"
+
+    core_narrative: "地球との対話"
+    storytelling_theme: "1500万年の時間を歩く"
+
+    key_features:
+      - "1500万年以上前は浅い海底"
+      - "100年に約5cm隆起して現在の姿"
+      - "海虫の化石、波紋（漣痕）が残る"
+
+    visual_elements:
+      primary: "広大な岩盤と地層（マクロ）、夕日"
+      geological_time: "地球の歴史のページを歩く"
+
+    filming_tips:
+      best_time:
+        - "日中（地層観察）"
+        - "日没時（日本夕日百選）"
+      shot_types:
+        - "広角：岩盤の広大さ、地層の線（ローアングル）"
+        - "マクロ：海虫の化石、漣痕の接写"
+        - "夕景：岩盤に座る人々のシルエット"
+      poetic_shot: "岩盤に寝そべり、耳を当てて1500万年前の波の音を聞く"
+
+    metaphor: "地球が用意した夕日を眺める特等席"
+
+# ストーリーフレームワーク（3案）
+story_frameworks:
+  contrast:
+    name: "A案：対比の物語"
+    theme: "古代と現代、静と動、自然と人工"
+    target_audience: "知的で物事の多面性を楽しむ層"
+    structure:
+      - contrast: "熊野古道の静 vs SUNTIDEの動"
+      - contrast: "崎の湯の荒々しい自然 vs 白良浜の管理された自然"
+      - contrast: "三段壁の歴史 vs 花火の今"
+
+  time:
+    name: "B案：時間の物語（最も推奨）"
+    theme: "1500万年から15分まで、白浜で交錯する時間"
+    target_audience: "歴史や地質学に興味があり、深い学びを旅に求める層"
+    timeline:
+      - era: "1500万年前"
+        location: "千畳敷"
+      - era: "平安時代"
+        location: "熊野古道"
+      - era: "源平合戦"
+        location: "三段壁"
+      - era: "江戸時代"
+        location: "番所山"
+      - era: "現代"
+        location: "白良浜"
+      - era: "一瞬"
+        location: "円月島の夕日"
+      - era: "15分"
+        location: "花火ラリー"
+
+  senses:
+    name: "C案：五感の物語"
+    theme: "白浜で研ぎ澄まされる五感"
+    target_audience: "癒しと感覚的な体験を最優先する層"
+    sensory_mapping:
+      visual:
+        - "円月島の夕日"
+        - "花火"
+      auditory:
+        - "崎の湯の波音"
+        - "千畳敷の風音"
+      tactile:
+        - "温泉の湯"
+        - "白良浜の砂"
+      olfactory:
+        - "崎の湯の潮の香り"
+        - "熊野古道の森の匂い"
+      gustatory:
+        - "SUNTIDEのシャンパン"
+
+# 撮影ロジスティクス・サマリー
+filming_summary:
+  key_visual_priorities:
+    - location: "円月島"
+      priority: "最高"
+      reason: "奇跡の瞬間（春分・秋分期）は見逃せない"
+
+    - location: "花火ラリー"
+      priority: "高"
+      reason: "7-8月の日曜限定、15分間のみ"
+
+    - location: "白良浜"
+      priority: "高"
+      reason: "ブランド・アイデンティティの核"
+
+  weather_dependent:
+    - location: "崎の湯"
+      condition: "荒天時の波しぶきが最高"
+
+    - location: "円月島・千畳敷"
+      condition: "晴天の夕日が必須"
+
+  seasonal_recommendations:
+    summer:
+      best:
+        - "白良浜（パラソルの賑わい）"
+        - "花火ラリー"
+        - "SUNTIDE（リゾート感）"
+
+    spring_autumn:
+      best:
+        - "円月島（穴に沈む夕日）"
+        - "熊野古道（過ごしやすい気候）"
+
+    winter:
+      best:
+        - "崎の湯（温泉の湯気が美しい）"
+        - "湯けむり（ASMR的要素）"
+
+# ナラティブ・キーフレーズ
+narrative_phrases:
+  openings:
+    - "白浜には、四つの顔がある。古代の聖地、地質学の博物館、歴史的要衝、そして近代的なリゾート。"
+    - "1500万年の時間が、ここでは歩ける距離にある。"
+
+  transitions:
+    - "目を閉じて、白浜の『音』を聞く。"
+    - "白浜の『上』には絶景がある。しかし、白浜の『下』には、物語がある。"
+
+  closings:
+    - "白浜。ここは、自然と人間の情熱が描き上げた、一枚の絵画である。"
+    - "最高の景色は、時として、歴史の影に隠されている。"

@@ -14,6 +14,8 @@ from .matching_strategies import (
     CompetitionMatchingStrategy,
     DefaultMatchingStrategy
 )
+from .research_loader import ResearchDatabase, Location, StoryFramework
+from .research_aware_strategy import ResearchAwareStrategy
 
 __all__ = [
     'ProjectManager',
@@ -29,4 +31,8 @@ __all__ = [
     'MarketingMatchingStrategy',
     'CompetitionMatchingStrategy',
     'DefaultMatchingStrategy',
+    'ResearchDatabase',
+    'Location',
+    'StoryFramework',
+    'ResearchAwareStrategy',
 ]
