@@ -14,6 +14,21 @@ from ..base import BaseVideoGenerator, GeneratorConfig
 
 
 @dataclass
+class DialogueLine:
+    """Single line of dialogue"""
+    speaker: str
+    text: str
+    duration: Optional[float] = None
+
+    def to_dict(self) -> Dict:
+        return {
+            'speaker': self.speaker,
+            'text': self.text,
+            'duration': self.duration
+        }
+
+
+@dataclass
 class CutData:
     """Data for a single cut in the storyboard"""
     cut_number: int
@@ -31,12 +46,26 @@ class CutData:
     veo3_prompt: str = ''  # Veo 3プロンプト（推奨）
     sora2_prompt: str = ''  # Sora 2プロンプト（推奨）
     recommended_model: str = 'Veo 3'  # 推奨モデル
-    # Narration fields
+
+    # Dialogue system - 3 modes: narration, monologue, dialogue
+    dialogue_mode: str = 'narration'  # 'narration', 'monologue', 'dialogue'
+
+    # Mode 1: Narration (narrator voiceover - existing functionality)
     narration_text: Optional[str] = None
     narration_needed: bool = False
     narration_duration: Optional[float] = None
     narration_timing: Optional[str] = None
     narration_style: Optional[str] = None
+
+    # Mode 2: Monologue (single character speaking)
+    monologue_character: Optional[str] = None  # Character name
+    monologue_text: Optional[str] = None
+    monologue_duration: Optional[float] = None
+
+    # Mode 3: Dialogue (two characters conversing)
+    dialogue_lines: Optional[List[DialogueLine]] = None
+    dialogue_characters: Optional[List[str]] = None  # List of character names
+
     # Material fields (for projects using existing photos/materials)
     material_photo_path: Optional[str] = None
     material_photo_name: Optional[str] = None
@@ -45,7 +74,12 @@ class CutData:
     reference_images: Optional[List[str]] = None
 
     def to_dict(self) -> Dict:
-        return asdict(self)
+        data = asdict(self)
+        # Convert DialogueLine objects to dicts
+        if self.dialogue_lines:
+            data['dialogue_lines'] = [line.to_dict() if isinstance(line, DialogueLine) else line
+                                     for line in self.dialogue_lines]
+        return data
 
 
 @dataclass
@@ -639,14 +673,36 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
             report.append(f"**Movement**: {cut.camera_movement}\n")
             report.append(f"**Mood**: {cut.mood} | {cut.lighting}\n")
 
-            # Add narration if available
-            if cut.narration_text:
-                report.append(f"\n**Narration** ({cut.narration_timing or 'start'} - {cut.narration_duration or 0}s):\n")
+            # Add dialogue/narration based on mode
+            if cut.dialogue_mode == 'narration' and cut.narration_text:
+                # Mode 1: Narration (narrator voiceover)
+                report.append(f"\n**🎙️ Narration** ({cut.narration_timing or 'start'} - {cut.narration_duration or 0}s):\n")
                 report.append("```\n")
                 report.append(f"{cut.narration_text}\n")
                 report.append("```\n")
                 if cut.narration_style:
                     report.append(f"> 💡 Style: {cut.narration_style} | Timing: {cut.narration_timing or 'start'} | Duration: ~{cut.narration_duration or 0}s\n")
+
+            elif cut.dialogue_mode == 'monologue' and cut.monologue_text:
+                # Mode 2: Monologue (single character speaking)
+                report.append(f"\n**💭 Monologue** - {cut.monologue_character or 'Character'} ({cut.monologue_duration or 0}s):\n")
+                report.append("```\n")
+                report.append(f"{cut.monologue_text}\n")
+                report.append("```\n")
+                report.append(f"> 💡 Character: {cut.monologue_character or 'Unknown'} | Duration: ~{cut.monologue_duration or 0}s\n")
+
+            elif cut.dialogue_mode == 'dialogue' and cut.dialogue_lines:
+                # Mode 3: Dialogue (two characters conversing)
+                total_duration = sum(line.duration for line in cut.dialogue_lines if line.duration)
+                characters = cut.dialogue_characters or [line.speaker for line in cut.dialogue_lines]
+                report.append(f"\n**💬 Dialogue** - {' & '.join(characters)} ({total_duration:.1f}s):\n")
+                report.append("```\n")
+                for line in cut.dialogue_lines:
+                    report.append(f"{line.speaker}: {line.text}\n")
+                    if line.duration:
+                        report.append(f"          ({line.duration:.1f}s)\n")
+                report.append("```\n")
+                report.append(f"> 💡 Characters: {', '.join(characters)} | Total Duration: ~{total_duration:.1f}s\n")
 
             report.append(f"\n**Image Prompt**:\n```\n{cut.image_prompt}\n```\n")
 
