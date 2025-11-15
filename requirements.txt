@@ -5,6 +5,7 @@ google-generativeai>=0.3.0    # Gemini API for image generation and vision
 pillow>=10.0.0                # Image processing
 numpy>=1.24.0                 # Array operations
 python-dotenv>=1.0.0          # .env file support for API keys
+pyyaml>=6.0.0                 # YAML configuration file support for Claude Skills
 
 # Optional but recommended
 scikit-learn>=1.3.0           # K-means clustering for color extraction

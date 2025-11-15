@@ -552,8 +552,8 @@ class EnhancedStoryboardGenerator(CoreStoryboardGenerator):
         print("\n🎵 Applying J-pop emotional structure...")
         cuts_data = JPOPEmotionalStructure.analyze_story_for_jpop_structure(
             story_description, 
-            self.config.duration, 
-            self.config.num_cuts
+            self.enhanced_config.get('duration', 30), 
+            self.enhanced_config.get('num_cuts', 8)
         )
         
         # インテリジェント選択による高度化
