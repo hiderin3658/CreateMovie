@@ -1,0 +1,203 @@
+{
+  "title": "ストーリー1: 朝から夜まで、白浜の一日",
+  "theme": "時間軸の旅 - 白浜の多様性",
+  "target_audience": "全世代",
+  "appeal_point": "白浜の朝から夜までの魅力を凝縮",
+  "duration": 10,
+  "num_cuts": 4,
+  "aspect_ratio": "9:16",
+  "cuts": [
+    {
+      "cut_number": 1,
+      "duration": 2.5,
+      "time_of_day": "朝",
+      "scene_title": "白良浜の朝",
+      "scene_description": "朝日が昇る白良浜の全景。三日月型の美しい白い砂浜とエメラルドグリーンの海が朝の光に輝く。",
+      "character_action": "少女が朝日を浴びながらビーチに到着し、深呼吸して両手を広げて伸びをする。爽やかな表情で新しい一日の始まりを喜ぶ。",
+      "location": "白良浜",
+      "source_material": "白良浜1（海向き全景）.jpeg",
+      "composition": "rule_of_thirds",
+      "camera_angle": "wide_aerial_view",
+      "camera_movement": "slow_zoom_in",
+      "lighting": "golden_hour_morning",
+      "mood": "hopeful, refreshing, energetic",
+      "color_tone": "warm_gold_blue_white",
+      "image_prompt": "anime style, aerial view of Shirahama Beach at sunrise, crescent-shaped white sandy beach, emerald turquoise ocean, young woman with long brown ponytail arriving on beach, stretching arms wide, backpack on back, golden morning light, resort hotels in background, rule of thirds composition, bright and hopeful atmosphere, vertical 9:16",
+      "video_prompt": "slow zoom in towards the beach, gradually revealing the beautiful morning scene, young woman stretching and taking deep breath, gentle waves rolling, morning light reflecting on water, 2.5 seconds, hopeful and energetic atmosphere, maintain aerial perspective throughout",
+      "key_elements": [
+        "白良浜の三日月型砂浜",
+        "エメラルドグリーンの海",
+        "朝の黄金色の光",
+        "伸びをする少女",
+        "リゾートホテル群（背景）"
+      ],
+      "emotion": "新しい旅の始まりへのワクワク感",
+      "generated_image_path": null,
+      "runway_prompt": "camera: slow zoom in\nmotion: woman stretching arms, taking deep breath\nduration: 2.5 seconds\natmosphere: bright morning, golden light\nconstraint: maintain composition, only scale/crop allowed",
+      "veo3_prompt": "Slow aerial zoom in on young anime-style woman stretching at sunrise beach, golden morning light, emerald ocean, 2.5 seconds",
+      "sora2_prompt": "Cinematic anime: Aerial view zooming into Shirahama Beach at dawn, woman with ponytail stretching joyfully on white sand, warm golden sunrise, turquoise waters, 2.5s",
+      "recommended_model": "Runway Gen-3"
+    },
+    {
+      "cut_number": 2,
+      "duration": 2.5,
+      "time_of_day": "昼",
+      "scene_title": "千畳敷の探検",
+      "scene_description": "畳を敷き詰めたような広大な岩の平地。青い海と空のコントラスト、層状の地層が特徴的。",
+      "character_action": "少女が広大な岩場を歩きながら周囲を見回し、そのスケール感に驚きの表情を見せる。手でサングラスを上げて目を輝かせる。",
+      "location": "千畳敷",
+      "source_material": "千畳敷2.jpeg",
+      "composition": "wide_ground_level",
+      "camera_angle": "low_wide_shot",
+      "camera_movement": "tracking_side",
+      "lighting": "bright_daylight",
+      "mood": "adventurous, amazed, curious",
+      "color_tone": "blue_gray_white",
+      "image_prompt": "anime style, wide flat rock formation of Senjojiki, layered sedimentary rocks like tatami mats, young woman walking on ancient rocky plateau, looking around with amazed expression, adjusting sunglasses, blue ocean background, bright midday sun, low angle shot emphasizing vast scale, vertical 9:16",
+      "video_prompt": "smooth tracking shot following woman from the side, walking across vast rock formation, looking around in wonder, raising sunglasses, demonstrating the enormous scale of natural wonder, 2.5 seconds, adventurous and curious atmosphere, bright midday lighting",
+      "key_elements": [
+        "広大な岩の平地",
+        "層状の地層パターン",
+        "青い海と空",
+        "探検する少女",
+        "驚きの表情"
+      ],
+      "emotion": "自然の壮大さへの驚き",
+      "generated_image_path": null,
+      "runway_prompt": "camera: smooth side tracking\nmotion: woman walking across rocks, looking around in wonder, adjusting sunglasses\nduration: 2.5 seconds\natmosphere: bright daylight, adventurous\nconstraint: maintain composition, only scale/crop allowed",
+      "veo3_prompt": "Side tracking shot of anime woman exploring vast Senjojiki rock plateau, amazed expression, bright midday, blue ocean, 2.5 seconds",
+      "sora2_prompt": "Anime adventure: Woman walking on ancient layered rock formation, looking around in wonder, vast scale, bright blue sky and sea, tracking side view, 2.5s",
+      "recommended_model": "Runway Gen-3"
+    },
+    {
+      "cut_number": 3,
+      "duration": 2.5,
+      "time_of_day": "夕方",
+      "scene_title": "円月島の夕景",
+      "scene_description": "夕日が円月島の穴を通過する絶景。オレンジ・ピンク・金色のグラデーション空、シルエットが美しい。",
+      "character_action": "少女が円月島の穴から差す夕日を静かに見つめる。シルエットで描かれ、髪が夕風になびく。感動に満ちた静かな瞬間。",
+      "location": "円月島",
+      "source_material": "円月島夕日１.jpeg",
+      "composition": "centered_silhouette",
+      "camera_angle": "medium_shot",
+      "camera_movement": "static_with_drift",
+      "lighting": "sunset_silhouette",
+      "mood": "awe, peaceful, emotional",
+      "color_tone": "orange_pink_gold_purple",
+      "image_prompt": "anime style, silhouette of Engetsuto Island at sunset, sun passing through circular hole in rock, young woman in silhouette gazing at sunset, hair flowing in evening breeze, dramatic orange pink gold gradient sky, ocean reflection, centered composition, emotional and peaceful atmosphere, vertical 9:16",
+      "video_prompt": "static camera with gentle natural drift, woman's silhouette watching sunset through island's hole, hair gently flowing in breeze, sun slowly setting, colors shifting from gold to deep orange, 2.5 seconds, awe-inspiring and emotional atmosphere, maintain silhouette effect",
+      "key_elements": [
+        "円月島の穴",
+        "夕日のシルエット",
+        "オレンジ〜ピンクのグラデーション",
+        "少女のシルエット",
+        "なびく髪"
+      ],
+      "emotion": "自然の美しさへの感動と静寂",
+      "generated_image_path": null,
+      "runway_prompt": "camera: static with slight drift\nmotion: woman's silhouette, hair flowing gently in breeze, sun slowly setting\nduration: 2.5 seconds\natmosphere: sunset, emotional, peaceful\nconstraint: maintain composition, only scale/crop allowed",
+      "veo3_prompt": "Static shot of anime woman silhouette watching sunset through Engetsuto Island hole, hair flowing, dramatic orange sky, 2.5 seconds",
+      "sora2_prompt": "Cinematic anime: Silhouette of woman watching sun set through circular rock formation, flowing hair, gradient orange pink sky, peaceful moment, 2.5s",
+      "recommended_model": "Runway Gen-3"
+    },
+    {
+      "cut_number": 4,
+      "duration": 2.5,
+      "time_of_day": "夜",
+      "scene_title": "花火の夜",
+      "scene_description": "白良浜の夜空に打ち上げられる華やかな花火。金色とピンクの大きな花火が夜空を彩る。",
+      "character_action": "少女が花火を見上げる横顔。表情は喜びに満ち、目に花火が映り込む。笑顔で一日の思い出を噛みしめる。",
+      "location": "白良浜（夜）",
+      "source_material": "白良浜5（花火）.jpg",
+      "composition": "profile_close_up",
+      "camera_angle": "close_up",
+      "camera_movement": "static",
+      "lighting": "fireworks_illumination",
+      "mood": "joyful, nostalgic, satisfied",
+      "color_tone": "gold_pink_warm_glow",
+      "image_prompt": "anime style, close-up profile of young woman looking up at fireworks, fireworks reflecting in her eyes, bright smile, golden and pink fireworks bursting in night sky over Shirahama Beach, warm glow on face, nostalgic and joyful atmosphere, vertical 9:16",
+      "video_prompt": "static camera on woman's profile, fireworks bursting in sequence above, colors reflecting on her face and in her eyes, gentle smile growing, expressing joy and satisfaction of wonderful day, 2.5 seconds, joyful and nostalgic atmosphere",
+      "key_elements": [
+        "花火（金色とピンク）",
+        "見上げる少女の横顔",
+        "目に映る花火",
+        "笑顔",
+        "夜の海"
+      ],
+      "emotion": "一日の思い出への満足感と幸福感",
+      "generated_image_path": null,
+      "runway_prompt": "camera: static close-up\nmotion: fireworks bursting in sky, colors reflecting on woman's face, growing smile\nduration: 2.5 seconds\natmosphere: joyful night, warm glow from fireworks\nconstraint: maintain composition, only scale/crop allowed",
+      "veo3_prompt": "Static close-up of anime woman's profile watching fireworks, reflections in eyes, smile, gold and pink bursts, 2.5 seconds",
+      "sora2_prompt": "Anime closeup: Woman's profile illuminated by golden and pink fireworks, reflections in eyes, joyful smile, night beach atmosphere, 2.5s",
+      "recommended_model": "Runway Gen-3"
+    }
+  ],
+  "style_guide": {
+    "visual_style": "anime",
+    "color_palette": [
+      "#FFD700",
+      "#87CEEB",
+      "#FFFFFF",
+      "#FF69B4",
+      "#FFA500"
+    ],
+    "mood": "hopeful_to_nostalgic",
+    "lighting": "natural_progression",
+    "texture": "clean anime style",
+    "character_consistency": {
+      "hair": "long brown hair, ponytail",
+      "clothing": "casual summer outfit (t-shirt, shorts)",
+      "accessories": "backpack, sunglasses"
+    }
+  },
+  "narrative_arc": {
+    "beginning": "新しい一日の始まり（朝）",
+    "development": "アクティブな探検（昼）",
+    "climax": "感動的な自然美（夕方）",
+    "resolution": "幸せな思い出（夜）"
+  },
+  "music_suggestion": {
+    "genre": "J-Pop / Cinematic",
+    "tempo_progression": "120bpm → 110bpm → 95bpm → 105bpm",
+    "mood_progression": "energetic → adventurous → emotional → joyful",
+    "instruments": [
+      "piano",
+      "strings",
+      "acoustic guitar",
+      "light percussion"
+    ],
+    "suno_prompt": "[Intro: Bright J-Pop] 120bpm, energetic morning theme, piano and strings, uplifting melody | [Development: Adventure] 110bpm, curious exploration, adding light percussion | [Bridge: Emotional] 95bpm, sunset moment, strings swell, touching melody | [Finale: Joy] 105bpm, fireworks celebration, full instrumentation, happy ending"
+  },
+  "material_usage": {
+    "total_materials_used": 4,
+    "categories": {
+      "beach": 2,
+      "nature": 2
+    },
+    "materials_list": [
+      "白良浜1（海向き全景）.jpeg",
+      "千畳敷2.jpeg",
+      "円月島夕日１.jpeg",
+      "白良浜5（花火）.jpg"
+    ]
+  },
+  "constraints": {
+    "modification_rule": "モチーフ改変禁止 - 写真の構図と主要被写体を保持",
+    "allowed_operations": "Scale and Crop only",
+    "character_integration": "背景をアニメ化した上にキャラクターを合成",
+    "duration_constraint": "10秒（各カット2.5秒）"
+  },
+  "submission_notes": {
+    "appeal": "朝から夜まで、白浜の時間の流れで多様な魅力を凝縮。全世代に訴求できる王道ストーリー。",
+    "strengths": [
+      "時間軸で構成され、わかりやすい",
+      "白浜の代表的な4つの魅力を網羅",
+      "感情の起伏が自然",
+      "ビジュアルのバリエーションが豊か"
+    ],
+    "target_platform": "TikTok, Instagram Reels, YouTube Shorts"
+  },
+  "created_at": "2025-11-09T00:00:00",
+  "created_by": "Claude (AI Assistant)",
+  "version": "1.0"
+}
