@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """
-Narration Generator
-Generates contextual narration text for video storyboard cuts using Claude API
+Narration Generator (Extended to support 3 dialogue modes)
+Generates contextual narration, monologue, and dialogue for video storyboard cuts using Claude API
+
+Modes:
+1. Narration: Narrator voiceover (existing functionality)
+2. Monologue: Single character speaking
+3. Dialogue: Two characters conversing
 """
 import os
 from typing import List, Optional, Dict, Any
@@ -14,7 +19,14 @@ except ImportError:
 
 
 class NarrationGenerator:
-    """Generate contextual narration text for video storyboard cuts"""
+    """
+    Generate contextual narration, monologue, and dialogue for video storyboard cuts
+
+    Supports 3 modes:
+    - narration: Narrator voiceover
+    - monologue: Single character speaking
+    - dialogue: Two characters conversing
+    """
 
     def __init__(self, api_key: Optional[str] = None):
         """
@@ -289,5 +301,323 @@ Respond with ONLY the narration text, nothing else.
 
         narration_count = sum(1 for cut in cuts if cut.narration_text)
         print(f"\n✅ Generated {narration_count} narrations")
+
+        return cuts
+
+    def generate_monologue_text(
+        self,
+        cut: Any,
+        story_context: str,
+        character_name: str,
+        character_context: str,
+        previous_cuts: List[Any]
+    ) -> Optional[str]:
+        """
+        Generate monologue text for a single character
+
+        Args:
+            cut: Cut data
+            story_context: Overall story description
+            character_name: Name of the character speaking
+            character_context: Character background/personality
+            previous_cuts: Previous cuts for context
+
+        Returns:
+            Generated monologue text or None
+        """
+        if not self.use_claude:
+            return None
+
+        # Build context from previous cuts
+        prev_context = ""
+        if previous_cuts:
+            last_few = previous_cuts[-2:] if len(previous_cuts) > 2 else previous_cuts
+            prev_context = "\n".join([
+                f"Cut {c.cut_number}: {c.scene_description}"
+                for c in last_few
+            ])
+
+        # Calculate max characters based on duration (Japanese: ~300 chars/min)
+        max_chars = int((cut.duration / 60) * 300)
+
+        prompt = f"""You are writing a monologue for a character in a video storyboard.
+
+Story Context:
+{story_context}
+
+Character: {character_name}
+Character Context: {character_context}
+
+Previous Cuts:
+{prev_context if prev_context else "None (this is the first cut)"}
+
+Current Cut (Cut {cut.cut_number}, {cut.duration}s):
+- Scene: {cut.scene_description}
+- Action: {cut.action}
+- Mood: {cut.mood}
+- Camera: {cut.camera_angle}, {cut.camera_movement}
+
+Generate a monologue where {character_name} speaks their thoughts that:
+1. Fits within {cut.duration}s (approximately {max_chars} Japanese characters)
+2. Reflects {character_name}'s personality and perspective
+3. Advances the story or reveals character emotions
+4. Matches the {cut.mood} mood
+5. Is written in Japanese (日本語)
+6. Uses natural, spoken language (not narration style)
+
+Respond with ONLY the monologue text, nothing else.
+"""
+
+        try:
+            response = self.client.messages.create(
+                model=self.model,
+                max_tokens=500,
+                messages=[{"role": "user", "content": prompt}]
+            )
+
+            monologue = response.content[0].text.strip()
+            # Remove any markdown formatting or quotes
+            monologue = monologue.strip('"').strip("'").strip('`')
+            return monologue
+
+        except Exception as e:
+            print(f"Error generating monologue for Cut {cut.cut_number}: {e}")
+            return None
+
+    def generate_dialogue_text(
+        self,
+        cut: Any,
+        story_context: str,
+        character1_name: str,
+        character1_context: str,
+        character2_name: str,
+        character2_context: str,
+        previous_cuts: List[Any]
+    ) -> Optional[List[Dict]]:
+        """
+        Generate dialogue between two characters
+
+        Args:
+            cut: Cut data
+            story_context: Overall story description
+            character1_name: Name of first character
+            character1_context: First character background
+            character2_name: Name of second character
+            character2_context: Second character background
+            previous_cuts: Previous cuts for context
+
+        Returns:
+            List of dialogue lines [{'speaker': '...', 'text': '...'}] or None
+        """
+        if not self.use_claude:
+            return None
+
+        # Build context from previous cuts
+        prev_context = ""
+        if previous_cuts:
+            last_few = previous_cuts[-2:] if len(previous_cuts) > 2 else previous_cuts
+            prev_context = "\n".join([
+                f"Cut {c.cut_number}: {c.scene_description}"
+                for c in last_few
+            ])
+
+        # Calculate max characters based on duration
+        max_chars = int((cut.duration / 60) * 300)
+
+        prompt = f"""You are writing dialogue for two characters in a video storyboard.
+
+Story Context:
+{story_context}
+
+Character 1: {character1_name}
+Context: {character1_context}
+
+Character 2: {character2_name}
+Context: {character2_context}
+
+Previous Cuts:
+{prev_context if prev_context else "None (this is the first cut)"}
+
+Current Cut (Cut {cut.cut_number}, {cut.duration}s):
+- Scene: {cut.scene_description}
+- Action: {cut.action}
+- Mood: {cut.mood}
+- Camera: {cut.camera_angle}, {cut.camera_movement}
+
+Generate a natural dialogue between {character1_name} and {character2_name} that:
+1. Fits within {cut.duration}s (approximately {max_chars} Japanese characters total)
+2. Reflects each character's personality
+3. Advances the story or reveals emotions/conflict
+4. Matches the {cut.mood} mood
+5. Is written in Japanese (日本語)
+6. Has 2-4 back-and-forth exchanges
+
+Respond in this exact JSON format:
+[
+  {{"speaker": "{character1_name}", "text": "..."}},
+  {{"speaker": "{character2_name}", "text": "..."}},
+  ...
+]
+
+Respond with ONLY the JSON array, nothing else.
+"""
+
+        try:
+            response = self.client.messages.create(
+                model=self.model,
+                max_tokens=800,
+                messages=[{"role": "user", "content": prompt}]
+            )
+
+            content = response.content[0].text.strip()
+
+            # Extract JSON array from response
+            import json
+            import re
+            json_match = re.search(r'\[.*\]', content, re.DOTALL)
+            if json_match:
+                dialogue_lines = json.loads(json_match.group())
+                return dialogue_lines
+            else:
+                print(f"Warning: Could not parse dialogue JSON for Cut {cut.cut_number}")
+                return None
+
+        except Exception as e:
+            print(f"Error generating dialogue for Cut {cut.cut_number}: {e}")
+            return None
+
+    def generate_dialogue_for_storyboard(
+        self,
+        cuts: List[Any],
+        story_context: str,
+        dialogue_mode: str = 'narration',
+        character_info: Optional[Dict] = None,
+        style: str = "documentary"
+    ) -> List[Any]:
+        """
+        Generate dialogue/narration for entire storyboard with mode selection
+
+        Args:
+            cuts: List of cut data
+            story_context: Overall story description
+            dialogue_mode: 'narration', 'monologue', or 'dialogue'
+            character_info: Dict with character information for monologue/dialogue modes
+                           {'character1': {'name': '...', 'context': '...'},
+                            'character2': {'name': '...', 'context': '...'}}
+            style: Narration style (for narration mode only)
+
+        Returns:
+            Updated cuts with dialogue/narration
+        """
+        if not self.use_claude:
+            print("⚠️  Claude API not available, skipping dialogue generation")
+            return cuts
+
+        print(f"\n🎙️  Generating dialogue (mode: {dialogue_mode})...")
+
+        if dialogue_mode == 'narration':
+            # Use existing narration generation
+            return self.generate_narrations_for_storyboard(cuts, story_context, style)
+
+        # Validate character_info for monologue/dialogue modes
+        if not character_info:
+            print("⚠️  Character info required for monologue/dialogue mode")
+            return cuts
+
+        previous_cuts = []
+
+        for i, cut in enumerate(cuts):
+            cut.dialogue_mode = dialogue_mode
+
+            if dialogue_mode == 'monologue':
+                # Generate monologue
+                char1 = character_info.get('character1', {})
+                char_name = char1.get('name', '主人公')
+                char_context = char1.get('context', '')
+
+                print(f"  Generating monologue for Cut {cut.cut_number} ({char_name})...")
+
+                monologue = self.generate_monologue_text(
+                    cut,
+                    story_context,
+                    char_name,
+                    char_context,
+                    previous_cuts
+                )
+
+                if monologue:
+                    cut.monologue_character = char_name
+                    cut.monologue_text = monologue
+
+                    # Calculate duration
+                    timing_info = self.calculate_narration_timing(
+                        monologue,
+                        cut.duration
+                    )
+                    cut.monologue_duration = timing_info['duration']
+
+                    if not timing_info['fits_in_cut']:
+                        print(f"    ⚠️  Warning: Monologue ({timing_info['duration']}s) exceeds cut duration ({cut.duration}s)")
+                    else:
+                        print(f"    ✓ Generated ({timing_info['duration']}s, {timing_info['char_count']} chars)")
+
+            elif dialogue_mode == 'dialogue':
+                # Generate dialogue
+                char1 = character_info.get('character1', {})
+                char2 = character_info.get('character2', {})
+
+                char1_name = char1.get('name', 'キャラA')
+                char1_context = char1.get('context', '')
+                char2_name = char2.get('name', 'キャラB')
+                char2_context = char2.get('context', '')
+
+                print(f"  Generating dialogue for Cut {cut.cut_number} ({char1_name} & {char2_name})...")
+
+                dialogue_lines = self.generate_dialogue_text(
+                    cut,
+                    story_context,
+                    char1_name,
+                    char1_context,
+                    char2_name,
+                    char2_context,
+                    previous_cuts
+                )
+
+                if dialogue_lines:
+                    # Import DialogueLine class
+                    from ..video.storyboard_generator import DialogueLine
+
+                    # Convert to DialogueLine objects with duration estimates
+                    dialogue_objs = []
+                    total_chars = sum(len(line['text']) for line in dialogue_lines)
+                    total_duration = cut.duration
+
+                    for line in dialogue_lines:
+                        # Estimate duration based on character count proportion
+                        line_chars = len(line['text'])
+                        line_duration = (line_chars / total_chars) * total_duration if total_chars > 0 else 0
+
+                        dialogue_objs.append(DialogueLine(
+                            speaker=line['speaker'],
+                            text=line['text'],
+                            duration=round(line_duration, 1)
+                        ))
+
+                    cut.dialogue_lines = dialogue_objs
+                    cut.dialogue_characters = [char1_name, char2_name]
+
+                    total_duration_calc = sum(d.duration for d in dialogue_objs if d.duration)
+                    print(f"    ✓ Generated {len(dialogue_objs)} lines ({total_duration_calc:.1f}s total)")
+
+            previous_cuts.append(cut)
+
+        # Count generated dialogues
+        dialogue_count = 0
+        if dialogue_mode == 'monologue':
+            dialogue_count = sum(1 for cut in cuts if cut.monologue_text)
+        elif dialogue_mode == 'dialogue':
+            dialogue_count = sum(1 for cut in cuts if cut.dialogue_lines)
+
+        print(f"\n✅ Generated {dialogue_count} {dialogue_mode}s")
 
         return cuts
