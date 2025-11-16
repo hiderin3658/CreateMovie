@@ -29,6 +29,23 @@ class DialogueLine:
 
 
 @dataclass
+class SubtitleLine:
+    """Single subtitle line with timing information"""
+    text: str
+    start_time: float  # Seconds from start of cut
+    end_time: float    # Seconds from start of cut
+    speaker: Optional[str] = None  # For dialogue mode
+
+    def to_dict(self) -> Dict:
+        return {
+            'text': self.text,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'speaker': self.speaker
+        }
+
+
+@dataclass
 class CutData:
     """Data for a single cut in the storyboard"""
     cut_number: int
@@ -66,6 +83,11 @@ class CutData:
     dialogue_lines: Optional[List[DialogueLine]] = None
     dialogue_characters: Optional[List[str]] = None  # List of character names
 
+    # Subtitle system - automatic subtitle generation based on dialogue mode
+    subtitle_enabled: bool = True  # Whether to generate subtitles
+    subtitle_style: str = 'auto'   # 'auto', 'none', 'full', 'with_speaker', 'without_speaker'
+    subtitle_lines: Optional[List[SubtitleLine]] = None  # Generated subtitle lines
+
     # Material fields (for projects using existing photos/materials)
     material_photo_path: Optional[str] = None
     material_photo_name: Optional[str] = None
@@ -79,6 +101,10 @@ class CutData:
         if self.dialogue_lines:
             data['dialogue_lines'] = [line.to_dict() if isinstance(line, DialogueLine) else line
                                      for line in self.dialogue_lines]
+        # Convert SubtitleLine objects to dicts
+        if self.subtitle_lines:
+            data['subtitle_lines'] = [line.to_dict() if isinstance(line, SubtitleLine) else line
+                                     for line in self.subtitle_lines]
         return data
 
 
@@ -703,6 +729,17 @@ class CoreStoryboardGenerator(BaseVideoGenerator):
                         report.append(f"          ({line.duration:.1f}s)\n")
                 report.append("```\n")
                 report.append(f"> 💡 Characters: {', '.join(characters)} | Total Duration: ~{total_duration:.1f}s\n")
+
+            # Add subtitles section
+            if cut.subtitle_enabled and cut.subtitle_lines:
+                report.append(f"\n**📺 Subtitles** ({len(cut.subtitle_lines)} lines):\n")
+                report.append("```\n")
+                for i, subtitle in enumerate(cut.subtitle_lines, 1):
+                    time_info = f"[{subtitle.start_time:.1f}s - {subtitle.end_time:.1f}s]"
+                    report.append(f"{i}. {time_info} {subtitle.text}\n")
+                report.append("```\n")
+                style_info = cut.subtitle_style if cut.subtitle_style != 'auto' else f"auto ({cut.dialogue_mode})"
+                report.append(f"> 💡 Style: {style_info} | Lines: {len(cut.subtitle_lines)}\n")
 
             report.append(f"\n**Image Prompt**:\n```\n{cut.image_prompt}\n```\n")
 
